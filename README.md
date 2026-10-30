@@ -6,7 +6,16 @@ A live classroom activity for a UX research lecture on **ease of use**. About 30
 
 ---
 
-## 1 · Start it in GitHub Codespaces (≈2 min)
+## 1a · Permanent public link: Render (recommended)
+
+1. Sign in at https://render.com with GitHub (free, no card).
+2. **New + → Blueprint** → pick this repo → **Apply**. Render reads `render.yaml`.
+3. After ~2 minutes you get a permanent link like `https://mass-com-ux-lab.onrender.com`.
+   - Instructor panel: `…/admin?key=ux2026` · Projector: `…/live?key=ux2026`
+4. The free plan sleeps after 15 minutes with no visitors. Open the link 2 minutes before class to wake it.
+   Data is kept in memory/disk only while it runs: export it before class ends.
+
+## 1b · Start it in GitHub Codespaces (≈2 min)
 
 1. Push this folder to a GitHub repo, then **Code → Codespaces → Create codespace**.
    The dev container installs everything automatically.

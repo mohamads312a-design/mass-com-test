@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: mass-com-ux-lab
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ADMIN_KEY
+        value: ux2026
+      - key: NODE_VERSION
+        value: "22"

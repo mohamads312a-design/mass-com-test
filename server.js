@@ -14,6 +14,7 @@ const ADMIN_KEY = process.env.ADMIN_KEY || 'ux2026';
 const DATA_FILE = path.join(__dirname, 'data', 'session.json');
 
 const app = express();
+app.set('trust proxy', true);
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' }, maxHttpBufferSize: 2e6 });
 
