@@ -1,0 +1,16 @@
+{
+  "name": "news-ux-lab",
+  "version": "1.0.0",
+  "description": "Classroom UX research lab: 3 simulated news sites, live tracking, personas, animated dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "public": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.3.0",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.4"
+  }
+}

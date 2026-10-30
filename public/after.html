@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>After</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:"Noto Naskh Arabic",Tahoma,system-ui,sans-serif;background:#fff8f0;color:#1d1d1b;min-height:844px;position:relative;overflow:hidden}
+img{display:block;width:100%}
+.ui{font-family:system-ui,Tahoma,sans-serif}
+/* ledger */
+.lh{border-bottom:1px solid #1d1d1b;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fff8f0}
+.lh .logo{font-weight:700;font-size:25px}.lh .btn{font-size:12px;font-weight:700;background:#0a3d62;color:#fff;padding:7px 10px;border-radius:3px}
+.secs{display:flex;gap:16px;padding:6px 14px 8px;font-size:13px;font-weight:600;border-bottom:1px solid #1d1d1b}
+.wrap{padding:0 16px}
+.lead img{aspect-ratio:16/10;object-fit:cover;margin:16px 0 12px}
+.kick{font-size:11px;font-weight:700;letter-spacing:.1em;color:#a12a1a;margin-bottom:6px}
+h2{font-size:27px;line-height:1.5;margin:0 0 6px}
+p.t{font-size:19px;line-height:1.95;margin:0 0 16px}
+.dim{position:absolute;inset:0;background:rgba(20,20,20,.35)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:20px 20px 0 0;padding:22px 18px 26px;box-shadow:0 -10px 30px rgba(0,0,0,.2)}
+.sheet h3{margin:0 0 8px;font-size:21px}.sheet p{margin:0 0 14px;color:#444;font-size:15px;line-height:1.7}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{border:0;border-radius:8px;padding:14px;font-size:16px;font-weight:700;font-family:inherit;text-align:center}
+.b.p{background:#0a3d62;color:#fff}.b.o{background:#fff;color:#0a3d62;border:2px solid #0a3d62}
+.lnk{display:block;text-align:center;margin-top:12px;color:#0a3d62;font-size:14px;font-weight:600}
+.alerts{background:#0a3d62;color:#e6f0f7;font-size:13px;padding:8px 14px;display:flex;justify-content:space-between;align-items:center}
+.alerts .off{background:#fff;color:#0a3d62;border-radius:99px;padding:3px 12px;font-weight:700}
+.toast{position:absolute;left:16px;right:16px;bottom:24px;background:#1d1d1b;color:#fff;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;font-size:15px}
+.toast b{color:#7fd1ff}
+.box{background:#fff;border:1px solid #e1d6c6;border-radius:12px;padding:18px;margin:8px 0 18px}
+/* khabar */
+.top{background:#b3001b;color:#fff}.top .row{display:flex;justify-content:space-between;align-items:center;padding:8px 12px}
+.klogo{font-weight:900;font-size:24px}.klogo b{background:#fff;color:#b3001b;border-radius:6px;padding:0 6px;font-size:20px}
+.nav{display:flex;gap:16px;padding:7px 12px;background:#8c0015;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden}
+.kw{padding:10px;background:#f1f1f1;min-height:760px}
+.card{display:flex;gap:10px;background:#fff;border-radius:6px;padding:8px;margin-bottom:8px}.card img{width:118px;height:78px;border-radius:4px;object-fit:cover;flex:none}
+.card h3{font-size:15px;line-height:1.55;margin:0}.meta{font-size:11px;color:#888;margin-top:4px}
+.hero{position:relative;border-radius:6px;overflow:hidden;margin-bottom:10px}.hero img{height:200px;object-fit:cover}.hero .cap{position:absolute;inset:auto 0 0 0;padding:40px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font-weight:700;font-size:18px;line-height:1.45}
+.adzone{border:2px dashed #c9c9c9;border-radius:8px;padding:8px;margin:12px 0;background:#fafafa}
+.adzone .lbl{display:inline-block;background:#ffd400;color:#000;font-weight:800;font-size:12px;padding:2px 8px;border-radius:4px;margin-bottom:6px}
+.adsm{background:#fff;border:1px solid #ddd;padding:12px;display:flex;align-items:center;gap:10px;border-radius:6px}.adsm .lg{width:40px;height:40px;border-radius:9px;background:#0b4ea2;color:#fff;font-weight:900;display:grid;place-items:center}
+.sp{background:#fff7d6;border:2px solid #f2c200}
+.sp .badge{display:inline-block;background:#f2c200;color:#000;font-size:12px;font-weight:800;padding:2px 8px;border-radius:4px;margin-bottom:4px}
+.art{background:#fff;border-radius:6px;padding:12px}.art h1{font-size:22px;line-height:1.5;margin:6px 0 8px}.art p{font-size:17px;line-height:1.9;margin:12px 0}
+.rt{font-size:12px;color:#777;display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:8px}
+.follow{background:#fff;border:2px solid #b3001b;border-radius:12px;padding:16px;margin-top:10px}
+.follow h4{margin:0 0 6px;font-size:17px}.follow p{margin:0 0 12px;font-size:14px;color:#555}
+.kb{border-radius:8px;padding:12px;font-weight:800;font-size:15px;text-align:center}
+/* viral */
+.vh{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:3px solid #ff2e63;font-family:system-ui,sans-serif}
+.vlogo{font-weight:900;font-size:24px;font-style:italic;direction:ltr}.vlogo span{color:#ff2e63}
+.vw{padding:0 12px;font-family:system-ui,Tahoma,sans-serif}
+.it{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0}.it img{width:110px;height:80px;border-radius:10px;object-fit:cover;flex:none}.it h3{margin:0;font-size:15px;line-height:1.4;font-weight:800}
+.end{text-align:center;padding:30px 10px;border-radius:16px;background:#f4f4f6;margin:16px 0}
+.end .ck{width:56px;height:56px;border-radius:50%;background:#22c55e;color:#fff;font-size:30px;display:grid;place-items:center;margin:0 auto 10px}
+.end h3{margin:0 0 6px;font-size:20px}.end p{margin:0;color:#666;font-size:14px}
+.vid{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:linear-gradient(135deg,#00e1ff,#0035ff 60%,#14002e);display:grid;place-items:center;margin:10px 0}
+.vid .play{width:70px;height:70px;border-radius:50%;background:#fffd;display:grid;place-items:center;font-size:28px;color:#0035ff;padding-right:4px}
+.vid .tag{position:absolute;top:8px;right:8px;background:#ffde00;color:#000;font-size:12px;font-weight:800;padding:3px 8px;border-radius:4px}
+.vid .cap{position:absolute;bottom:8px;right:10px;left:10px;color:#fff;font-size:13px;font-weight:700;display:flex;justify-content:space-between}
+/* paywall */
+.pay{background:#fff;border:2px solid #0a3d62;border-radius:14px;padding:18px;margin:8px 0}
+.pay h3{margin:0 0 10px;font-size:20px}.pr{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}.pr b{font-size:34px;color:#0a3d62}
+.pay ul{margin:0 0 14px;padding:0 20px 0 0;font-size:15px;line-height:2}
+.label{position:absolute;top:0;left:0;right:0;height:0}
+</style></head>
+<body>
+<div id="s"></div>
+<script src="/js/content.js"></script>
+<script>
+const C = CONTENT, th = C.thumb, s = new URLSearchParams(location.search).get('s');
+const LH = `<div class="lh ui"><span style="font-size:22px">☰</span><span class="logo" style="font-family:Amiri,'Noto Naskh Arabic',serif">ذا جلوبال ليدجر</span><span class="btn">اشترك</span></div><div class="secs ui"><span>العالم</span><span>اقتصاد</span><span>تكنولوجيا</span><span>مناخ</span><span>ثقافة</span><span>رأي</span></div>`;
+const LEAD = `<div class="wrap"><div class="lead"><img src="${th('climate', 3)}"><div class="kick ui">تحقيق خاص</div><h2>سباق مع الوقت: إزاي المدن اللي على البحر بتفكر في الميه من جديد</h2><div style="font-size:15px;color:#55524c;line-height:1.7">من إسكندرية لروتردام، المدن بتجرّب حلول جديدة لارتفاع البحر.</div></div></div>`;
+const KH = `<div class="top ui"><div class="row"><span style="font-size:20px">☰</span><span class="klogo"><b>الخبر</b> الآن</span><span style="font-size:20px">🔍</span></div><div class="nav"><span>الرئيسية</span><span>أخبار مصر</span><span>رياضة</span><span>فن</span><span>اقتصاد</span><span>تكنولوجيا</span></div></div>`;
+const VH = `<div class="vh"><span style="background:#111;color:#ffde00;font-weight:800;font-size:12px;padding:5px 10px;border-radius:99px">🔥 تريند</span><span class="vlogo">Viral<span>Vault</span></span></div>`;
+const S = {
+  cookiewall: `${LH}${LEAD}<div class="dim"></div><div class="sheet ui"><h3>الكوكيز في الموقع ده</h3><p>بنستخدم كوكيز ضرورية عشان الموقع يشتغل. تسمح بكوكيز زيادة لقياس الزيارات والإعلانات؟</p><div class="row2"><div class="b o">رفض</div><div class="b o">قبول</div></div><span class="lnk">اختار بنفسك ›</span></div>`,
+  newsletter: `${LH}<div class="wrap" style="padding-top:16px"><p class="t">وفي الآخر، شكله كده مستقبل المدن اللي على البحر هيتكتب بقرارات بتتاخد في العشر سنين دول.</p><div style="text-align:center;color:#a12a1a;margin:6px 0 14px">◆ ◆ ◆</div><div class="box ui"><div class="kick">النشرة الصباحية</div><div style="font-size:19px;font-weight:700;margin-bottom:6px">عجبك المقال؟</div><div style="font-size:14px;color:#555;line-height:1.7;margin-bottom:12px">أهم 5 أخبار على إيميلك كل يوم الصبح. تقدر تلغي الاشتراك بدوسة من أي رسالة.</div><div style="border:1px solid #bbb;border-radius:6px;padding:12px;color:#999;font-size:15px;margin-bottom:10px">إيميلك</div><div class="row2"><div class="b o">لأ شكرًا</div><div class="b p">اشترك</div></div></div><div class="kick ui" style="color:#1d1d1b;margin-top:16px">اقرا كمان</div><div style="font-size:18px;font-weight:700;line-height:1.6">هل الذكاء الاصطناعي بيغيّر طريقة قرايتنا للأخبار؟</div></div>`,
+  confirmshame: `${LH.replace('</div><div class="secs', '</div><div class="alerts ui"><span>🔔 تنبيهات الأخبار العاجلة: شغالة</span><span class="off">اقفل</span></div><div class="secs')}${LEAD}<div class="toast ui"><span>🔕 التنبيهات اتقفلت</span><b>رجّعها</b></div>`,
+  interstitial: `${KH}<div class="kw"><div class="hero"><img src="${th('celeb', 7)}"><div class="cap">نجوم النيل يحسم القمة قدام دلتا في آخر دقايق</div></div>${[['local', 'افتتاح 3 جناين جديدة وتطوير ممشى الحي'], ['education', 'الجامعات هتجرّب كارنيه الطلبة الديجيتال الترم الجاي']].map(([c, t], i) => `<div class="card"><img src="${th(c, i + 3)}"><div><h3>${t}</h3><div class="meta">من ${12 + i * 7} دقيقة</div></div></div>`).join('')}
+    <div class="adzone"><span class="lbl">إعلان</span><div class="adsm"><div class="lg">F</div><div style="flex:1;font-size:13px;line-height:1.5"><b style="font-size:15px">كارت فيوتشر للطلبة</b><br>من غير مصاريف إصدار أول سنة</div></div></div>
+    <div class="card"><img src="${th('economy', 9)}"><div><h3>استطلاع: 6 من كل 10 شباب يتسوقون عبر الإنترنت أسبوعيًا</h3><div class="meta">من 40 دقيقة</div></div></div></div>`,
+  sponsored: `${KH}<div class="kw">${[['sports', 'ماتش نار.. نجوم النيل يحسم القمة قدام دلتا في آخر دقايق'], ['education', 'الجامعات هتجرّب كارنيه الطلبة الديجيتال الترم الجاي']].map(([c, t], i) => `<div class="card"><img src="${th(c, i + 3)}"><div><h3>${t}</h3><div class="meta">من ${12 + i * 7} دقيقة</div></div></div>`).join('')}
+    <div class="card sp"><img src="${th('crypto', 4)}"><div><span class="badge">إعلان ممول · كريبتو نايل</span><h3>منصة تداول بالذكاء الاصطناعي.. الأرباح مش مضمونة</h3></div></div>
+    ${[['local', 'افتتاح 3 جناين جديدة وتطوير ممشى الحي'], ['economy', 'استطلاع: 6 من كل 10 شباب بيشتروا أونلاين كل أسبوع'], ['health', 'دراسة: النوم 7 ساعات ببيحسّن التركيز في الامتحانات']].map(([c, t], i) => `<div class="card"><img src="${th(c, i + 8)}"><div><h3>${t}</h3><div class="meta">من ${30 + i * 9} دقيقة</div></div></div>`).join('')}</div>`,
+  scam: `${KH}<div class="kw"><div class="art"><h1>ماتش نار.. نجوم النيل يحسم القمة قدام دلتا</h1><div class="rt"><span>محرر الخبر الآن</span><span>⏱ 3 دقايق قراية</span></div>
+    <p>ستاد القاهرة شهد امبارح ماتش نار بين نجوم النيل ودلتا في الأسبوع العاشر من الدوري.</p><p>دلتا بدأ الماتش جامد وجاب جول بدري في الدقيقة 12، وقبل نهاية الشوط الأول نجوم النيل عادل.</p><p>وفي الشوط التاني كل فريق سبق التاني، ودلتا رجع عادل في الدقيقة 78.</p><p>وقبل الصفارة بدقيقتين، كريم سامي خطف جول الفوز، والماتش خلص 3 أجوال مقابل جولين.</p><div style="text-align:center;color:#888;font-size:13px">— المقال كله في صفحة واحدة —</div></div></div>`,
+  notif: `${KH}<div class="kw"><div class="art"><h1>نجوم النيل يحسم القمة قدام دلتا</h1><p>…وقبل الصفارة بدقيقتين، كريم سامي خطف جول الفوز، والماتش خلص بفوز نجوم النيل 3 أجوال مقابل جولين.</p></div>
+    <div class="follow ui"><h4>⚽ تتابع نجوم النيل؟</h4><p>هنبعتلك تنبيه واحد بس لما كل ماتش يخلص. تقدر تقفله في أي وقت.</p><div class="row2"><div class="kb" style="background:#f1f1f1;color:#333">مش دلوقتي</div><div class="kb" style="background:#b3001b;color:#fff">آه، نبّهني</div></div></div></div>`,
+  feed: `${VH}<div class="vw"><div style="font-weight:900;font-size:19px;margin:16px 0 6px">📈 التريند دلوقتي</div>${[['food', 'كشري في 10 دقايق'], ['health', 'دراسة: النوم 7 ساعات ببيحسّن التركيز في الامتحانات'], ['tech', 'تحديث جديد بيضيف ميزة "وقت الشاشة" للموبايلات'], ['celeb', 'نجم مشهور بيربّي دقنه عشان دور جديد']].map(([c, t], i) => `<div class="it"><img src="${th(c, i + 50)}"><div><h3>${t}</h3><div style="font-size:12px;color:#888;margin-top:4px">من ${2 + i} ساعات</div></div></div>`).join('')}
+    <div class="end"><div class="ck">✓</div><h3>خلّصت كل الجديد</h3><p>شفت كل حاجة النهارده. تعالى بكرة 👋</p></div></div>`,
+  video: `${VH}<div class="vw"><h2 style="font-family:system-ui,Tahoma;font-size:22px;font-weight:900;line-height:1.4;margin:14px 0 6px">10 أكلات بتاكلها غلط</h2><div style="font-size:12px;color:#888">⏱ 3 دقايق · القايمة كلها في صفحة واحدة</div>
+    <div class="vid"><span class="tag">إعلان</span><div class="play">▶</div><div class="cap"><span>VoltUp · 15 ث</span><span>دوس عشان يشتغل</span></div></div>
+    <div style="font-size:16px;line-height:1.9"><b>1. المانجا</b> — قشّرها بالكوباية بدل السكينة.<br><b>2. الرمان</b> — اخبطه بالمعلقة من ضهره.<br><b>3. البطيخ</b> — قطّعه صوابع بدل الشرايح.<br><b>4. التوم</b> — اهرسه قبل الطبيخ بعشر دقايق.<br><b>5. الخيار</b> — ماتقشروش كله.<br><b>6. البيض</b> — حطه بعيد عن باب التلاجة.<br><b>7. الموز</b> — افتحه من تحت.</div></div>`,
+  paywall: `${LH}<div class="wrap" style="padding-top:14px"><h2>هل الذكاء الاصطناعي بيغيّر طريقة قرايتنا للأخبار؟</h2><p class="t" style="color:#666">بدأت مؤسسات إعلامية عديدة في تقديم ملخصات قصيرة للمقالات يكتبها الذكاء الاصطناعي…</p>
+    <div class="pay ui"><h3>كمّل قراية مع الاشتراك</h3><div class="pr"><b>299</b><span>جنيه في الشهر</span></div><ul><li>نفس السعر كل شهر</li><li>إلغاء بدوسة واحدة من حسابك</li><li>3 مقالات ببلاش كل شهر</li></ul><div class="row2"><div class="b o">مش دلوقتي</div><div class="b p">اشترك</div></div></div></div>`,
+};
+document.getElementById('s').innerHTML = S[s] || '';
+</script>
+</body></html>

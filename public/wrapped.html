@@ -1,0 +1,110 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Your News Wrapped</title><link rel="stylesheet" href="/css/lab.css">
+<style>
+body{overflow:hidden}
+.prog{position:fixed;top:calc(10px + env(safe-area-inset-top));left:10px;right:10px;display:flex;gap:4px;z-index:5}.prog i{flex:1;height:4px;border-radius:4px;background:#ffffff33;overflow:hidden}.prog i b{display:block;height:100%;width:0;background:#fff}
+.prog i.done b{width:100%}.prog i.on b{animation:fill 7s linear forwards}@keyframes fill{to{width:100%}}
+.st{position:fixed;inset:0;display:none;flex-direction:column;justify-content:center;padding:60px 26px 40px;max-width:520px;margin:0 auto}
+.st.on{display:flex}
+.st .k{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#d8b4fe;margin-bottom:10px;opacity:0;animation:in .6s .1s forwards}
+.st h2{font-size:34px;line-height:1.15;margin:0 0 18px;font-weight:800;opacity:0;animation:in .7s .25s forwards}[dir=rtl] .st h2{line-height:1.45}
+.st .num{font-size:96px;font-weight:800;line-height:1;opacity:0;animation:pop .8s .5s cubic-bezier(.2,1.6,.4,1) forwards}
+.st .row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #ffffff22;font-size:17px;opacity:0;animation:in .5s forwards}
+.st .row b{font-size:22px}
+.st .p{font-size:18px;line-height:1.6;color:#e9defc;opacity:0;animation:in .6s .6s forwards}
+@keyframes in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.3) rotate(-10deg)}to{opacity:1;transform:none}}
+.bg1{background:linear-gradient(160deg,#4c1d95,#0d0717)}.bg2{background:linear-gradient(160deg,#9d174d,#1e0b2e)}.bg3{background:linear-gradient(160deg,#065f46,#0d0717)}.bg4{background:linear-gradient(160deg,#b45309,#1e0b2e)}.bg5{background:linear-gradient(160deg,#1e3a8a,#0d0717)}.bg6{background:linear-gradient(160deg,#be123c,#3b0764)}.bg7{background:conic-gradient(from 200deg at 50% 40%,#7c3aed,#db2777,#f59e0b,#7c3aed)}.bg8{background:#0a0a0a}
+.ring{width:170px;height:170px;margin:6px 0 20px;opacity:0;animation:pop .8s .4s forwards}
+.emoji{font-size:130px;line-height:1;opacity:0;animation:spin 1.2s .3s cubic-bezier(.2,1.4,.4,1) forwards}@keyframes spin{from{opacity:0;transform:scale(0) rotate(-540deg)}to{opacity:1;transform:none}}
+.pname{font-size:40px;font-weight:800;line-height:1.1;margin:16px 0 8px;opacity:0;animation:in .7s 1.2s forwards;text-shadow:0 4px 30px #0006}
+.chip{display:inline-block;background:#fff;color:#111;border-radius:99px;padding:8px 14px;margin:4px;font-weight:700;font-size:15px;opacity:0;animation:pop .5s forwards}
+.term{font-family:ui-monospace,Menlo,monospace;color:#4ade80;font-size:14px;line-height:1.8;direction:ltr;text-align:left;background:#111;border:1px solid #222;border-radius:12px;padding:14px;opacity:0;animation:in .6s .4s forwards}
+.tapnote{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;font-size:12px;color:#ffffff88}
+.nav{position:fixed;top:0;bottom:0;z-index:4}.nav.l{left:0;width:30%}.nav.r{right:0;width:70%}
+</style></head>
+<body data-site=""><div class="bg"></div>
+<div class="prog" id="prog"></div>
+<div id="stories"></div>
+<div class="nav l" id="nl"></div><div class="nav r" id="nr"></div>
+<div class="tapnote" id="tn"></div>
+<div class="screen" id="load" style="text-align:center"><div class="pulse">✨</div><h1 id="lt"></h1></div>
+<script src="/js/lab.js"></script>
+<script>
+const L = Lab.L, ar = Lab.lang === 'ar', tx = (a, e) => ar ? a : e;
+document.getElementById('lt').textContent = tx('بنحلل تصفحك…', 'Analysing your browsing…');
+document.getElementById('tn').textContent = tx('دوس عشان تكمّل', 'Tap to continue');
+const SITE = { alkhabar: tx('الخبر الآن', 'Al-Khabar Now'), ledger: tx('ذا جلوبال ليدجر', 'The Global Ledger'), viralvault: tx('فايرال فولت', 'ViralVault') };
+const CAT = { sports: tx('رياضة', 'Sports'), celeb: tx('مشاهير', 'Celebrities'), economy: tx('اقتصاد ومال', 'Money'), health: tx('صحة', 'Health'), tech: tx('تكنولوجيا', 'Tech'), food: tx('أكل', 'Food'), crypto: tx('فلوس سريعة', 'Get-rich-quick'), education: tx('تعليم', 'Education'), local: tx('أخبار محلية', 'Local news'), climate: tx('بيئة', 'Climate'), culture: tx('ثقافة', 'Culture'), opinion: tx('رأي', 'Opinion') };
+const TAG = {
+  impulsive: tx('بيدوس على طول على العناوين المثيرة', 'Impulsive clicker on sensational headlines'),
+  lowPrivacy: tx('مش فارقة معاه الخصوصية', 'Low privacy concern'),
+  privacyAware: tx('واعي بالخصوصية — صعب نستهدفه', 'Privacy-aware — hard to target'),
+  adResponsive: tx('بيتفاعل مع الإعلانات', 'Responds to ads'),
+  promoSusceptible: tx('بيصدّق عروض "اكسب دلوقتي"', 'Susceptible to “win now” promos'),
+  shortAttention: tx('تركيزه قصير — محتاج رسايل سريعة', 'Short attention span — needs quick messages'),
+  engagedReader: tx('قارئ متفاعل — ينفع معاه المحتوى الطويل', 'Engaged reader — good for long-form'),
+  reachable: tx('نقدر نوصله بالإشعارات/الإيميل', 'Reachable by push/email'),
+  frustrated: tx('باين عليه إنه متضايق', 'Shows signs of frustration'),
+  payer: tx('مستعد يدفع', 'Willing to pay'),
+};
+const fmt = (ms) => ms == null ? '—' : (ms / 1000).toFixed(1) + tx('ث', 's');
+fetch('/api/me/' + Lab.sid).then(r => r.json()).then(({ me, class: cl }) => build(me, cl)).catch(() => { document.getElementById('lt').textContent = '…'; });
+
+function build(m, cl) {
+  document.getElementById('load').remove();
+  const S = [];
+  const row = (a, b, d) => `<div class="row" style="animation-delay:${d}s"><span>${a}</span><b>${b}</b></div>`;
+  const nm = { alkhabar: tx('نتيجة الماتش', 'Match score'), ledger: tx('قفل التنبيهات', 'Turn off alerts'), viralvault: tx('الأكلة رقم 7', 'Food #7') };
+  const tk = (t) => !t ? '—' : t.gaveUp ? tx('سبتها 🏳️', 'Gave up 🏳️') : (t.ok ? '✅ ' : '❌ ') + fmt(t.ms) + ' · ' + t.steps + tx(' دوسة', ' taps');
+  // 1 intro
+  S.push(['bg1', `<div class="k">${tx('تقريرك الشخصي', 'Your personal report')}</div><h2>${tx('ده اللي عملته في', 'Here’s what you did in')} <span class="grad">${(() => { const n = Math.max(1, Math.round(m.timeS / 60)); return n + ' ' + (ar ? (n >= 3 && n <= 10 ? 'دقايق' : 'دقيقة') : (n === 1 ? 'minute' : 'minutes')); })()}</span> ${tx('من تصفح الأخبار', 'of browsing the news')}</h2>
+    ${row(tx('دوسات', 'Taps'), m.taps, .7)}${row(tx('مقالات فتحتها', 'Articles opened'), m.reading.opened, .85)}${row(tx('نوافذ وإعلانات قاطعتك', 'Pop-ups & ads that interrupted you'), m.adsSeen, 1)}<p class="p" style="margin-top:20px">${tx('وكل دوسة فيهم اتسجلت. 👀', 'And every single tap was recorded. 👀')}</p>`]);
+  // 2 tasks
+  S.push(['bg3', `<div class="k">${tx('المهام', 'Tasks')}</div><h2>${tx('خلّصت', 'You completed')}</h2><div class="num">${m.taskSuccess ?? 0}%</div><p class="p">${tx('من المهام', 'of the tasks')}${m.fasterThan != null ? ' · ' + tx(`أسرع من ${m.fasterThan}% من المدرج`, `faster than ${m.fasterThan}% of the room`) : ''}</p>
+    ${row(nm.alkhabar, tk(m.task.alkhabar), 1)}${row(nm.ledger, tk(m.task.ledger), 1.15)}${row(nm.viralvault, tk(m.task.viralvault), 1.3)}`]);
+  // 3 time lost
+  S.push(['bg2', `<div class="k">${tx('الوقت اللي ضاع', 'Time lost')}</div><h2>${tx('النوافذ والإعلانات خدت منك', 'Pop-ups and ads took')}</h2><div class="num">${m.lostTotalS || 0}${tx('ث', 's')}</div>
+    <p class="p">${tx('متوسط المدرج:', 'Room average:')} ${cl.lostAvg || 0}${tx('ث', 's')}</p>
+    ${row(SITE.alkhabar, (m.lostS.alkhabar || 0) + tx('ث', 's'), 1)}${row(SITE.ledger, (m.lostS.ledger || 0) + tx('ث', 's'), 1.15)}${row(SITE.viralvault, (m.lostS.viralvault || 0) + tx('ث', 's'), 1.3)}`]);
+  // 4 errors
+  S.push(['bg4', `<div class="k">${tx('الأخطاء', 'Errors')}</div><h2>${tx('دوست بعصبية', 'You rage-tapped')}</h2><div class="num">${m.rage}×</div>
+    ${row(tx('دوسات على حاجات مش بتتداس', 'Taps on things that aren’t buttons'), m.deadTaps, .9)}${row(tx('دوسات بالغلط على إعلانات', 'Accidental taps on ads'), m.adTaps, 1.05)}
+    ${row(tx('وقت قفل إعلان الشاشة الكاملة', 'Time to close the full-screen ad'), fmt(m.interstitialMs), 1.2)}${row(tx('جايزة الآيفون الفيك', 'Fake iPhone prize'), m.scam === 'claim' ? tx('دوست عليها 😬', 'Tapped it 😬') : m.scam ? tx('قفلتها 👏', 'Closed it 👏') : '—', 1.35)}`]);
+  // 5 reading
+  const d = m.reading.avgDepth, circ = 2 * Math.PI * 70;
+  S.push(['bg5', `<div class="k">${tx('القراية', 'Reading')}</div><h2>${tx('في المتوسط قريت', 'On average you read')}</h2>
+    <svg class="ring" viewBox="0 0 170 170"><circle cx="85" cy="85" r="70" stroke="#ffffff22" stroke-width="16" fill="none"/><circle cx="85" cy="85" r="70" stroke="url(#gr)" stroke-width="16" fill="none" stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${circ}" transform="rotate(-90 85 85)"><animate attributeName="stroke-dashoffset" from="${circ}" to="${circ * (1 - d / 100)}" dur="1.6s" begin=".6s" fill="freeze"/></circle><defs><linearGradient id="gr"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#f472b6"/></linearGradient></defs><text x="85" y="98" text-anchor="middle" fill="#fff" font-size="40" font-weight="800">${d}%</text></svg>
+    ${row(tx('قريته بجد', 'Actually read'), m.reading.read, 1.05)}${row(tx('عدّيت عليه بسرعة', 'Skimmed'), m.reading.skimmed, 1.2)}${m.feedItems ? row(tx('بوستات في السكرول اللي مالوش آخر', 'Infinite-feed posts scrolled'), m.feedItems, 1.35) : ''}`]);
+  // 6 say vs do
+  S.push(['bg6', `<div class="k">${tx('قلت وعملت', 'Said vs did')}</div><h2>${tx('قلت إن المواقع كانت سهلة', 'You said the sites were easy')}</h2>
+    ${['alkhabar', 'ledger', 'viralvault'].map((k, i) => row(SITE[k], (m.sites[k].mood ?? '—') + '/7', .7 + i * .15)).join('')}
+    ${m.contradiction ? `<p class="p">${tx(`قلت إن "${SITE[m.contradiction.site]}" سهل ${m.contradiction.mood}/7… بس تصرفاتك قالت حاجة تانية 🤔`, `You rated “${SITE[m.contradiction.site]}” ${m.contradiction.mood}/7 easy… but your behaviour said otherwise 🤔`)}</p>` : `<p class="p">${tx('وكلامك وتصرفاتك كانوا متفقين 👌', 'Your words and actions matched 👌')}</p>`}`]);
+  // 7 persona
+  S.push(['bg7', `<div style="text-align:center"><div class="k" style="color:#fff">${tx('شخصيتك كمستخدم', 'Your user persona')}</div><div class="emoji">${m.persona.emoji}</div><div class="pname">${L(m.persona)}</div>
+    ${m.persona2 ? `<p class="p" style="color:#fff">${tx('ومعاها شوية', 'with a touch of')} ${m.persona2.emoji} ${L(m.persona2)}</p>` : ''}
+    <p class="p" style="color:#fff;opacity:.85">${cl.personas[m.persona.id] > 1 ? tx(`إنت و${cl.personas[m.persona.id] - 1} كمان في المدرج`, `You and ${cl.personas[m.persona.id] - 1} others in the room`) : tx('إنت الوحيد في المدرج!', 'The only one in the room!')}</p></div>`]);
+  // 8 report card
+  S.push(['bg8', `<div class="k" style="color:#4ade80">${tx('تقرير سهولة الاستخدام بتاعك', 'Your ease-of-use report')}</div>
+    <div class="term">&gt; usability_report("${m.name}")<br><span dir="auto">✓ ${tx('نجاح المهام', 'task success')}: ${m.taskSuccess ?? 0}%</span><br><span dir="auto">✓ ${tx('دوسات للمهمة', 'taps per task')}: ${m.taskAvgSteps ?? '—'}</span><br><span dir="auto">✓ ${tx('وقت ضاع', 'time lost')}: ${m.lostTotalS || 0}${tx('ث', 's')}</span><br><span dir="auto">✓ ${tx('السهولة اللي قلتها', 'ease you reported')}: ${m.seqAvg ?? '—'}/7</span><br>&gt; status: <span style="color:#f472b6">${(m.lostTotalS || 0) > 20 || (m.taskSuccess ?? 0) < 67 ? 'NEEDS_BETTER_DESIGN' : 'SMOOTH'}</span></div>
+    <p class="p" style="margin-top:22px">${tx(`تصميم أسهل كان هيوفّرلك ${m.lostTotalS || 0} ثانية النهارده. تخيّل في السنة كلها.`, `A simpler design would have saved you ${m.lostTotalS || 0} seconds today. Imagine a whole year.`)}</p>`]);
+
+  const box = document.getElementById('stories'), prog = document.getElementById('prog');
+  box.innerHTML = S.map(([bg, h], i) => `<section class="st ${bg}" data-i="${i}"><div>${h}</div></section>`).join('');
+  prog.innerHTML = S.map(() => '<i><b></b></i>').join('');
+  let cur = -1, tmr;
+  const go = (i) => {
+    i = Math.max(0, Math.min(S.length - 1, i)); if (i === cur) return; cur = i;
+    box.querySelectorAll('.st').forEach((s, k) => { s.classList.toggle('on', k === i); if (k === i) { const c = s.cloneNode(true); s.replaceWith(c); } });
+    prog.querySelectorAll('i').forEach((p, k) => { p.className = k < i ? 'done' : k === i ? 'on' : ''; if (k === i) { const n = p.cloneNode(true); p.replaceWith(n); } });
+    clearTimeout(tmr); if (i < S.length - 1) tmr = setTimeout(() => go(cur + 1), 7000);
+    Lab.log('wrapped', { screen: i });
+  };
+  const fwd = 'nr', back = 'nl';
+  document.getElementById(fwd).onclick = () => go(cur + 1); document.getElementById(back).onclick = () => go(cur - 1);
+  document.querySelector('.tapnote').onclick = () => go(cur + 1);
+  go(0);
+}
+</script>
+</body></html>

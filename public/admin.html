@@ -1,0 +1,72 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>News UX Lab — Instructor</title><link rel="stylesheet" href="/css/lab.css">
+<style>
+body{font-family:"Space Grotesk",system-ui,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+.card{background:#160d26;border:1px solid #2a1d44;border-radius:18px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:15px;color:#b9acd6;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.stages button,.act button{padding:14px 10px;border-radius:14px;border:2px solid #2a1d44;background:#1f1433;color:#fff;font-weight:700;font-size:15px;font-family:inherit;cursor:pointer}
+.stages button.cur{border-color:#a855f7;background:#4c1d95}
+.stages button small{display:block;font-weight:500;color:#b9acd6;font-size:11px;margin-top:3px}
+.act{display:grid;grid-template-columns:1fr 1fr auto;gap:8px}.act button.p{background:linear-gradient(135deg,#7c3aed,#db2777);border:0}
+.top{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.qr{background:#fff;border-radius:14px;padding:8px;width:150px;height:150px}.qr svg{width:100%;height:100%}
+.stat{font-size:42px;font-weight:700;line-height:1}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:7px 5px;border-bottom:1px solid #2a1d44;text-align:start}th{color:#b9acd6;font-weight:500}
+a{color:#f0abfc}.small{font-size:12px;color:#b9acd6}
+.danger{background:#3b0a14!important;border-color:#7f1d1d!important}
+.flow{font-size:13px;color:#b9acd6;line-height:1.7}
+</style></head>
+<body><div class="bg"></div>
+<div class="wrap">
+  <h1 style="font-size:28px">🎛 <span class="grad">Instructor panel</span></h1>
+  <div class="card top">
+    <div class="qr" id="qr"></div>
+    <div style="flex:1;min-width:200px"><div class="stat"><span id="joined">0</span> <span style="font-size:16px;color:#b9acd6">joined · <span id="online">0</span> online now</span></div>
+      <div class="small" style="margin-top:6px">Students open: <b id="url"></b></div>
+      <div class="small" style="margin-top:6px">📽 Projector: <a id="liveLink" target="_blank">open live dashboard</a> (keys: ← → scenes · C controls · L language · F flip cards · ↓ next student)</div></div>
+  </div>
+  <div class="card"><h2>1 · Stage (moves all phones)</h2><div class="stages" id="stages"></div></div>
+  <div class="card"><h2>2 · Activities for the current site</h2>
+    <div class="act"><button class="p" id="task">🎯 Push mission</button><button class="p" id="check">⚡ Push quick check<br><small style="font-weight:500">mood + ad recall</small></button><button id="clear">✕ Clear</button></div>
+    <div class="flow" style="margin-top:10px" id="hint"></div></div>
+  <div class="card"><h2>Students</h2><div style="overflow:auto"><table id="tbl"></table></div></div>
+  <div class="card"><h2>Data</h2><div class="act" style="grid-template-columns:1fr 1fr"><button id="exp">⬇️ Export JSON</button><button class="danger" id="reset">🗑 Delete all data &amp; reset</button></div></div>
+  <div class="card flow"><h2>Suggested run (≈15–18 min)</h2>
+    Lobby (students scan &amp; join) → <b>Al-Khabar Now</b> 3 min → 🎯 mission (match score) → ⚡ quick check → <b>The Global Ledger</b> 3 min → 🎯 mission (escape the alerts trap) → ⚡ quick check → <b>ViralVault</b> 3 min → 🎯 mission (food #7) → ⚡ quick check → <b>Spot the ad</b> → <b>Reveal</b> (phones show Wrapped, projector shows the analysis).</div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const KEY = new URLSearchParams(location.search).get('key') || '';
+const $ = (s) => document.querySelector(s);
+const STAGES = [['lobby', 'Lobby', 'waiting screen'], ['alkhabar', 'Al-Khabar Now', 'busy local portal'], ['ledger', 'The Global Ledger', 'paywall broadsheet'], ['viralvault', 'ViralVault', 'clickbait site'], ['spot', 'Spot the ad', 'mini game'], ['wrapped', 'Reveal ✨', 'personal Wrapped']];
+const HINT = { alkhabar: 'Mission: find the final match score (hidden on page 3 of a split article, behind ads + a fake prize popup).', ledger: 'Mission: turn off breaking-news alerts (☰ → My account → Preferences → bottom → confirmshaming → survey).', viralvault: 'Mission: find food #7 in the paginated listicle (pre-roll video ad + ads between items).', lobby: 'Wait until everyone has joined, then move to Al-Khabar Now.', spot: 'Students tap the posts they think are ads.', wrapped: 'Phones show personal stories. Use the projector scenes to walk through the analysis.' };
+let state = {};
+$('#liveLink').href = '/live?key=' + encodeURIComponent(KEY);
+const socket = io();
+socket.on('connect', () => socket.emit('hello', { role: 'admin', key: KEY }));
+socket.on('denied', () => document.body.innerHTML = '<h1 style="padding:30px">🔒 Wrong or missing ?key=</h1>');
+socket.on('state', (s) => { state = s; render(); });
+socket.on('online', (n) => $('#online').textContent = n);
+socket.on('analysis', (a) => {
+  $('#joined').textContent = a.joined;
+  $('#tbl').innerHTML = '<tr><th>Name</th><th>Lang</th><th>Time</th><th>Taps</th><th>Persona</th><th></th></tr>' + a.students.map(s => `<tr><td>${s.name.replace(/</g, '&lt;')}</td><td>${s.lang}</td><td>${Math.round(s.timeS / 60 * 10) / 10}m</td><td>${s.taps}</td><td>${s.persona.emoji} ${s.persona.en}</td><td><a href="#" data-k="${s.sid}">remove</a></td></tr>`).join('');
+  document.querySelectorAll('[data-k]').forEach(a => a.onclick = (e) => { e.preventDefault(); if (confirm('Remove this student and their data?')) socket.emit('kick', a.dataset.k); });
+});
+function render() {
+  $('#stages').innerHTML = STAGES.map(([k, l, d]) => `<button class="${state.stage === k ? 'cur' : ''}" data-s="${k}">${l}<small>${d}</small></button>`).join('');
+  document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => socket.emit('setStage', b.dataset.s));
+  const site = ['alkhabar', 'ledger', 'viralvault'].includes(state.stage);
+  $('#task').disabled = $('#check').disabled = !site; $('#task').style.opacity = $('#check').style.opacity = site ? 1 : .35;
+  $('#hint').textContent = (HINT[state.stage] || '') + (state.overlay ? `  ·  Active now: ${state.overlay.type === 'task' ? '🎯 mission' : '⚡ quick check'}` : '');
+}
+$('#task').onclick = () => socket.emit('pushOverlay', 'task');
+$('#check').onclick = () => socket.emit('pushOverlay', 'check');
+$('#clear').onclick = () => socket.emit('clearOverlay');
+$('#reset').onclick = () => { if (confirm('Delete ALL students and data? This cannot be undone.')) socket.emit('reset'); };
+$('#exp').onclick = () => location.href = '/api/export?key=' + encodeURIComponent(KEY);
+fetch('/api/qr').then(r => r.json()).then(j => { $('#qr').innerHTML = j.svg; $('#url').textContent = j.url; });
+</script>
+</body></html>

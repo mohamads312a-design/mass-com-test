@@ -1,0 +1,243 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Al-Khabar Now</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Cairo,Tahoma,"Segoe UI",system-ui,sans-serif;background:#f1f1f1;color:#1b1b1b;-webkit-tap-highlight-color:rgba(0,0,0,.05)}
+a{color:inherit;text-decoration:none}img{display:block;width:100%}
+.top{background:#b3001b;color:#fff;position:sticky;top:0;z-index:50;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.top .row{display:flex;align-items:center;justify-content:space-between;padding:8px 12px}
+.logo{font-weight:900;font-size:24px;letter-spacing:-.5px;display:flex;align-items:center;gap:6px}
+.logo b{background:#fff;color:#b3001b;border-radius:6px;padding:0 6px;font-size:20px}
+.ic{width:34px;height:34px;display:grid;place-items:center;font-size:20px;border-radius:50%}
+.nav{display:flex;gap:16px;overflow-x:auto;padding:7px 12px;background:#8c0015;font-size:14px;font-weight:600;white-space:nowrap;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}
+.nav span.on{border-bottom:3px solid #ffd400;padding-bottom:2px}
+.tick{display:flex;background:#fff;border-bottom:1px solid #ddd;font-size:13px;overflow:hidden;align-items:stretch}
+.tick b{background:#ffd400;color:#000;padding:6px 10px;white-space:nowrap;z-index:2}
+.tick .mv{white-space:nowrap;padding:6px 0;animation:mv 28s linear infinite;display:inline-block}
+[dir=rtl] .tick .mv{animation-name:mvr}
+@keyframes mv{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}@keyframes mvr{from{transform:translateX(-100vw)}to{transform:translateX(100%)}}
+.wrap{padding:10px 10px 120px}
+.hero{background:#fff;border-radius:6px;overflow:hidden;margin-bottom:10px;position:relative}
+.hero .cap{position:absolute;inset:auto 0 0 0;padding:40px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font-weight:700;font-size:19px;line-height:1.45}
+.tag{display:inline-block;background:#b3001b;color:#fff;font-size:11px;padding:1px 7px;border-radius:3px;margin-bottom:4px}
+.card{display:flex;gap:10px;background:#fff;border-radius:6px;padding:8px;margin-bottom:8px;align-items:flex-start}
+.card img{width:118px;height:78px;border-radius:4px;object-fit:cover;flex:none}
+.card h3{font-size:15px;line-height:1.5;margin:0;font-weight:700}
+.meta{font-size:11px;color:#888;margin-top:4px}
+.sec-h{display:flex;align-items:center;gap:8px;margin:16px 0 8px;font-weight:900;font-size:17px}.sec-h:before{content:"";width:5px;height:20px;background:#b3001b;border-radius:3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid2 .g{background:#fff;border-radius:6px;overflow:hidden}.grid2 .g img{height:96px;object-fit:cover}.grid2 .g h3{font-size:13px;padding:6px 8px 8px;margin:0;line-height:1.5}
+.most{background:#fff;border-radius:6px;padding:4px 10px}.most a{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #eee;font-size:14px;font-weight:600;line-height:1.5}.most a:last-child{border:0}.most i{font-style:normal;color:#b3001b;font-size:22px;font-weight:900;min-width:20px}
+/* ads */
+.ad{position:relative;margin:12px 0;border-radius:4px;overflow:hidden}
+.ad .lbl{position:absolute;top:0;inset-inline-end:0;background:rgba(255,255,255,.85);color:#555;font:10px Arial;padding:1px 4px;display:flex;gap:3px;align-items:center;z-index:2;direction:ltr}
+.ad .lbl:before{content:"▷";color:#00aecd;font-size:9px}
+.adlab{font-size:10px;color:#999;text-align:center;margin-top:12px}
+.ad-compound{background:linear-gradient(135deg,#0d3b2e,#14614a);color:#fff;padding:16px;display:flex;flex-direction:column;gap:6px;min-height:150px}
+.ad-compound .big{font-size:24px;font-weight:900;color:#f5d27a;line-height:1.2}.ad-compound .cta{align-self:flex-start;background:#f5d27a;color:#0d3b2e;font-weight:900;padding:6px 14px;border-radius:99px;margin-top:4px}
+.ad-food{background:#ff5a1f;color:#fff;padding:14px;display:flex;align-items:center;gap:12px}.ad-food .p{font-size:40px;font-weight:900;line-height:1}.ad-food .t{font-weight:700;line-height:1.4}
+.ad-bank{background:#fff;border:1px solid #ddd;padding:12px;display:flex;align-items:center;gap:10px}.ad-bank .lg{width:44px;height:44px;border-radius:10px;background:#0b4ea2;color:#fff;font-weight:900;display:grid;place-items:center;font-size:20px}.ad-bank .t{flex:1;font-size:13px;line-height:1.5}.ad-bank .t b{display:block;font-size:15px}.ad-bank .cta{background:#0b4ea2;color:#fff;padding:7px 12px;border-radius:6px;font-weight:700;font-size:13px}
+.ad-mpu{height:250px;background:radial-gradient(circle at 30% 20%,#ff7ab6,#7b2ff7 60%,#2a0a5e);color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:6px;padding:16px}
+.ad-mpu .big{font-size:30px;font-weight:900;line-height:1.2}.ad-mpu .cta{background:#fff;color:#7b2ff7;padding:8px 18px;border-radius:99px;font-weight:900}
+/* sticky banner */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:60;background:linear-gradient(90deg,#4a00e0,#8e2de2);color:#fff;display:flex;align-items:center;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -4px 12px rgba(0,0,0,.25);transition:transform .4s}
+.sticky.hide{transform:translateY(110%)}.sticky .t{flex:1;font-weight:700;font-size:14px;line-height:1.35}.sticky .t span{color:#ffd400;font-size:18px;font-weight:900}
+.sticky .cta{background:#ffd400;color:#2a0060;font-weight:900;padding:6px 12px;border-radius:6px;font-size:13px}
+.sticky .x{position:absolute;top:-14px;inset-inline-start:6px;width:18px;height:18px;border-radius:50%;background:#fff;color:#555;font:12px/18px Arial;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+/* interstitial */
+.inter{position:fixed;inset:0;z-index:100;background:#0d3b2e;color:#fff;display:flex;flex-direction:column}
+.inter .skip{position:absolute;top:calc(10px + env(safe-area-inset-top));inset-inline-end:10px;font:12px Arial;background:rgba(0,0,0,.45);padding:6px 10px;border-radius:99px;z-index:3;direction:ltr}
+.inter .xx{position:absolute;top:calc(8px + env(safe-area-inset-top));inset-inline-end:8px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.25);color:#fff;font:14px/22px Arial;text-align:center;z-index:3}
+.inter .body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px;gap:14px;background:radial-gradient(circle at 70% 25%,rgba(245,210,122,.35),transparent 50%),linear-gradient(160deg,#0d3b2e,#1c7c5e)}
+.inter .brand{font-weight:900;letter-spacing:2px;color:#f5d27a;font-size:14px}
+.inter h2{font-size:38px;line-height:1.15;margin:0;font-weight:900}.inter h2 span{color:#f5d27a}
+.inter .villa{height:170px;border-radius:14px;background:linear-gradient(#87ceeb,#d6f0ff 60%,#3c9a5f 60%);position:relative;overflow:hidden}
+.inter .villa:before{content:"";position:absolute;left:18%;right:18%;bottom:40%;height:42%;background:#fff;box-shadow:inset 0 -14px 0 #e8e1d3;clip-path:polygon(0 30%,50% 0,100% 30%,100% 100%,0 100%)}
+.inter .villa:after{content:"";position:absolute;left:28%;bottom:40%;width:12%;height:16%;background:#4a90c2;box-shadow:120px 0 0 #4a90c2,60px -30px 0 #4a90c2}
+.inter .cta{background:#f5d27a;color:#0d3b2e;text-align:center;font-weight:900;font-size:20px;padding:14px;border-radius:12px}
+.inter .fine{font-size:11px;opacity:.7;text-align:center}
+/* cookie */
+.cookie{position:fixed;left:0;right:0;bottom:0;z-index:90;background:#fff;box-shadow:0 -6px 20px rgba(0,0,0,.25);padding:14px 14px calc(14px + env(safe-area-inset-bottom));font-size:13px;line-height:1.6}
+.cookie .btns{display:flex;gap:8px;margin-top:10px;align-items:center}.cookie .ok{flex:1;background:#b3001b;color:#fff;border:0;padding:12px;border-radius:6px;font-weight:900;font-size:16px;font-family:inherit}
+.cookie .set{background:none;border:0;color:#888;font-size:12px;text-decoration:underline;font-family:inherit}
+.cookie .opts{margin-top:8px;border-top:1px solid #eee;padding-top:8px}.cookie .opts label{display:flex;justify-content:space-between;padding:6px 0}
+.cookie .rej{background:none;border:1px solid #ccc;color:#555;padding:9px;border-radius:6px;font-family:inherit;font-size:13px;width:100%;margin-top:6px}
+/* scam */
+.scam{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;padding:20px}
+.scam .box{background:#fff;border-radius:16px;overflow:hidden;width:100%;max-width:360px;position:relative;text-align:center}
+.scam .hd{background:linear-gradient(135deg,#ffcc00,#ff8800);padding:20px 16px;font-weight:900;font-size:24px;line-height:1.3}
+.scam .ph{font-size:70px;margin:10px 0}.scam p{margin:0 16px 10px;font-size:14px}.scam .claim{display:block;margin:12px 16px 16px;background:#16a34a;color:#fff;padding:14px;border-radius:10px;font-weight:900;font-size:18px;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.04)}}.scam .x{position:absolute;top:4px;inset-inline-end:6px;color:rgba(0,0,0,.35);font:13px Arial;padding:4px}
+.scam .timer{color:#dc2626;font-weight:900}
+/* article */
+.art{background:#fff;border-radius:6px;padding:12px}.art h1{font-size:22px;line-height:1.5;margin:6px 0 8px}.art .by{font-size:12px;color:#777;display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:8px}
+.art p{font-size:17px;line-height:1.95;margin:14px 0}
+.share{display:flex;gap:6px;margin:10px 0}.share span{flex:1;text-align:center;color:#fff;padding:7px 0;border-radius:4px;font-size:13px;font-weight:700}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:16px 0}.pager .nx{flex:1;background:#b3001b;color:#fff;text-align:center;padding:13px;border-radius:6px;font-weight:900;font-size:16px}
+.pager .pv{padding:13px 16px;background:#eee;border-radius:6px;font-weight:700}
+.pg{font-size:12px;color:#888;text-align:center}
+.rel h4{margin:16px 0 8px}
+.foot{background:#222;color:#aaa;font-size:12px;padding:20px 14px 100px;text-align:center;line-height:1.8}
+.foot .sim{color:#ffd400}
+.views{color:#b3001b;font-weight:700}
+</style></head>
+<body data-site="alkhabar">
+<header class="top">
+  <div class="row"><span class="ic" data-t="menu">☰</span><div class="logo" id="logo"></div><span class="ic" data-t="search">🔍</span></div>
+  <nav class="nav" id="nav"></nav>
+</header>
+<div class="tick"><b id="tickL"></b><div style="overflow:hidden;flex:1"><span class="mv" id="tick"></span></div></div>
+<main class="wrap" id="app"></main>
+<footer class="foot" id="foot"></footer>
+<div class="sticky hide" id="sticky" data-t="ad-sticky"></div>
+
+<script src="/js/content.js"></script>
+<script src="/js/lab.js"></script>
+<script>
+(function(){
+const C = CONTENT, S = C.alkhabar, lang = Lab.lang, L = Lab.L, ar = lang === 'ar';
+const $ = (s) => document.querySelector(s);
+window.MISSION = { task: S.task, check: S.recall };
+const tx = (a, e) => ar ? a : e;
+
+$('#logo').innerHTML = ar ? '<b>الخبر</b> الآن' : '<b>Al-Khabar</b> Now';
+$('#nav').innerHTML = L(S.sections).map((s, i) => `<span data-t="nav" class="${i ? '' : 'on'}">${s}</span>`).join('');
+$('#tickL').textContent = tx('عاجل', 'BREAKING');
+$('#tick').textContent = L(S.ticker).join('   ●   ');
+$('#foot').innerHTML = `${tx('كل الحقوق محفوظة © الخبر الآن 2026', '© 2026 Al-Khabar Now. All rights reserved')}<br>${tx('احنا مين · كلمنا · سياسة الخصوصية · اعلن معانا', 'About · Contact · Privacy policy · Advertise')}<br><span class="sim">${tx('محاكاة تعليمية — كل الأخبار والإعلانات من خيالنا', 'Classroom simulation — all news and ads are fictional')}</span>`;
+
+const byId = Object.fromEntries(S.items.map(i => [i.id, i]));
+const words = (arr) => arr.join(' ').split(/\s+/).length;
+
+// ---------- ads ----------
+let adN = 0;
+const AD = {
+  compound: () => `<div class="ad ad-compound" data-ad="k-compound-${adN++}" data-t="ad"><span class="lbl">Ad</span><div style="font-size:12px;letter-spacing:2px;color:#f5d27a">NILE GARDENS</div><div class="big">${tx('مقدم 5% وقسّط على 10 سنين', '5% down, 10 years to pay')}</div><div>${tx('فيلات وتاون هاوس جنب العاصمة الجديدة', 'Villas & townhouses near the New Capital')}</div><span class="cta">${tx('احجز دلوقتي', 'Book now')}</span></div>`,
+  food: () => `<div class="ad ad-food" data-ad="k-food-${adN++}" data-t="ad"><span class="lbl">Ad</span><div class="p">50%</div><div class="t">${tx('خصم على أول 3 أوردرات من أكلة<br><small>استخدم كود: YUMMY</small>', 'off your first 3 orders on Akla<br><small>Use code: YUMMY</small>')}</div></div>`,
+  bank: () => `<div class="ad ad-bank" data-ad="k-bank-${adN++}" data-t="ad"><span class="lbl">Ad</span><div class="lg">F</div><div class="t"><b>${tx('كارت فيوتشر للطلبة', 'Future Student Card')}</b>${tx('من غير مصاريف إصدار أول سنة', 'No issue fees for the first year')}</div><span class="cta">${tx('اطلبها', 'Apply')}</span></div>`,
+  mpu: () => `<div class="ad ad-mpu" data-ad="k-mpu-${adN++}" data-t="ad"><span class="lbl">Ad</span><div style="font-size:13px;letter-spacing:3px">NILETEL</div><div class="big">${tx('50 جيجا<br>بـ 99 جنيه', '50GB<br>for 99 EGP')}</div><div>${tx('عرض لفترة محدودة!', 'Limited time offer!')}</div><span class="cta">${tx('اشترك دلوقتي', 'Subscribe now')}</span></div>`,
+};
+const adRot = [AD.mpu, AD.food, AD.bank, AD.compound];
+let rot = 0; const ad = () => `<div class="adlab">${tx('إعلان', 'Advertisement')}</div>` + adRot[rot++ % adRot.length]();
+document.addEventListener('click', (e) => { const a = e.target.closest('[data-ad]'); if (a && !a.closest('.inter')) Lab.log('adtap', { id: a.dataset.ad }); });
+
+// ---------- views ----------
+function headlineTap(it) { Lab.log('headline', { id: it.id, kind: it.kind, cat: it.cat }); }
+function link(it) { return `href="#/a/${it.id}/1" data-t="headline:${it.kind}" data-h="${it.id}"`; }
+document.addEventListener('click', (e) => { const h = e.target.closest('[data-h]'); if (h) headlineTap(byId[h.dataset.h]); });
+
+function home() {
+  const it = S.items; const hero = it[1];
+  const card = (x, i) => `<a class="card" ${link(x)}><img src="${C.thumb(x.cat, i + 3)}" alt=""><div><h3>${L(x.title)}</h3><div class="meta">${x.kind === 'sponsored' ? '' : '<span class="views">👁 ' + x.views + '</span> · '}${tx('من', '')} ${12 + i * 7} ${tx('دقيقة', 'min ago')}</div></div></a>`;
+  $('#app').innerHTML = `
+    <a class="hero" ${link(hero)}><img src="${C.thumb(hero.cat, 7)}" style="height:220px;object-fit:cover"><div class="cap"><span class="tag">${tx('فيديو', 'Video')}</span><br>${L(hero.title)}</div></a>
+    ${card(it[0], 0)}${card(it[6], 1)}
+    ${ad()}
+    ${card(it[2], 2)}${card(it[3], 3)}
+    <div class="sec-h">${tx('الأكتر قراية', 'Most read')}</div>
+    <div class="most">${[it[4], it[1], it[6], it[2], it[0]].map((x, i) => `<a ${link(x)}><i>${i + 1}</i>${L(x.title)}</a>`).join('')}</div>
+    ${ad()}
+    <div class="sec-h">${tx('منوعات', 'More stories')}</div>
+    <div class="grid2">${[it[5], it[4], it[7], it[2]].map((x, i) => `<a class="g" ${link(x)}><img src="${C.thumb(x.cat, i + 11)}"><h3>${L(x.title)}</h3></a>`).join('')}</div>
+    ${ad()}
+    ${card(it[7], 4)}${card(it[5], 5)}
+  `;
+  scrollTo(0, 0);
+  Lab.setView({ view: 'home', kind: 'home' });
+}
+
+function article(id, page) {
+  const it = byId[id]; if (!it) return home();
+  if (it.scam) return advertorial(it);
+  const paras = L(it.body);
+  const pages = it.pages || 1, per = Math.ceil(paras.length / pages);
+  const mine = paras.slice((page - 1) * per, page * per);
+  let html = '';
+  mine.forEach((p, i) => { html += `<p>${p}</p>`; if (i === 0 || i === 2) html += ad(); });
+  const rel = S.items.filter(x => x.id !== id).slice(0, 4);
+  $('#app').innerHTML = `
+    <article class="art" id="art"><span class="tag">${L(S.sections)[{ sports: 2, celeb: 3, economy: 4, tech: 5, health: 6, education: 1, local: 1 }[it.cat] || 1]}</span>
+      <h1>${L(it.title)}</h1><div class="by"><span>${tx('كتب: محرر الخبر الآن', 'By: Al-Khabar staff')}</span><span>👁 ${it.views || ''}</span></div>
+      <div class="share"><span style="background:#1877f2">f</span><span style="background:#25d366">WhatsApp</span><span style="background:#000">X</span></div>
+      ${page === 1 ? `<img src="${C.thumb(it.cat, 5)}" style="border-radius:4px;margin-top:8px">` : ''}
+      <div id="txt">${html}</div>
+    </article>
+    ${pages > 1 ? `<div class="pg">${tx('صفحة', 'Page')} ${page} ${tx('من', 'of')} ${pages}</div><div class="pager">${page > 1 ? `<a class="pv" href="#/a/${id}/${page - 1}" data-t="prev">${tx('اللي قبلها', 'Prev')}</a>` : ''}${page < pages ? `<a class="nx" href="#/a/${id}/${page + 1}" data-t="next" id="nextBtn">${tx('الصفحة اللي بعدها ←', 'Next page →')}</a>` : ''}</div>` : ''}
+    ${ad()}
+    <div class="rel"><h4>${tx('اقرا كمان', 'Read also')}</h4>${rel.map((x, i) => `<a class="card" ${link(x)}><img src="${C.thumb(x.cat, i + 20)}"><div><h3>${L(x.title)}</h3></div></a>`).join('')}</div>`;
+  scrollTo(0, 0);
+  Lab.setView({ view: 'article', kind: 'article', id: id + ':' + page, words: words(mine), el: $('#txt') });
+  const nx = $('#nextBtn');
+  if (nx && !localStorage.getItem('lab_k_scam')) nx.addEventListener('click', (e) => { e.preventDefault(); scam(() => location.hash = nx.getAttribute('href')); }, { once: true });
+}
+
+function advertorial(it) {
+  $('#app').innerHTML = `<article class="art" id="art"><div style="font-size:11px;color:#aaa">${tx('محتوى ترويجي', 'Promoted')}</div><h1>${L(it.title)}</h1>
+    <img src="${C.thumb('crypto', 4)}" style="border-radius:6px">
+    <p>${tx('"ماصدقتش نفسي لما شفت الأرباح في حسابي!" بالكلام ده بدأ أحمد، طالب جامعة، حكايته مع منصة كريبتو نايل.', '“I couldn’t believe it when I saw the profit in my account!” That’s how Ahmed, a university student, describes CryptoNile.')}</p>
+    <p>${tx('المنصة شغالة لوحدها بالذكاء الاصطناعي.. سجّل بس وابدأ بـ 500 جنيه. العرض لأول 100 واحد النهارده بس!', 'The platform runs automatically with AI. Just sign up and start with 500 EGP. Only for the first 100 people today!')}</p>
+    <a class="nx" style="display:block;background:#16a34a;color:#fff;text-align:center;padding:14px;border-radius:8px;font-weight:900" data-ad="k-crypto-cta" data-t="ad">${tx('سجّل دلوقتي واكسب ←', 'Register now and earn →')}</a>
+    <p style="font-size:11px;color:#aaa">${tx('* الأرباح مش مضمونة. ده إعلان.', '* Profits not guaranteed. This is an advertisement.')}</p></article>`;
+  scrollTo(0, 0);
+  Lab.setView({ view: 'advertorial', kind: 'advertorial', id: it.id });
+}
+
+function route() { const m = location.hash.match(/^#\/a\/([\w-]+)\/(\d+)/); if (m) article(m[1], +m[2]); else home(); }
+addEventListener('hashchange', route);
+document.addEventListener('click', (e) => { if (e.target.closest('[data-t=nav]') || e.target.closest('#logo')) { if (location.hash.length > 2) location.hash = '#/'; else route(); } });
+
+// ---------- popups ----------
+function interstitial(done) {
+  if (localStorage.getItem('lab_k_inter')) return done();
+  const el = document.createElement('div'); el.className = 'inter';
+  el.innerHTML = `<span class="skip" id="sk">Skip ad in 5</span>
+    <div class="body" data-ad="k-inter" data-t="ad-inter"><div class="brand">NILE GARDENS · ${tx('نايل جاردنز', 'COMPOUND')}</div>
+    <h2>${tx('بيتك <span>الجديد</span><br>مستنيك', 'Your <span>new home</span><br>is waiting')}</h2>
+    <div class="villa"></div><div>${tx('فيلات بحمامات سباحة خاصة · مقدم 5% · تقسيط لحد 10 سنين', 'Villas with private pools · 5% down · up to 10 years')}</div>
+    <div class="cta">${tx('احجز وحدتك دلوقتي', 'Reserve your unit now')}</div><div class="fine">${tx('الصور للتوضيح بس', 'Images for illustration only')}</div></div>`;
+  document.body.appendChild(el); Lab.log('adseen', { id: 'k-inter' });
+  const t0 = Date.now(); let n = 5;
+  const iv = setInterval(() => { n--; const sk = el.querySelector('#sk'); if (n > 0) sk.textContent = 'Skip ad in ' + n; else { clearInterval(iv); sk.remove(); const x = document.createElement('span'); x.className = 'xx'; x.textContent = '✕'; x.dataset.t = 'inter-close'; el.appendChild(x); x.onclick = (e) => { e.stopPropagation(); Lab.log('interstitial', { action: 'close', ms: Date.now() - t0 }); localStorage.setItem('lab_k_inter', 1); el.remove(); done(); }; } }, 1000);
+  el.querySelector('.body').addEventListener('click', () => Lab.log('interstitial', { action: 'adtap', ms: Date.now() - t0 }));
+}
+function cookie() {
+  if (localStorage.getItem('lab_k_cookie')) return;
+  const el = document.createElement('div'); el.className = 'cookie';
+  el.innerHTML = `${tx('بنستخدم الكوكيز وتقنيات شبهها عشان نحسّن تجربتك ونظبط الإعلانات على مقاسك ونحلل الزيارات. لما تدوس "موافق" يبقى إنت موافق إننا نستخدمها.', 'We use cookies and similar technologies to improve your experience, personalise ads and analyse traffic. By tapping “Agree” you accept our use of them.')}
+    <div class="btns"><button class="ok" data-t="cookie-accept">${tx('موافق', 'Agree')}</button><button class="set" data-t="cookie-settings">${tx('الإعدادات', 'Settings')}</button></div>`;
+  document.body.appendChild(el);
+  const t0 = Date.now(); let opened = false;
+  const close = (choice) => { Lab.log('cookie', { choice, ms: Date.now() - t0, opened }); localStorage.setItem('lab_k_cookie', 1); el.remove(); setTimeout(sticky, 1500); };
+  el.querySelector('.ok').onclick = () => close('accept');
+  el.querySelector('.set').onclick = () => {
+    opened = true;
+    el.querySelector('.btns').insertAdjacentHTML('afterend', `<div class="opts">${[tx('ضرورية', 'Necessary'), tx('تحليلات', 'Analytics'), tx('إعلانات على مقاسك', 'Personalised ads'), tx('شركاء', 'Partners')].map((x, i) => `<label>${x}<input type="checkbox" ${i ? 'checked' : 'checked disabled'}></label>`).join('')}<button class="rej" data-t="cookie-save">${tx('احفظ اختياراتك', 'Save choices')}</button><button class="rej" data-t="cookie-reject" style="border:0;color:#999;font-size:11px">${tx('ارفض الكل', 'Reject all')}</button></div>`);
+    el.querySelector('.set').remove();
+    el.querySelector('[data-t=cookie-save]').onclick = () => { const off = [...el.querySelectorAll('input:not([disabled])')].some(i => !i.checked); close(off ? 'custom' : 'accept'); };
+    el.querySelector('[data-t=cookie-reject]').onclick = () => close('reject');
+  };
+}
+function sticky() {
+  const st = $('#sticky');
+  st.innerHTML = `<span class="x" data-t="sticky-close">✕</span><div class="t" data-ad="k-sticky">NileTel · ${tx('باقة الطلبة', 'Student bundle')} <span>${tx('50 جيجا', '50GB')}</span></div><span class="cta" data-ad="k-sticky-cta">${tx('اشترك', 'Get it')}</span>`;
+  st.classList.remove('hide');
+  st.querySelector('.x').onclick = (e) => { e.stopPropagation(); Lab.log('sticky', { action: 'close' }); st.classList.add('hide'); setTimeout(() => st.classList.remove('hide'), 25000); };
+}
+function scam(after) {
+  localStorage.setItem('lab_k_scam', 1);
+  const el = document.createElement('div'); el.className = 'scam';
+  el.innerHTML = `<div class="box" data-ad="k-scam"><span class="x" data-t="scam-close">✕</span><div class="hd">🎉 ${tx('مبروك!', 'Congratulations!')}<br><small style="font-size:15px">${tx('إنت الزائر رقم 1,000,000', 'You are visitor #1,000,000')}</small></div>
+    <div class="ph">📱</div><p>${tx('اتختارت تكسب iPhone جديد! كمّل في خلال', 'You’ve been selected to win a new iPhone! Claim within')} <span class="timer" id="tmr">02:59</span></p>
+    <a class="claim" data-t="scam-claim">${tx('خد جايزتك دلوقتي', 'Claim your prize now')}</a></div>`;
+  document.body.appendChild(el);
+  let s = 179; const iv = setInterval(() => { s--; const m = el.querySelector('#tmr'); if (m) m.textContent = '0' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }, 1000);
+  const close = (action) => { clearInterval(iv); Lab.log('scam', { action }); el.remove(); after(); };
+  el.querySelector('.x').onclick = (e) => { e.stopPropagation(); close('close'); };
+  el.querySelector('.claim').onclick = (e) => { e.stopPropagation(); el.querySelector('.box').innerHTML = `<div style="padding:40px 20px;font-size:15px">⏳ ${tx('بنحوّلك…', 'Redirecting…')}</div>`; setTimeout(() => close('claim'), 1300); };
+}
+
+route();
+if (!Lab.dashboard) interstitial(() => setTimeout(cookie, 400));
+})();
+</script>
+</body></html>

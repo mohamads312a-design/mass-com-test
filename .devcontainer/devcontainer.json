@@ -1,0 +1,8 @@
+{
+  "name": "News UX Lab",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "postCreateCommand": "npm install",
+  "postStartCommand": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME >/dev/null 2>&1 || true",
+  "forwardPorts": [3000],
+  "portsAttributes": { "3000": { "label": "News UX Lab", "onAutoForward": "notify" } }
+}

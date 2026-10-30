@@ -1,0 +1,227 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Global Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff8f0;color:#1d1d1b;font-family:"Source Serif 4","Noto Naskh Arabic",Georgia,serif;-webkit-tap-highlight-color:rgba(0,0,0,.04)}
+[dir=rtl] body{font-family:"Noto Naskh Arabic","Amiri",serif}
+a{color:inherit;text-decoration:none}img{display:block;width:100%}
+.ui{font-family:Inter,system-ui,sans-serif}[dir=rtl] .ui{font-family:"Noto Naskh Arabic",system-ui,sans-serif}
+header{background:#fff8f0;border-bottom:1px solid #1d1d1b;position:sticky;top:0;z-index:40}
+.mast{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
+.mast .logo{font-family:"Source Serif 4","Amiri",serif;font-weight:700;font-size:25px;letter-spacing:-.3px}
+[dir=rtl] .mast .logo{font-family:Amiri,serif;font-size:27px}
+.mast .btn{font-size:12px;font-weight:700;background:#0a3d62;color:#fff;padding:7px 10px;border-radius:3px}
+.burger{font-size:22px;width:30px}
+.secs{display:flex;gap:16px;overflow-x:auto;padding:6px 14px 8px;font-size:13px;font-weight:600;white-space:nowrap;scrollbar-width:none}.secs::-webkit-scrollbar{display:none}
+.alerts{background:#0a3d62;color:#e6f0f7;font-size:12px;padding:6px 14px;display:flex;justify-content:space-between}
+.wrap{padding:0 16px 80px}
+.lead{border-bottom:1px solid #ddd2c3;padding:16px 0}.lead img{aspect-ratio:16/10;object-fit:cover;margin-bottom:12px}
+.kicker{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#a12a1a;margin-bottom:6px}
+.lead h2{font-size:28px;line-height:1.2;margin:0 0 8px;font-weight:700}[dir=rtl] .lead h2{line-height:1.5}
+.dek{font-size:16px;color:#55524c;line-height:1.5}
+.row{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #ddd2c3}.row img{width:110px;height:80px;object-fit:cover;flex:none}
+.row h3{font-size:18px;line-height:1.3;margin:0 0 4px}[dir=rtl] .row h3{line-height:1.6}
+.rt{font-size:12px;color:#888}
+.partner{background:#f3ece2;padding:12px;margin:14px 0;border-radius:2px}.partner .kicker{color:#7a6a55}
+.sect{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-top:3px solid #1d1d1b;padding-top:6px;margin:24px 0 4px}
+/* article */
+.art h1{font-size:30px;line-height:1.2;margin:18px 0 10px}[dir=rtl] .art h1{line-height:1.55}
+.art .by{font-size:13px;color:#666;border-top:1px solid #ddd2c3;border-bottom:1px solid #ddd2c3;padding:8px 0;margin:12px 0;display:flex;justify-content:space-between}
+.art p{font-size:19px;line-height:1.7;margin:0 0 18px}[dir=rtl] .art p{font-size:20px;line-height:2}
+.art p:first-of-type::first-letter{font-size:3.1em;float:inline-start;line-height:.9;margin-inline-end:6px;font-weight:700}
+.fade{position:relative;max-height:330px;overflow:hidden}.fade:after{content:"";position:absolute;inset:auto 0 0 0;height:180px;background:linear-gradient(rgba(255,248,240,0),#fff8f0)}
+.pay{border-top:4px solid #0a3d62;background:#fff;padding:22px 18px;margin:0 -16px;box-shadow:0 -6px 20px rgba(0,0,0,.06);text-align:center}
+.pay h3{font-size:22px;margin:0 0 8px;line-height:1.35}.pay .price{font-size:15px;margin:10px 0}.pay .price b{font-size:26px;color:#0a3d62}
+.pay .go{display:block;background:#0a3d62;color:#fff;font-weight:700;padding:15px;border-radius:4px;font-size:16px;margin:12px 0 10px}
+.pay .fine{font-size:11px;color:#888;line-height:1.5}.pay .lnk{display:inline-block;margin:6px 10px;font-size:14px;text-decoration:underline;color:#0a3d62}
+.meter{font-size:12px;background:#0a3d62;color:#fff;padding:7px 14px;text-align:center}
+/* modals */
+.ov{position:fixed;inset:0;z-index:100;background:rgba(20,20,20,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.mod{background:#fff;width:100%;max-width:420px;max-height:86vh;overflow:auto;border-radius:6px;padding:20px 18px;position:relative;font-size:14px;line-height:1.55}
+.mod h3{margin:0 0 8px;font-size:20px}.mod p{color:#444;margin:0 0 10px}
+.pbtn{display:block;width:100%;border:0;padding:14px;border-radius:4px;font-weight:700;font-size:16px;margin-top:10px;cursor:pointer}
+.pbtn.pri{background:#0a3d62;color:#fff}.pbtn.sec{background:#fff;color:#0a3d62;border:1px solid #0a3d62}
+.tlink{background:none;border:0;color:#888;font-size:12px;text-decoration:underline;margin-top:12px;display:block;width:100%;cursor:pointer}
+.purp{border-top:1px solid #eee;padding:10px 0;display:flex;justify-content:space-between;align-items:center;gap:10px}.purp small{display:block;color:#888;font-size:11px}
+.sw{position:relative;width:46px;height:26px;flex:none}.sw input{display:none}.sw span{position:absolute;inset:0;background:#ccc;border-radius:99px;transition:.2s}.sw span:after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}
+.sw input:checked+span{background:#0a7d4f}.sw input:checked+span:after{transform:translateX(20px)}[dir=rtl] .sw input:checked+span:after{transform:translateX(-20px)}
+.nl{position:fixed;inset:auto 0 0 0;z-index:90;background:#fff;border-top:4px solid #a12a1a;padding:20px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px rgba(0,0,0,.2);animation:up .4s}
+@keyframes up{from{transform:translateY(100%)}}
+.nl input{width:100%;padding:13px;border:1px solid #bbb;border-radius:4px;font-size:16px;margin:8px 0 0}
+.nl .x{position:absolute;top:8px;inset-inline-end:12px;font-size:18px;color:#999;cursor:pointer}
+/* drawer & account */
+.drawer{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.4)}.drawer .pan{position:absolute;top:0;bottom:0;inset-inline-start:0;width:80%;max-width:320px;background:#fff8f0;padding:18px;animation:sl .25s}
+@keyframes sl{from{transform:translateX(-100%)}}[dir=rtl] .drawer .pan{animation-name:slr}@keyframes slr{from{transform:translateX(100%)}}
+.drawer a{display:block;padding:12px 0;border-bottom:1px solid #e4dbcf;font-size:17px}
+.acc h2{font-size:24px;margin:18px 0}.acc .it{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #e4dbcf;font-size:16px}
+.acc .grp{font-size:12px;font-weight:700;letter-spacing:.1em;color:#888;text-transform:uppercase;margin:22px 0 4px}
+.foot{background:#1d1d1b;color:#bbb;padding:24px 16px 60px;font-size:13px;line-height:1.8}.foot .sim{color:#ffd28a}
+</style></head>
+<body data-site="ledger">
+<header class="ui">
+  <div class="mast"><span class="burger" data-t="menu" id="burger">☰</span><a class="logo" href="#/" id="logo"></a><a class="btn" data-t="subscribe-top" href="#/a/l-ai">↗</a></div>
+  <nav class="secs" id="secs"></nav>
+  <div class="alerts" id="alerts"></div>
+</header>
+<main class="wrap" id="app"></main>
+<footer class="foot ui" id="foot"></footer>
+<script src="/js/content.js"></script>
+<script src="/js/lab.js"></script>
+<script>
+(function(){
+const C = CONTENT, S = C.ledger, L = Lab.L, ar = Lab.lang === 'ar', tx = (a, e) => ar ? a : e, $ = (s) => document.querySelector(s);
+window.MISSION = { task: { escape: true }, check: S.recall };
+const byId = Object.fromEntries(S.items.map(i => [i.id, i]));
+const words = (a) => a.join(' ').split(/\s+/).length;
+let alertsOn = localStorage.getItem('lab_l_alerts') !== 'off';
+
+$('#logo').textContent = L(S.name);
+$('.mast .btn').textContent = tx('اشترك', 'Subscribe');
+$('#secs').innerHTML = L(S.sections).map(s => `<span data-t="nav">${s}</span>`).join('');
+$('#foot').innerHTML = `<b style="color:#fff;font-size:18px">${L(S.name)}</b><br>${tx('احنا مين · الشروط · الخصوصية · إعدادات الكوكيز · كلمنا', 'About · Terms · Privacy · Cookie settings · Contact')}<br><span class="sim">${tx('محاكاة تعليمية — المحتوى من خيالنا', 'Classroom simulation — fictional content')}</span>`;
+function renderAlerts() { $('#alerts').innerHTML = alertsOn ? `<span>🔔 ${tx('تنبيهات الأخبار العاجلة: شغالة', 'Breaking news alerts: ON')}</span><span style="opacity:.6">${tx('اعرف أكتر', 'Learn more')}</span>` : `<span>🔕 ${tx('التنبيهات مقفولة', 'Alerts off')}</span>`; }
+renderAlerts();
+
+// escape mission: every tap while active counts as a step
+document.addEventListener('click', (e) => { if (Lab.escape && Lab.escape.active && !e.target.closest('.lab-ui')) Lab.escape.steps++; }, true);
+document.addEventListener('click', (e) => { const h = e.target.closest('[data-h]'); if (h) { const it = byId[h.dataset.h]; Lab.log('headline', { id: it.id, kind: it.kind, cat: it.cat }); } });
+
+function home() {
+  const [lead, ...rest] = S.items;
+  const row = (x, i) => x.partner ? `<a class="partner" href="#/a/${x.id}" data-h="${x.id}" data-t="headline:sponsored" style="display:block"><div class="kicker ui">${tx('محتوى من شركائنا', 'Partner content')}</div><div class="row" style="border:0;padding:0"><img src="${C.thumb(x.cat, 40)}"><div><h3>${L(x.title)}</h3><div class="rt ui">${L(x.dek)}</div></div></div></a>`
+    : `<a class="row" href="#/a/${x.id}" data-h="${x.id}" data-t="headline:${x.kind}"><div style="flex:1"><div class="kicker ui">${L(S.sections)[{ tech: 2, economy: 1, culture: 4, opinion: 5, climate: 3 }[x.cat] || 0]}</div><h3>${L(x.title)}</h3><div class="rt ui">${x.read} ${tx('دقايق قراية', 'min read')}</div></div><img src="${C.thumb(x.cat, i + 30)}"></a>`;
+  $('#app').innerHTML = `
+    <a class="lead" href="#/a/${lead.id}" data-h="${lead.id}" data-t="headline:serious" style="display:block"><img src="${C.thumb(lead.cat, 3)}"><div class="kicker ui">${tx('تحقيق خاص', 'Special report')}</div><h2>${L(lead.title)}</h2><div class="dek">${L(lead.dek)}</div><div class="rt ui" style="margin-top:8px">${lead.read} ${tx('دقايق قراية', 'min read')}</div></a>
+    ${rest.slice(0, 2).map(row).join('')}
+    ${row(rest[4], 9)}
+    <div class="sect ui">${tx('الأكتر قراية', 'Most read')}</div>
+    ${rest.slice(2, 4).map((x, i) => row(x, i + 5)).join('')}`;
+  scrollTo(0, 0); Lab.setView({ view: 'home', kind: 'home' });
+}
+
+function article(id) {
+  const it = byId[id]; if (!it) return home();
+  const read = JSON.parse(localStorage.getItem('lab_l_read') || '[]');
+  const free = read.length === 0 || read.includes(id) || it.partner;
+  if (!read.includes(id) && free) { read.push(id); localStorage.setItem('lab_l_read', JSON.stringify(read)); }
+  const paras = L(it.body);
+  const shown = free ? paras : paras.slice(0, 2);
+  $('#app').innerHTML = `
+    ${free && !it.partner ? `<div class="meter ui" style="margin:0 -16px">${tx('ده آخر مقال ببلاش ليك الشهر ده', 'This is your last free article this month')}</div>` : ''}
+    <article class="art" id="art">${it.partner ? `<div class="kicker ui" style="margin-top:14px;color:#7a6a55">${tx('محتوى من شركائنا', 'Partner content')}</div>` : ''}<h1>${L(it.title)}</h1><div class="dek">${L(it.dek)}</div>
+      <div class="by ui"><span>${tx('كتبه: فريق التحرير', 'By the Ledger staff')}</span><span>${it.read} ${tx('دقيقة', 'min')}</span></div>
+      <img src="${C.thumb(it.cat, 3)}" style="margin-bottom:16px">
+      <div id="txt" class="${free ? '' : 'fade'}">${shown.map(p => `<p>${p}</p>`).join('')}</div></article>
+    ${free ? '' : paywall()}`;
+  scrollTo(0, 0);
+  Lab.setView({ view: 'article', kind: 'article', id, words: words(shown), el: $('#txt') });
+  if (!free) { Lab.log('paywall', { action: 'seen' }); bindPaywall(); }
+}
+function paywall() {
+  return `<div class="pay ui"><h3>${tx('خلّصت المقالات اللي ببلاش', 'You’ve reached your free article limit')}</h3>
+    <div>${tx('الصحافة المستقلة تستاهل الدعم. اشترك واقرا من غير حدود.', 'Independent journalism is worth supporting. Subscribe for unlimited access.')}</div>
+    <div class="price"><b>${tx('1 جنيه', '1 EGP')}</b> ${tx('لأول شهر*', 'for your first month*')}</div>
+    <a class="go" data-t="paywall-subscribe" id="pwSub">${tx('اشترك دلوقتي', 'Subscribe now')}</a>
+    <div class="fine">${tx('*وبعدين 299 جنيه في الشهر. بيتجدد لوحده. تقدر تلغي في أي وقت لما تكلم خدمة العملاء.', '*Then 299 EGP/month. Renews automatically. Cancel anytime by calling customer service.')}</div>
+    <a class="lnk" data-t="paywall-signin" id="pwIn">${tx('عندك حساب؟ سجّل دخول', 'Already a subscriber? Sign in')}</a><a class="lnk" href="#/" data-t="paywall-back" id="pwBack">${tx('ارجع للرئيسية', 'Back to homepage')}</a></div>`;
+}
+function bindPaywall() {
+  $('#pwSub').onclick = () => { Lab.log('paywall', { action: 'subscribe' }); modal(`<h3>💳 ${tx('دخّل بيانات الكارت', 'Enter card details')}</h3><p>${tx('(دي محاكاة — مش هنطلب أي بيانات حقيقية)', '(Simulation — no real details are collected)')}</p><button class="pbtn pri" data-close>${tx('تمام', 'OK')}</button>`); };
+  $('#pwIn').onclick = () => { Lab.log('paywall', { action: 'signin' }); modal(`<h3>${tx('تسجيل الدخول', 'Sign in')}</h3><p>${tx('مش متاح في المحاكاة دي.', 'Not available in this simulation.')}</p><button class="pbtn pri" data-close>OK</button>`); };
+  $('#pwBack').onclick = () => Lab.log('paywall', { action: 'back' });
+}
+function modal(html) { const o = document.createElement('div'); o.className = 'ov ui'; o.innerHTML = `<div class="mod">${html}</div>`; document.body.appendChild(o); o.querySelectorAll('[data-close]').forEach(b => b.onclick = () => o.remove()); return o; }
+
+// ------- account / preferences (escape-the-trap path) -------
+function drawer() {
+  const d = document.createElement('div'); d.className = 'drawer ui';
+  d.innerHTML = `<div class="pan"><div style="font-family:Amiri,serif;font-weight:700;font-size:22px;margin-bottom:10px">${L(S.name)}</div>${L(S.sections).map(s => `<a data-t="drawer-sec">${s}</a>`).join('')}<a data-t="drawer-podcasts">${tx('بودكاست', 'Podcasts')}</a><a data-t="drawer-games">${tx('ألعاب وكلمات متقاطعة', 'Puzzles & games')}</a><a href="#/account" data-t="drawer-account" style="color:#0a3d62;font-weight:700">👤 ${tx('حسابي', 'My account')}</a></div>`;
+  document.body.appendChild(d);
+  d.onclick = (e) => { if (e.target === d || e.target.closest('a')) d.remove(); if (e.target.closest('[data-t=drawer-sec]')) location.hash = '#/'; };
+}
+$('#burger').onclick = drawer;
+function account() {
+  $('#app').innerHTML = `<div class="acc ui"><h2>${tx('حسابي', 'My account')}</h2>
+    <div class="grp">${tx('الاشتراك', 'Subscription')}</div><div class="it" data-t="acc-plan">${tx('الباقة الحالية', 'Current plan')}<span style="color:#888">${tx('ببلاش', 'Free')} ›</span></div><div class="it" data-t="acc-upgrade">${tx('رقّي لبريميوم', 'Upgrade to Premium')} <span>›</span></div>
+    <div class="grp">${tx('المحتوى', 'Content')}</div><div class="it" data-t="acc-saved">${tx('المقالات اللي حفظتها', 'Saved articles')} <span>›</span></div><div class="it" data-t="acc-history">${tx('سجل القراية', 'Reading history')} <span>›</span></div>
+    <div class="grp">${tx('الإعدادات', 'Settings')}</div><div class="it" data-t="acc-profile">${tx('الملف الشخصي', 'Profile')} <span>›</span></div><a class="it" href="#/prefs" data-t="acc-prefs">${tx('التفضيلات', 'Preferences')} <span>›</span></a><div class="it" data-t="acc-help">${tx('المساعدة', 'Help')} <span>›</span></div></div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'account', kind: 'settings' });
+}
+function prefs() {
+  const sw = (id, on, lbl, sub) => `<div class="purp"><div>${lbl}<small>${sub || ''}</small></div><label class="sw"><input type="checkbox" id="${id}" ${on ? 'checked' : ''}><span></span></label></div>`;
+  $('#app').innerHTML = `<div class="acc ui"><h2>${tx('التفضيلات', 'Preferences')}</h2>
+    <div class="grp">${tx('العرض', 'Display')}</div>${sw('p1', false, tx('الوضع الليلي', 'Dark mode'))}${sw('p2', true, tx('خط كبير', 'Large text'))}${sw('p3', true, tx('الفيديو يشتغل لوحده', 'Autoplay video'))}
+    <div class="grp">${tx('الإيميل', 'Email')}</div>${sw('p4', true, tx('عروض خاصة من شركائنا', 'Special offers from partners'))}${sw('p5', true, tx('ملخص الأسبوع', 'Weekly digest'))}
+    <div class="grp">${tx('الخصوصية', 'Privacy')}</div>${sw('p6', true, tx('ترشيحات على مقاسك', 'Personalised recommendations'), tx('على حسب اللي بتقراه', 'Based on your reading history'))}${sw('p7', true, tx('مشاركة بياناتك مع الشركاء', 'Share data with partners'))}
+    <div class="grp">${tx('اللغة والمنطقة', 'Language & region')}</div><div class="it">${tx('اللغة', 'Language')}<span style="color:#888">${ar ? 'العربية' : 'English'} ›</span></div><div class="it">${tx('المنطقة', 'Region')}<span style="color:#888">${tx('مصر', 'Egypt')} ›</span></div>
+    <div class="grp">${tx('الإشعارات', 'Notifications')}</div>${sw('alertsSw', alertsOn, tx('تنبيهات الأخبار العاجلة', 'Breaking news alerts'), tx('بننصح بيه', 'Recommended'))}${sw('p8', true, tx('تحديثات الماتشات', 'Match updates'))}</div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'prefs', kind: 'settings' });
+  const a = $('#alertsSw');
+  a.onchange = () => {
+    if (a.checked) { alertsOn = true; localStorage.setItem('lab_l_alerts', 'on'); renderAlerts(); return; }
+    a.checked = true; // not so fast...
+    const o = modal(`<h3>${tx('إنت متأكد؟ 😢', 'Are you sure? 😢')}</h3><p>${tx('هيفوتك الأخبار المهمة اللي تهمك. 9 من كل 10 قرّاء بيسيبوا التنبيهات شغالة.', 'You’ll miss the stories that matter to you. 9 out of 10 readers keep alerts on.')}</p>
+      <button class="pbtn pri" data-t="alerts-keep" id="keep">${tx('خلّي التنبيهات شغالة', 'Keep me informed')}</button><button class="tlink" data-t="alerts-off1" id="off1">${tx('اقفلها برضه', 'Turn off anyway')}</button>`);
+    o.querySelector('#keep').onclick = () => { Lab.log('alerts', { step: 'kept' }); o.remove(); };
+    o.querySelector('#off1').onclick = () => {
+      o.querySelector('.mod').innerHTML = `<h3>${tx('ساعدنا نبقى أحسن', 'Help us improve')}</h3><p>${tx('ليه عايز تقفل التنبيهات؟', 'Why do you want to turn off alerts?')}</p>
+        ${[tx('كتير أوي', 'Too many'), tx('مش مهمة ليا', 'Not relevant'), tx('بفضّل الإيميل', 'I prefer email'), tx('سبب تاني', 'Other')].map((r, i) => `<label class="purp" style="justify-content:flex-start"><input type="radio" name="r" value="${i}"> ${r}</label>`).join('')}
+        <button class="pbtn sec" data-t="alerts-pause" id="pause">${tx('وقّفها أسبوع بس بدل كده', 'Pause for 1 week instead')}</button>
+        <button class="tlink" data-t="alerts-confirm" id="conf" disabled style="opacity:.5">${tx('تأكيد القفل', 'Confirm turning off')}</button>`;
+      const conf = o.querySelector('#conf');
+      o.querySelectorAll('input[name=r]').forEach(r => r.onchange = () => { conf.disabled = false; conf.style.opacity = 1; });
+      o.querySelector('#pause').onclick = () => { Lab.log('alerts', { step: 'paused' }); o.remove(); };
+      conf.onclick = () => { alertsOn = false; localStorage.setItem('lab_l_alerts', 'off'); a.checked = false; renderAlerts(); Lab.log('alerts', { step: 'off' }); o.remove(); if (Lab.escapeComplete) Lab.escapeComplete(); };
+    };
+  };
+}
+
+function route() {
+  const h = location.hash;
+  if (h.startsWith('#/a/')) article(h.slice(4)); else if (h === '#/account') account(); else if (h === '#/prefs') prefs(); else home();
+}
+addEventListener('hashchange', route);
+document.addEventListener('click', (e) => { if (e.target.closest('[data-t=nav]')) { if (location.hash.length > 2) location.hash = '#/'; else route(); } });
+
+// ------- cookie wall -------
+function cookieWall() {
+  if (localStorage.getItem('lab_l_cookie')) return setTimeout(newsletter, 15000);
+  const t0 = Date.now(); let opened = false;
+  const o = document.createElement('div'); o.className = 'ov ui';
+  const purposes = [[tx('تخزين معلومات على جهازك', 'Store information on your device'), ''], [tx('إعلانات على مقاسك', 'Personalised advertising'), tx('مصلحة مشروعة', 'Legitimate interest')], [tx('قياس أداء الإعلانات', 'Measure ad performance'), ''], [tx('عمل بروفايل للمحتوى', 'Create a content profile'), tx('مصلحة مشروعة', 'Legitimate interest')], [tx('تطوير المنتجات', 'Develop and improve products'), ''], [tx('مشاركة البيانات مع 847 شريك', 'Share data with 847 partners'), '']];
+  o.innerHTML = `<div class="mod"><h3>${tx('احنا بنهتم بخصوصيتك', 'We value your privacy')}</h3>
+    <p>${tx('احنا و847 من شركائنا بنخزّن معلومات على جهازك وبنوصلها، زي معرّفات فريدة، عشان نعالج بياناتك الشخصية للإعلانات اللي على مقاسك والمحتوى وقياس الأداء وتطوير المنتجات. تقدر توافق أو تظبط اختياراتك تحت، ومن ضمنها حقك إنك تعترض على المصلحة المشروعة.', 'We and our 847 partners store and access information on your device, such as unique IDs, to process personal data for personalised ads and content, measurement, audience insights and product development. You can accept or manage your choices below, including your right to object to legitimate interest.')}</p>
+    <div id="cw"><button class="pbtn pri" data-t="cookie-accept" id="acc">${tx('موافق على الكل', 'Accept all')}</button><button class="tlink" data-t="cookie-manage" id="man">${tx('ظبّط الاختيارات', 'Manage options')}</button></div></div>`;
+  document.body.appendChild(o);
+  const close = (choice) => { Lab.log('cookie', { choice, ms: Date.now() - t0, opened }); localStorage.setItem('lab_l_cookie', 1); o.remove(); setTimeout(newsletter, 15000); };
+  o.querySelector('#acc').onclick = () => close('accept');
+  o.querySelector('#man').onclick = () => {
+    opened = true;
+    o.querySelector('#cw').innerHTML = purposes.map(([p, li], i) => `<div class="purp"><div>${p}<small>${li}</small></div><label class="sw"><input type="checkbox" checked data-p="${i}"><span></span></label></div>`).join('') +
+      `<button class="pbtn pri" data-t="cookie-accept2" id="acc2">${tx('موافق على الكل', 'Accept all')}</button><button class="pbtn sec" data-t="cookie-save" id="save">${tx('احفظ واخرج', 'Save & exit')}</button><button class="tlink" data-t="cookie-reject" id="rej">${tx('ارفض الكل', 'Reject all')}</button>`;
+    o.querySelector('#acc2').onclick = () => close('accept');
+    o.querySelector('#save').onclick = () => close([...o.querySelectorAll('[data-p]')].some(i => !i.checked) ? 'custom' : 'accept');
+    o.querySelector('#rej').onclick = () => close('reject');
+  };
+}
+function newsletter() {
+  if (localStorage.getItem('lab_l_nl') || document.querySelector('.ov')) { if (!localStorage.getItem('lab_l_nl')) setTimeout(newsletter, 5000); return; }
+  const t0 = Date.now();
+  const n = document.createElement('div'); n.className = 'nl ui';
+  n.innerHTML = `<span class="x" data-t="nl-close">✕</span><div class="kicker">${tx('النشرة الصباحية', 'The Morning Brief')}</div><h3 style="margin:4px 0 6px;font-size:21px;line-height:1.3">${tx('ابدأ يومك وإنت فاهم ☕', 'Start your day smarter ☕')}</h3>
+    <div style="font-size:14px;color:#555">${tx('أهم 5 أخبار على إيميلك كل يوم الصبح. انضم لـ 2 مليون قارئ.', 'The 5 stories that matter, in your inbox every morning. Join 2 million readers.')}</div>
+    <input type="email" placeholder="${tx('إيميلك', 'Your email address')}" data-t="nl-input"><button class="pbtn pri" data-t="nl-subscribe" id="sub">${tx('اشترك ببلاش', 'Sign me up — it’s free')}</button>
+    <button class="tlink" data-t="nl-decline" id="dec">${tx('لأ شكرًا، مش بحب أبقى فاهم', 'No thanks, I prefer to stay uninformed')}</button>`;
+  document.body.appendChild(n); Lab.log('adseen', { id: 'l-newsletter' });
+  const close = (action) => { Lab.log('newsletter', { action, ms: Date.now() - t0 }); localStorage.setItem('lab_l_nl', 1); n.remove(); };
+  n.querySelector('.x').onclick = () => close('close');
+  n.querySelector('#dec').onclick = () => close('decline');
+  n.querySelector('#sub').onclick = () => close('subscribe');
+}
+
+route();
+if (!Lab.dashboard) setTimeout(cookieWall, 600);
+})();
+</script>
+</body></html>

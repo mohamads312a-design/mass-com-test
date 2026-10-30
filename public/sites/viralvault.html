@@ -1,0 +1,206 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ViralVault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Rubik,system-ui,sans-serif;background:#fff;color:#111;-webkit-tap-highlight-color:rgba(0,0,0,.05)}
+a{color:inherit;text-decoration:none}img{display:block;width:100%}
+.appb{display:flex;align-items:center;gap:10px;padding:8px 10px;background:#f4f4f6;border-bottom:1px solid #e5e5e5;font-size:13px}
+.appb .ico{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,#ff2e63,#ffb800);display:grid;place-items:center;color:#fff;font-weight:900;font-size:20px}
+.appb .t{flex:1;line-height:1.3}.appb .t b{display:block}.appb .t small{color:#888}.appb .open{background:#ff2e63;color:#fff;font-weight:800;padding:6px 14px;border-radius:99px}.appb .x{color:#999;font-size:16px;padding:0 4px}
+header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:3px solid #ff2e63;display:flex;align-items:center;justify-content:space-between;padding:8px 12px}
+.logo{font-weight:900;font-size:24px;font-style:italic;letter-spacing:-1px}.logo span{color:#ff2e63}
+.pill{background:#111;color:#ffde00;font-weight:800;font-size:12px;padding:5px 10px;border-radius:99px}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;scrollbar-width:none}.cats::-webkit-scrollbar{display:none}
+.cats span{white-space:nowrap;padding:6px 12px;border-radius:99px;background:#f2f2f5;font-weight:600;font-size:13px}.cats span:first-child{background:#ff2e63;color:#fff}
+.wrap{padding:0 12px 100px}
+.big{display:block;border-radius:14px;overflow:hidden;position:relative;margin-bottom:14px}.big img{aspect-ratio:4/3;object-fit:cover}
+.big .ov{position:absolute;inset:auto 0 0 0;padding:50px 14px 14px;background:linear-gradient(transparent,rgba(0,0,0,.9));color:#fff}
+.big h2{margin:0;font-size:22px;line-height:1.25;font-weight:900}
+.hot{display:inline-flex;align-items:center;gap:4px;background:#ffde00;color:#111;font-weight:800;font-size:11px;padding:3px 8px;border-radius:99px;margin-bottom:6px}
+.live{display:inline-flex;gap:5px;align-items:center;font-size:12px;color:#ff2e63;font-weight:700}.live:before{content:"";width:8px;height:8px;border-radius:50%;background:#ff2e63;animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.2}}
+.it{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0}.it img{width:120px;height:90px;border-radius:10px;object-fit:cover;flex:none}
+.it h3{margin:0 0 4px;font-size:16px;line-height:1.3;font-weight:800}
+.spons{font-size:11px;color:#aaa}
+.adbox{margin:14px 0;border-radius:12px;overflow:hidden;position:relative}.adbox .lb{position:absolute;top:4px;inset-inline-end:6px;font-size:10px;color:rgba(255,255,255,.75);direction:ltr}
+.ad-volt{background:linear-gradient(135deg,#00e1ff,#0035ff 60%,#14002e);color:#fff;padding:18px;display:flex;align-items:center;gap:14px;min-height:110px}
+.ad-volt .can{width:46px;height:84px;border-radius:10px;background:linear-gradient(#1f1f1f,#111);border:3px solid #00e1ff;display:grid;place-items:center;color:#00e1ff;font-weight:900;font-size:22px;flex:none;box-shadow:0 0 20px #00e1ff}
+.ad-volt b{font-size:22px;font-weight:900;display:block;line-height:1.1}
+.ad-game{background:linear-gradient(135deg,#2d0b59,#6a00f4);color:#fff;padding:16px;text-align:center}.ad-game b{font-size:22px;display:block}.ad-game .cta{display:inline-block;margin-top:8px;background:#22c55e;padding:8px 22px;border-radius:99px;font-weight:900}
+.trend-h{font-weight:900;font-size:20px;margin:20px 0 6px;display:flex;align-items:center;gap:6px}
+.loading{text-align:center;color:#aaa;padding:20px;font-size:13px}
+/* article */
+.art h1{font-size:25px;line-height:1.25;font-weight:900;margin:12px 0 8px}
+.art .meta{display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:10px}
+.art p{font-size:17px;line-height:1.75}
+.item{border-radius:14px;overflow:hidden;background:#fafafa;margin:10px 0}.item .n{font-size:58px;font-weight:900;color:#ff2e63;line-height:1;padding:12px 14px 0}.item h2{font-size:26px;margin:4px 14px 6px;font-weight:900}.item p{margin:0 14px 16px}
+.next{display:block;background:#ff2e63;color:#fff;text-align:center;font-weight:900;font-size:19px;padding:16px;border-radius:14px;margin:14px 0;box-shadow:0 6px 0 #c4003a}
+.dots{display:flex;gap:4px;justify-content:center;margin:6px 0}.dots i{width:7px;height:7px;border-radius:50%;background:#ddd}.dots i.on{background:#ff2e63}
+.react{display:flex;gap:8px;justify-content:center;margin:10px 0}.react span{background:#f2f2f5;border-radius:99px;padding:6px 12px;font-size:14px}
+/* video ad */
+.vid{position:relative;background:#000;border-radius:12px;overflow:hidden;aspect-ratio:16/9;margin:10px 0}
+.vid .scene{position:absolute;inset:0;background:radial-gradient(circle at 50% 120%,#00e1ff,#0035ff 40%,#000 75%);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;text-align:center}
+.vid .can{width:56px;height:100px;border-radius:12px;background:#111;border:3px solid #00e1ff;display:grid;place-items:center;color:#00e1ff;font-weight:900;font-size:26px;box-shadow:0 0 40px #00e1ff;animation:sh 1.2s infinite alternate}
+@keyframes sh{to{transform:rotate(-8deg) scale(1.1)}}
+.vid .tag{font-weight:900;font-size:20px;margin-top:10px;letter-spacing:1px}
+.vid .bar{position:absolute;left:0;bottom:0;height:4px;background:#ffde00;width:0}
+.vid .ad{position:absolute;top:8px;inset-inline-start:8px;background:#ffde00;color:#000;font-weight:800;font-size:11px;padding:2px 6px;border-radius:3px;direction:ltr}
+.vid .skp{position:absolute;bottom:14px;inset-inline-end:0;background:rgba(0,0,0,.75);color:#fff;font-size:14px;padding:9px 14px;border:1px solid rgba(255,255,255,.4);border-inline-end:0;direction:ltr}
+.vid .lrn{position:absolute;bottom:14px;inset-inline-start:10px;background:#fff;color:#000;font-size:13px;font-weight:700;padding:8px 12px;border-radius:4px}
+/* prompts */
+.perm{position:fixed;top:0;left:0;right:0;z-index:95;background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.25);padding:14px 16px;border-radius:0 0 14px 14px;font-family:system-ui,-apple-system,sans-serif;animation:dn .3s;direction:ltr}
+@keyframes dn{from{transform:translateY(-100%)}}
+.perm .h{font-size:14px;color:#333}.perm .h b{display:block;font-size:15px;color:#111;margin-bottom:6px}
+.perm .bt{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}.perm button{border:0;background:none;font-size:15px;font-weight:600;color:#1a73e8;padding:8px 12px;border-radius:6px}.perm button.al{background:#1a73e8;color:#fff}
+.ck{position:fixed;left:10px;right:10px;bottom:10px;z-index:90;background:#111;color:#fff;border-radius:16px;padding:14px;font-size:13px;line-height:1.5;box-shadow:0 10px 30px rgba(0,0,0,.4);margin-bottom:env(safe-area-inset-bottom)}
+.ck .row{display:flex;gap:8px;margin-top:10px;align-items:center}.ck .ok{flex:1;background:#ffde00;color:#111;border:0;border-radius:10px;padding:12px;font-weight:900;font-size:16px;font-family:inherit}.ck .pf{background:none;border:0;color:#777;font-size:11px;font-family:inherit}
+.ck .opts label{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #333}
+.foot{background:#111;color:#888;padding:20px 14px 90px;text-align:center;font-size:12px;line-height:1.8}.foot .sim{color:#ffde00}
+</style></head>
+<body data-site="viralvault">
+<div class="appb" id="appb"></div>
+<header><a class="logo" href="#/" id="logo"></a><span class="pill" id="pill"></span></header>
+<main id="app"></main>
+<footer class="foot" id="foot"></footer>
+<script src="/js/content.js"></script>
+<script src="/js/lab.js"></script>
+<script>
+(function(){
+const C = CONTENT, S = C.viral, L = Lab.L, ar = Lab.lang === 'ar', tx = (a, e) => ar ? a : e, $ = (s) => document.querySelector(s);
+window.MISSION = { task: S.task, check: S.recall };
+const byId = Object.fromEntries(S.items.map(i => [i.id, i]));
+const words = (a) => a.join(' ').split(/\s+/).length;
+const rnd = (a, b) => Math.floor(a + Math.random() * (b - a));
+
+$('#logo').innerHTML = 'Viral<span>Vault</span>';
+$('#pill').textContent = '🔥 ' + tx('تريند', 'Trending');
+$('#foot').innerHTML = `ViralVault © 2026 · ${tx('الخصوصية · الشروط · اعلن معانا', 'Privacy · Terms · Advertise')}<br><span class="sim">${tx('محاكاة تعليمية — المحتوى من خيالنا', 'Classroom simulation — fictional content')}</span>`;
+if (!localStorage.getItem('lab_v_appb')) {
+  $('#appb').innerHTML = `<div class="ico">V</div><div class="t"><b>ViralVault App</b><small>★★★★★ ${tx('أسرع وأحلى على الأبلكيشن', 'Faster & better in the app')}</small></div><a class="open" data-t="app-open">${tx('افتح', 'OPEN')}</a><span class="x" data-t="app-close">✕</span>`;
+  $('#appb .open').onclick = () => { Lab.log('appbanner', { action: 'open' }); Lab.toast(tx('الأبلكيشن مش متاح في المحاكاة', 'App not available in this simulation')); };
+  $('#appb .x').onclick = () => { Lab.log('appbanner', { action: 'close' }); localStorage.setItem('lab_v_appb', 1); $('#appb').remove(); };
+} else $('#appb').remove();
+
+let adN = 0;
+const ads = [
+  () => `<div class="adbox" data-ad="v-volt-${adN++}" data-t="ad"><div class="ad-volt"><div class="can">V</div><div><b>VOLTUP</b>${tx('طاقة تكفّي المذاكرة كلها ⚡', 'Energy for the whole study night ⚡')}</div></div><span class="lb">Ad</span></div>`,
+  () => `<div class="adbox" data-ad="v-game-${adN++}" data-t="ad"><div class="ad-game"><b>⚔️ Pharaoh Legends</b>${tx('99% مش بيعدّوا المستوى 3!', '99% can’t pass level 3!')}<br><span class="cta">${tx('العب ببلاش', 'PLAY FREE')}</span></div><span class="lb">Ad</span></div>`,
+];
+let ar_ = 0; const ad = () => ads[ar_++ % ads.length]();
+document.addEventListener('click', (e) => { const a = e.target.closest('[data-ad]'); if (a && !a.closest('.vid')) Lab.log('adtap', { id: a.dataset.ad }); });
+document.addEventListener('click', (e) => { const h = e.target.closest('[data-h]'); if (h) { const it = byId[h.dataset.h] || { id: h.dataset.h, kind: h.dataset.k || 'clickbait', cat: h.dataset.c || 'celeb' }; Lab.log('headline', { id: it.id, kind: it.kind, cat: it.cat }); } });
+
+let feedCount = 0, feedObs = null;
+function feedItem(i) {
+  const titles = L(S.feedTitles); const t = titles[i % titles.length];
+  const cats = ['celeb', 'tech', 'health', 'food', 'sports', 'local'];
+  if (i % 5 === 3) return `<a class="it" data-h="v-spons-feed" data-k="sponsored" data-c="crypto" data-ad="v-spons-feed-${i}" href="#/a/v-sponsor"><img src="${C.thumb('crypto', i)}"><div><h3>${L(byId['v-sponsor'].title)}</h3><div class="spons">${tx('ممول · كريبتو نايل', 'Sponsored · CryptoNile')}</div></div></a>`;
+  return `<a class="it" data-h="v-feed-${i % titles.length}" data-k="clickbait" data-c="${cats[i % cats.length]}" href="#/a/v-star"><img src="${C.thumb(cats[i % cats.length], i + 50)}"><div><h3>${t}</h3><span class="live">${rnd(300, 9000).toLocaleString()} ${tx('بيقروا دلوقتي', 'reading now')}</span></div></a>` + (i % 6 === 5 ? ad() : '');
+}
+function home() {
+  const [list, phone, star, quiz, spons, sci] = S.items;
+  $('#app').innerHTML = `<div class="cats">${[tx('🔥 التريند', '🔥 Trending'), tx('مشاهير', 'Celebs'), tx('اختبارات', 'Quizzes'), tx('أكل', 'Food'), tx('تكنولوجيا', 'Tech'), tx('غرايب', 'Weird')].map(c => `<span data-t="cat">${c}</span>`).join('')}</div>
+    <div class="wrap">
+    <a class="big" href="#/a/${list.id}" data-h="${list.id}" data-t="headline:clickbait"><img src="${C.thumb('food', 2)}"><div class="ov"><span class="hot">🔥 ${tx('الأكتر قراية', 'MOST READ')}</span><h2>${L(list.title)}</h2><span class="live" style="color:#ffde00">${list.reading} ${tx('بيقروا دلوقتي', 'reading now')}</span></div></a>
+    ${[phone, spons, star].map((x, i) => `<a class="it" href="#/a/${x.id}" data-h="${x.id}" data-t="headline:${x.kind}"><img src="${C.thumb(x.cat, i + 8)}"><div><h3>${L(x.title)}</h3>${x.kind === 'sponsored' ? `<div class="spons">${tx('ممول', 'Sponsored')}</div>` : `<span class="live">${x.reading} ${tx('بيقروا دلوقتي', 'reading now')}</span>`}</div></a>`).join('')}
+    ${ad()}
+    ${[quiz, sci].map((x, i) => `<a class="it" href="#/a/${x.id}" data-h="${x.id}" data-t="headline:${x.kind}"><img src="${C.thumb(x.cat, i + 15)}"><div><h3>${L(x.title)}</h3><span class="live">${x.reading} ${tx('بيقروا دلوقتي', 'reading now')}</span></div></a>`).join('')}
+    <div class="trend-h">📈 ${tx('التريند دلوقتي', 'Trending now')}</div><div id="feed"></div><div class="loading" id="more">${tx('بيحمّل كمان…', 'Loading more…')}</div></div>`;
+  feedCount = 0; addFeed(6);
+  if (feedObs) feedObs.disconnect();
+  feedObs = new IntersectionObserver((e) => { if (e[0].isIntersecting) setTimeout(() => addFeed(5), 500); }, { rootMargin: '300px' });
+  feedObs.observe($('#more'));
+  scrollTo(0, 0); Lab.setView({ view: 'home', kind: 'home' });
+}
+function addFeed(n) { const f = $('#feed'); if (!f) return; let h = ''; for (let i = 0; i < n; i++) h += feedItem(feedCount++); f.insertAdjacentHTML('beforeend', h); Lab.log('feed', { count: feedCount }); }
+
+function listicle(page) {
+  const it = byId['v-foods']; const foods = L(S.foods), tips = L(S.foodTips);
+  if (page === 0) {
+    $('#app').innerHTML = `<div class="wrap art"><h1>${L(it.title)}</h1><div class="meta"><span class="live">${it.reading} ${tx('بيقروا دلوقتي', 'reading now')}</span><span>⏱ 3 ${tx('دقايق', 'min')}</span></div>
+      <div id="vid"></div><p id="intro">${tx('كلنا بناكل الأكلات دي كل يوم.. بس عارف إنك بتاكلها غلط؟ كمّل القايمة للآخر عشان رقم 7 هيغيّر حياتك!', 'We all eat these foods every day… but did you know you’re doing it wrong? Read to the end, because #7 will change your life!')}</p>
+      <a class="next" href="#/list/1" data-t="next">${tx('ابدأ القايمة ←', 'Start the list →')}</a>${ad()}</div>`;
+    scrollTo(0, 0); Lab.setView({ view: 'article', kind: 'article', id: 'v-foods:0', words: 30, el: $('#intro') });
+    videoAd($('#vid'));
+    return;
+  }
+  const i = page - 1;
+  $('#app').innerHTML = `<div class="wrap art"><div class="dots">${foods.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
+    ${page === 4 || page === 8 ? ad() : ''}
+    <div class="item" id="item"><div class="n">#${page}</div><img src="${C.thumb('food', page * 3)}" style="aspect-ratio:16/10;object-fit:cover"><h2>${foods[i]}</h2><p>${tips[i]}</p></div>
+    <div class="react"><span>😂 ${rnd(100, 900)}</span><span>😮 ${rnd(100, 900)}</span><span>❤️ ${rnd(100, 900)}</span></div>
+    ${page < 10 ? `<a class="next" href="#/list/${page + 1}" data-t="next">${tx('اللي بعده', 'NEXT')} (${page + 1}/10) ${ar ? '←' : '→'}</a>` : `<a class="next" href="#/" data-t="done">${tx('اقرا كمان من التريند 🔥', 'More trending stories 🔥')}</a>`}
+    ${ad()}</div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'article', kind: 'article', id: 'v-foods:' + page, words: tips[i].split(/\s+/).length + 2, el: $('#item') });
+}
+
+function videoAd(box) {
+  if (localStorage.getItem('lab_v_video')) return;
+  box.innerHTML = `<div class="vid" data-ad="v-video" data-t="video-ad"><div class="scene"><div class="can">V</div><div class="tag">VOLTUP ⚡ ${tx('طاقة بلا حدود', 'UNLIMITED ENERGY')}</div></div><span class="ad">Ad · 0:15</span><span class="lrn" data-t="video-learn">${tx('اعرف أكتر', 'Learn more')}</span><span class="skp" id="skp">Skip in 5</span><div class="bar" id="bar"></div></div>`;
+  Lab.log('adseen', { id: 'v-video' });
+  const t0 = Date.now(), dur = 15; let done = false;
+  const iv = setInterval(() => {
+    const s = (Date.now() - t0) / 1000; const b = box.querySelector('#bar'); if (!b) return clearInterval(iv);
+    b.style.width = Math.min(100, s / dur * 100) + '%'; box.querySelector('.ad').textContent = 'Ad · 0:' + String(Math.max(0, Math.ceil(dur - s))).padStart(2, '0');
+    const sk = box.querySelector('#skp');
+    if (s < 5) sk.textContent = 'Skip in ' + Math.ceil(5 - s); else if (!sk.dataset.r) { sk.dataset.r = 1; sk.textContent = 'Skip ad ▸▏'; sk.dataset.t = 'video-skip'; }
+    if (s >= dur && !done) { done = true; clearInterval(iv); Lab.log('video', { action: 'complete', at: dur }); localStorage.setItem('lab_v_video', 1); box.innerHTML = ''; }
+  }, 200);
+  box.querySelector('#skp').onclick = (e) => { e.stopPropagation(); const s = (Date.now() - t0) / 1000; if (s < 5) return; done = true; clearInterval(iv); Lab.log('video', { action: 'skip', at: Math.round(s * 10) / 10 }); localStorage.setItem('lab_v_video', 1); box.innerHTML = ''; };
+  box.querySelector('.vid').addEventListener('click', (e) => { if (!e.target.closest('#skp')) Lab.log('video', { action: 'adtap', at: Math.round((Date.now() - t0) / 100) / 10 }); });
+}
+
+function article(id) {
+  const it = byId[id]; if (!it) return home();
+  if (it.list) return listicle(0);
+  if (it.scam) {
+    $('#app').innerHTML = `<div class="wrap art"><div class="spons">${tx('ممول', 'Sponsored')}</div><h1>${L(it.title)}</h1><img src="${C.thumb('crypto', 9)}" style="border-radius:12px">
+      <p id="txt">${tx('مروان بدأ بـ 500 جنيه بس على منصة كريبتو نايل، وفي شهر رصيده بقى 50 ألف جنيه! المنصة بتستخدم الذكاء الاصطناعي وبتتاجر لوحدها. "كنت شاكك في الأول، بس الأرباح بجد!"', 'Marwan started with just 500 EGP on CryptoNile, and within a month his balance hit 50,000 EGP! The platform uses AI to trade automatically. “I was sceptical at first, but the profits are real!”')}</p>
+      <a class="next" style="background:#16a34a;box-shadow:0 6px 0 #0e7a35" data-ad="v-crypto-cta" data-t="ad">${tx('ابدأ دلوقتي بـ 500 جنيه', 'Start now with 500 EGP')}</a><p style="font-size:11px;color:#aaa">${tx('إعلان. الأرباح مش مضمونة.', 'Advertisement. Profits not guaranteed.')}</p></div>`;
+    scrollTo(0, 0); return Lab.setView({ view: 'advertorial', kind: 'advertorial', id });
+  }
+  const b = L(it.body);
+  $('#app').innerHTML = `<div class="wrap art"><h1>${L(it.title)}</h1><div class="meta"><span class="live">${it.reading} ${tx('بيقروا دلوقتي', 'reading now')}</span><span>⏱ 1 ${tx('دقيقة', 'min')}</span></div>
+    <img src="${C.thumb(it.cat, 6)}" style="border-radius:12px">${ad()}<div id="txt">${b.map(p => `<p>${p}</p>`).join('')}</div>
+    <div class="react"><span>😂 ${rnd(100, 900)}</span><span>😮 ${rnd(100, 900)}</span><span>😡 ${rnd(10, 90)}</span></div>
+    <div class="trend-h">👀 ${tx('ممكن يعجبك كمان', 'You may also like')}</div>
+    ${S.items.filter(x => x.id !== id).slice(0, 4).map((x, i) => `<a class="it" href="#/a/${x.id}" data-h="${x.id}" data-t="headline:${x.kind}"><img src="${C.thumb(x.cat, i + 70)}"><div><h3>${L(x.title)}</h3>${x.kind === 'sponsored' ? `<div class="spons">${tx('ممول', 'Sponsored')}</div>` : ''}</div></a>`).join('')}</div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'article', kind: 'article', id, words: words(b), el: $('#txt') });
+}
+
+function route() {
+  const h = location.hash, m = h.match(/^#\/list\/(\d+)/);
+  if (m) listicle(+m[1]); else if (h.startsWith('#/a/')) article(h.slice(4)); else home();
+}
+addEventListener('hashchange', route);
+
+// prompts
+function notifPrompt() {
+  if (localStorage.getItem('lab_v_notif')) return;
+  const t0 = Date.now(); const p = document.createElement('div'); p.className = 'perm';
+  p.innerHTML = `<div class="h"><b>🔔 viralvault.news ${ar ? 'عايز' : 'wants to'}</b>${tx('يبعتلك إشعارات', 'Show notifications')}</div><div class="bt"><button data-t="notif-block" id="blk">${tx('حظر', 'Block')}</button><button class="al" data-t="notif-allow" id="alw">${tx('سماح', 'Allow')}</button></div>`;
+  document.body.appendChild(p);
+  const close = (choice) => { Lab.log('notif', { choice, ms: Date.now() - t0 }); localStorage.setItem('lab_v_notif', 1); p.remove(); };
+  p.querySelector('#blk').onclick = () => close('block'); p.querySelector('#alw').onclick = () => close('allow');
+}
+function cookie() {
+  if (localStorage.getItem('lab_v_cookie')) return;
+  const t0 = Date.now(); let opened = false; const c = document.createElement('div'); c.className = 'ck';
+  c.innerHTML = `🍪 ${tx('بنستخدم الكوكيز عشان نديك أحلى تجربة ومحتوى على مزاجك!', 'We use cookies to give you the best experience and content made for you!')}<div class="row"><button class="ok" data-t="cookie-accept">${tx('تمام! 👍', 'Got it! 👍')}</button><button class="pf" data-t="cookie-settings">${tx('التفضيلات', 'Preferences')}</button></div>`;
+  document.body.appendChild(c);
+  const close = (choice) => { Lab.log('cookie', { choice, ms: Date.now() - t0, opened }); localStorage.setItem('lab_v_cookie', 1); c.remove(); };
+  c.querySelector('.ok').onclick = () => close('accept');
+  c.querySelector('.pf').onclick = () => {
+    opened = true;
+    c.querySelector('.row').outerHTML = `<div class="opts" style="margin-top:8px">${[tx('تحليلات', 'Analytics'), tx('إعلانات', 'Advertising'), tx('السوشيال ميديا', 'Social media')].map(x => `<label>${x}<input type="checkbox" checked></label>`).join('')}</div><div class="row"><button class="ok" data-t="cookie-save">${tx('احفظ', 'Save')}</button><button class="pf" data-t="cookie-reject">${tx('ارفض الكل', 'Reject all')}</button></div>`;
+    c.querySelector('[data-t=cookie-save]').onclick = () => close([...c.querySelectorAll('input')].some(i => !i.checked) ? 'custom' : 'accept');
+    c.querySelector('[data-t=cookie-reject]').onclick = () => close('reject');
+  };
+}
+
+route();
+if (!Lab.dashboard) { setTimeout(cookie, 800); setTimeout(notifPrompt, 3500); }
+})();
+</script>
+</body></html>

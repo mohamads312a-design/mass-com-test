@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>News UX Lab</title><link rel="stylesheet" href="/css/lab.css"></head>
+<body><div class="bg"></div>
+<div class="screen stack">
+  <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase" class="muted">UX Research Lab · 2026</div>
+  <h1 id="h"></h1>
+  <p class="muted" id="sub" style="margin:0 0 6px;font-size:16px;line-height:1.6"></p>
+  <div class="seg"><button data-l="ar">العربية</button><button data-l="en">English</button></div>
+  <input class="field" id="name" maxlength="24" autocomplete="off">
+  <label class="consent"><input type="checkbox" id="ok"><span id="ct"></span></label>
+  <button class="btn" id="go" disabled></button>
+</div>
+<script>
+const T = {
+  h: { ar: 'جاهز تتصفح أخبار؟ 📰', en: 'Ready to browse the news? 📰' },
+  sub: { ar: 'هتتصفح 3 مواقع أخبار زي ما بتعمل كل يوم. خليك طبيعي خالص.', en: 'You’ll browse 3 news sites the way you normally do. Just act naturally.' },
+  name: { ar: 'اكتب اسمك', en: 'Your name' },
+  ct: { ar: 'موافق إن تفاعلاتي (الدوسات، السكرول، الوقت) تتسجل في السيشن عشان المحاضرة. اسمي ونتايجي هيظهروا على شاشة المدرج، والداتا هتتمسح بعد المحاضرة.', en: 'I agree that my interactions (taps, scrolling, time) are recorded during this session for the lecture. My name and results will appear on the class screen, and the data will be deleted after the lecture.' },
+  go: { ar: 'ادخل', en: 'Join' },
+};
+let lang = localStorage.getItem('lab_lang') || 'ar';
+const $ = (s) => document.querySelector(s);
+function render() {
+  document.documentElement.lang = lang; document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  $('#h').textContent = T.h[lang]; $('#sub').textContent = T.sub[lang]; $('#name').placeholder = T.name[lang]; $('#ct').textContent = T.ct[lang]; $('#go').textContent = T.go[lang];
+  document.querySelectorAll('[data-l]').forEach(b => b.classList.toggle('on', b.dataset.l === lang));
+}
+document.querySelectorAll('[data-l]').forEach(b => b.onclick = () => { lang = b.dataset.l; render(); });
+const upd = () => $('#go').disabled = !($('#name').value.trim() && $('#ok').checked);
+$('#name').oninput = upd; $('#ok').onchange = upd;
+$('#go').onclick = async () => {
+  $('#go').disabled = true;
+  const r = await fetch('/api/join', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: $('#name').value.trim(), lang, w: innerWidth, h: innerHeight }) });
+  const j = await r.json();
+  if (!j.sid) { $('#go').disabled = false; return; }
+  Object.keys(localStorage).filter(k => k.startsWith('lab_')).forEach(k => localStorage.removeItem(k));
+  localStorage.setItem('lab_sid', j.sid); localStorage.setItem('lab_lang', lang); localStorage.setItem('lab_name', $('#name').value.trim());
+  location.href = '/wait';
+};
+if (localStorage.getItem('lab_sid')) location.href = '/wait';
+render();
+</script>
+</body></html>

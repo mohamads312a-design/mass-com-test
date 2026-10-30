@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>News UX Lab</title><link rel="stylesheet" href="/css/lab.css"></head>
+<body data-site=""><div class="bg"></div>
+<div class="screen" style="text-align:center">
+  <div class="pulse">👀</div>
+  <h1 id="h"></h1>
+  <p class="muted" id="p" style="font-size:17px;line-height:1.6"></p>
+</div>
+<script src="/js/lab.js"></script>
+<script>
+const n = localStorage.getItem('lab_name') || '';
+document.getElementById('h').innerHTML = Lab.L({ ar: `أهلًا يا <span class="grad">${n}</span>!`, en: `You’re in, <span class="grad">${n}</span>!` });
+document.getElementById('p').textContent = Lab.L({ ar: 'استنى لحد ما الدكتور يبدأ… الشاشة دي هتتغير لوحدها.', en: 'Wait for your instructor to start… this screen will change automatically.' });
+</script>
+</body></html>

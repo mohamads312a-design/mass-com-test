@@ -1,0 +1,46 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Spot the ad</title><link rel="stylesheet" href="/css/lab.css">
+<style>
+.wrap{max-width:520px;margin:0 auto;padding:22px 14px 120px}
+.c{display:flex;gap:10px;background:#fff;color:#111;border-radius:14px;padding:10px;margin-bottom:10px;border:3px solid transparent;transition:.15s;cursor:pointer;position:relative}
+.c img{width:96px;height:72px;border-radius:9px;object-fit:cover;flex:none}
+.c h3{margin:0 0 4px;font-size:15px;line-height:1.4}.c small{color:#999;font-size:11px}
+.c.sel{border-color:#f472b6;transform:scale(.98)}.c.sel:after{content:"AD?";position:absolute;top:-8px;inset-inline-end:10px;background:#f472b6;color:#fff;font-weight:800;font-size:11px;padding:2px 8px;border-radius:99px}
+.bar{position:fixed;left:0;right:0;bottom:0;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,#0d0717 30%)}
+.res{text-align:center}.big{font-size:80px;font-weight:800}
+.c.hit{border-color:#22c55e}.c.miss{border-color:#f59e0b}.c.fa{border-color:#ef4444}
+.tag{position:absolute;bottom:6px;inset-inline-end:8px;font-size:11px;font-weight:800;padding:2px 8px;border-radius:99px;color:#fff}
+</style></head>
+<body data-site="spot"><div class="bg"></div>
+<div class="wrap" id="app"></div>
+<script src="/js/content.js"></script>
+<script src="/js/lab.js"></script>
+<script>
+const L = Lab.L, tx = (a, e) => Lab.lang === 'ar' ? a : e, C = CONTENT;
+const items = C.spot.map((x, i) => ({ ...x, i })).sort((a, b) => ((a.i * 7) % 10) - ((b.i * 7) % 10));
+const sel = new Set(); const t0 = Date.now();
+const app = document.getElementById('app');
+if (localStorage.getItem('lab_spot_done')) done(JSON.parse(localStorage.getItem('lab_spot_done')));
+else {
+  app.innerHTML = `<h1 style="font-size:30px">🔍 <span class="grad">${tx('اكتشف الإعلان', 'Spot the ad')}</span></h1>
+  <p class="muted" style="line-height:1.6">${tx('شوية من البوستات دي إعلانات متنكرة. دوس على كل بوست شايف إنه إعلان.', 'Some of these posts are ads in disguise. Tap every post you think is an ad.')}</p>
+  ${items.map(x => `<div class="c" data-i="${x.i}"><img src="${C.thumb(x.cat, x.i + 3)}"><div><h3>${L(x.t)}</h3><small>${L(x.src)}</small></div></div>`).join('')}
+  <div class="bar"><button class="btn" id="go">${tx('تأكيد الإجابات', 'Submit')}</button></div>`;
+  app.querySelectorAll('.c').forEach(c => c.onclick = () => { const i = +c.dataset.i; sel.has(i) ? sel.delete(i) : sel.add(i); c.classList.toggle('sel'); });
+  document.getElementById('go').onclick = () => {
+    const ads = C.spot.map((x, i) => x.ad ? i : -1).filter(i => i >= 0);
+    const r = { hits: ads.filter(i => sel.has(i)).length, misses: ads.filter(i => !sel.has(i)).length, falseAlarms: [...sel].filter(i => !C.spot[i].ad).length, totalAds: ads.length, ms: Date.now() - t0, sel: [...sel] };
+    Lab.log('spot', r); localStorage.setItem('lab_spot_done', JSON.stringify(r)); done(r);
+  };
+}
+function done(r) {
+  const s = new Set(r.sel || []);
+  app.innerHTML = `<div class="res"><div class="big grad">${r.hits}/${r.totalAds}</div><p style="font-size:18px">${tx('إعلانات اكتشفتها', 'ads spotted')}</p>
+    ${r.falseAlarms ? `<p class="muted">${tx('وكمان افتكرت إن', 'You also thought')} ${r.falseAlarms} ${tx('خبر حقيقي إعلان', 'real stories were ads')}</p>` : ''}</div>
+    ${C.spot.map((x, i) => { const cls = x.ad ? (s.has(i) ? 'hit' : 'miss') : (s.has(i) ? 'fa' : ''); const lbl = x.ad ? (s.has(i) ? ['#22c55e', tx('إعلان ✓', 'Ad ✓')] : ['#f59e0b', tx('إعلان فاتك!', 'Missed ad!')]) : (s.has(i) ? ['#ef4444', tx('خبر حقيقي', 'Real news')] : null);
+      return `<div class="c ${cls}"><img src="${C.thumb(x.cat, i + 3)}"><div><h3>${L(x.t)}</h3><small>${L(x.src)}</small></div>${lbl ? `<span class="tag" style="background:${lbl[0]}">${lbl[1]}</span>` : ''}</div>`; }).join('')}
+    <p class="muted" style="text-align:center">${tx('استنى المفاجأة الكبيرة… 👀', 'Wait for the big reveal… 👀')}</p>`;
+}
+</script>
+</body></html>

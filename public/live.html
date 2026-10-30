@@ -1,0 +1,308 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>News UX Lab — Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0614;--card:#160d26;--line:#2a1d44;--mut:#a497c2;--a:#a855f7;--b:#ec4899;--c:#f59e0b;--g:#22c55e;--r:#ef4444;--s:#38bdf8}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}
+body{background:var(--bg);color:#fff;font-family:"Space Grotesk",Cairo,system-ui,sans-serif;font-size:clamp(14px,1.15vw,24px)}
+[dir=rtl] body{font-family:Cairo,system-ui,sans-serif}
+.bgfx{position:fixed;inset:0;background:radial-gradient(circle at 10% 0%,#6d28d944,transparent 40%),radial-gradient(circle at 100% 100%,#db277744,transparent 40%)}
+.bgfx:after{content:"";position:absolute;inset:0;background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:28px 28px}
+.scene{position:fixed;inset:0;padding:4vh 4vw 9vh;display:none;flex-direction:column}
+.scene.on{display:flex}
+.kick{font-size:.8em;letter-spacing:.25em;text-transform:uppercase;color:var(--mut)}
+h1{font-size:3.2em;line-height:1.05;margin:.15em 0 .5em;font-weight:700;letter-spacing:-.02em}[dir=rtl] h1{line-height:1.35;letter-spacing:0}
+.grad{background:linear-gradient(90deg,#c084fc,#f472b6,#fb923c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.grid{display:grid;gap:1.4vw;flex:1;min-height:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:1.4vw 1.6vw;position:relative;overflow:hidden;min-height:0}
+.card h3{margin:0 0 .6em;font-size:.95em;color:var(--mut);font-weight:500;letter-spacing:.04em}
+.big{font-size:5.2em;font-weight:700;line-height:1;letter-spacing:-.03em}
+.mid{font-size:2.4em;font-weight:700;line-height:1.05}
+.sub{color:var(--mut);margin-top:.4em}
+/* entrance animation (only while .enter) */
+.enter .an{opacity:0;animation:up .7s cubic-bezier(.2,1,.3,1) forwards}
+@keyframes up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+.enter .pop{opacity:0;animation:pop .6s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+/* bars */
+.bars{display:flex;flex-direction:column;gap:.45em}
+.bar{display:grid;grid-template-columns:8.5em 1fr 4.2em;align-items:center;gap:.7em;font-size:.95em}
+.bar .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.bar .tr{height:1.25em;background:#ffffff0d;border-radius:99px;overflow:hidden}
+.bar .fl{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--a),var(--b));width:0;transition:width 1.2s cubic-bezier(.2,1,.3,1)}
+.bar .vl{text-align:end;font-variant-numeric:tabular-nums;font-weight:700}
+/* feed */
+.feed{display:flex;flex-direction:column;gap:.5em;overflow:hidden;height:100%}
+.fi{display:flex;gap:.7em;align-items:center;background:#ffffff08;border:1px solid var(--line);border-radius:14px;padding:.55em .8em;animation:fi .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes fi{from{opacity:0;transform:translateX(-40px) scale(.95)}}[dir=rtl] .fi{animation-name:fir}@keyframes fir{from{opacity:0;transform:translateX(40px) scale(.95)}}
+.fi .e{font-size:1.5em}.fi b{color:#f9a8d4}.fi .t{margin-inline-start:auto;color:var(--mut);font-size:.8em}
+/* bubbles */
+.bubbles{display:flex;flex-wrap:wrap;gap:.6em;align-content:flex-start}
+.bub{background:linear-gradient(135deg,#7c3aed,#db2777);padding:.5em 1em;border-radius:99px;font-weight:700;font-size:1.15em;animation:pop .6s cubic-bezier(.2,1.6,.4,1)}
+/* persona wall */
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(11.5em,1fr));gap:.9em;overflow:auto;align-content:start;padding-bottom:1em}
+.pc{perspective:800px;height:9.8em;cursor:pointer}
+.pc .in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,1,.3,1)}
+.pc.flip .in{transform:rotateY(180deg)}
+.pc .f,.pc .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;padding:.8em;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.pc .f{background:var(--card);border:1px solid var(--line);font-size:1.3em;font-weight:700}
+.pc .b{transform:rotateY(180deg);background:linear-gradient(150deg,#4c1d95,#9d174d)}
+.pc .em{font-size:2.6em;line-height:1}.pc .pn{font-weight:700;font-size:.95em;margin-top:.3em}.pc .nm{font-size:1.15em;font-weight:700}.pc .tg{font-size:.7em;opacity:.8;margin-top:.3em}
+/* misc */
+.nav{position:fixed;bottom:2.2vh;left:0;right:0;display:flex;justify-content:center;gap:.45em;z-index:20}
+.nav i{width:.65em;height:.65em;border-radius:50%;background:#ffffff33;cursor:pointer;transition:.3s}.nav i.on{background:#fff;width:2em;border-radius:99px}
+.hud{position:fixed;top:2.2vh;inset-inline-end:2vw;display:flex;gap:.6em;z-index:20;font-size:.85em}
+.hud span{background:#ffffff10;border:1px solid var(--line);padding:.35em .8em;border-radius:99px}
+.hud .dot{display:inline-block;width:.6em;height:.6em;border-radius:50%;background:var(--g);margin-inline-end:.4em;animation:bl 1.4s infinite}@keyframes bl{50%{opacity:.3}}
+.ctrl{position:fixed;bottom:6vh;left:50%;transform:translateX(-50%);background:#000c;border:1px solid var(--line);border-radius:16px;padding:.6em;display:none;gap:.4em;z-index:30;flex-wrap:wrap;justify-content:center;max-width:94vw;font-size:.8em}
+.ctrl.on{display:flex}.ctrl button{background:#2a1d44;color:#fff;border:0;border-radius:10px;padding:.6em .9em;font-family:inherit;font-size:1em;cursor:pointer}.ctrl button.cur{background:var(--a)}.ctrl .sep{width:1px;background:var(--line)}
+.vs{display:flex;align-items:flex-end;gap:1em;height:100%}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:.4em}
+.col .stk{width:100%;max-width:5em;border-radius:12px 12px 4px 4px;background:linear-gradient(var(--b),var(--a));height:0;transition:height 1.2s cubic-bezier(.2,1,.3,1);display:flex;align-items:flex-start;justify-content:center;padding-top:.3em;font-weight:700}
+.scatter{position:relative;height:100%}
+.sdot{position:absolute;transform:translate(-50%,50%);display:flex;flex-direction:column;align-items:center;transition:left 1s,bottom 1s}
+.sdot i{width:1.1em;height:1.1em;border-radius:50%;box-shadow:0 0 18px currentColor;background:currentColor}
+.sdot span{font-size:.75em;font-weight:600;white-space:nowrap;margin-top:.2em;background:#000a;padding:0 .4em;border-radius:6px}
+.axis{position:absolute;color:var(--mut);font-size:.8em}
+.heat{display:flex;gap:2vw;justify-content:center;flex:1;min-height:0}
+.hm{display:flex;flex-direction:column;align-items:center;gap:.5em}
+.hm .ph{position:relative;width:calc(390px * var(--k));height:calc(1300px * var(--k));border-radius:24px;overflow:hidden;border:6px solid #2a1d44;background:#fff}
+.hm iframe{width:390px;height:1300px;border:0;transform:scale(var(--k));transform-origin:0 0;pointer-events:none}
+.hm canvas{position:absolute;inset:0;width:100%;height:100%}
+.crown{font-size:4em;line-height:1}
+.fame{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2vw}
+.fame .card{text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:.25em}
+.fame .ic{font-size:2.6em}.fame .who{font-size:1.6em;font-weight:700}.fame .val{color:#f9a8d4;font-weight:700;font-size:1.2em}
+.spot{display:grid;grid-template-columns:1fr 1.4fr;gap:1.6vw;flex:1;min-height:0}
+.tagc{display:inline-block;background:#ffffff12;border:1px solid var(--line);border-radius:99px;padding:.35em .8em;margin:.2em;font-size:.9em}
+table.cmp{width:100%;border-collapse:collapse;font-size:1.05em}table.cmp td,table.cmp th{padding:.55em .5em;border-bottom:1px solid var(--line);text-align:center}table.cmp th{color:var(--mut);font-weight:500}table.cmp td:first-child,table.cmp th:first-child{text-align:start}
+.worst{background:linear-gradient(90deg,#ef444433,transparent)}
+.qr{background:#fff;border-radius:22px;padding:1vw;width:min(30vw,52vh);aspect-ratio:1}.qr svg{width:100%;height:100%}
+.empty{color:var(--mut);font-style:italic}
+</style></head>
+<body>
+<div class="bgfx"></div>
+<div id="scenes"></div>
+<div class="hud"><span><i class="dot"></i><b id="hn">0</b> <span id="hl"></span></span><span id="hstage"></span></div>
+<div class="nav" id="nav"></div>
+<div class="ctrl" id="ctrl"></div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/content.js"></script>
+<script>
+const KEY = new URLSearchParams(location.search).get('key') || '';
+let lang = localStorage.getItem('live_lang') || 'ar';
+const tx = (a, e) => lang === 'ar' ? a : e;
+const C = CONTENT;
+let A = null, state = { stage: 'lobby' }, cur = +localStorage.getItem('live_scene') || 0, entering = false;
+const feedItems = [];
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const SITE = () => ({ alkhabar: tx('الخبر الآن', 'Al-Khabar Now'), ledger: tx('ذا جلوبال ليدجر', 'The Global Ledger'), viralvault: tx('فايرال فولت', 'ViralVault') });
+const P = (p) => p ? (lang === 'ar' ? p.ar : p.en) : '';
+const sec = (ms) => ms == null ? '—' : (ms / 1000).toFixed(1) + tx('ث', 's');
+const headTitle = (id) => { for (const s of [C.alkhabar, C.ledger, C.viral]) { const it = s.items.find(i => i.id === id); if (it) return it.title[lang]; } if (id && id.startsWith('v-feed-')) return C.viral.feedTitles[lang][+id.slice(7)]; return id; };
+
+// --------------------------- scenes ---------------------------
+const SCENES = [
+  { id: 'join', title: () => tx('انضم', 'Join'), render: () => `
+    <div class="kick an">UX Research Lab</div><h1 class="an" style="animation-delay:.1s">${tx('امسح الكود و', 'Scan & ')}<span class="grad">${tx('ادخل', 'join')}</span></h1>
+    <div class="grid" style="grid-template-columns:auto 1fr">
+      <div class="an" style="animation-delay:.2s;display:flex;flex-direction:column;gap:1em;align-items:center"><div class="qr" id="qr"></div><div style="font-size:.9em;color:var(--mut);direction:ltr" id="qurl"></div></div>
+      <div class="card an" style="animation-delay:.3s"><h3>${tx('في المدرج دلوقتي', 'In the room')} · <b style="color:#fff" id="jc">${A ? A.joined : 0}</b></h3><div class="bubbles" id="bubbles">${(A ? A.students : []).map(s => `<span class="bub">${esc(s.name)}</span>`).join('')}</div></div>
+    </div>`, after: loadQR, static: true },
+  { id: 'live', title: () => tx('لايف', 'Live'), render: () => {
+    const st = A ? A.students : []; const s = (f) => st.reduce((a, x) => a + f(x), 0);
+    return `<div class="kick an">${tx('بيحصل دلوقتي', 'Happening now')}</div><h1 class="an" style="animation-delay:.1s">${tx('كل دوسة ', 'Every tap is ')}<span class="grad">${tx('بتتسجل', 'being recorded')}</span></h1>
+    <div class="grid" style="grid-template-columns:1fr 1fr 1fr 1.5fr;grid-template-rows:auto 1fr">
+      <div class="card an" style="animation-delay:.15s"><h3>${tx('دوسات', 'Taps')}</h3><div class="big" data-n="${s(x => x.taps)}">${s(x => x.taps)}</div></div>
+      <div class="card an" style="animation-delay:.25s"><h3>${tx('ثواني ضاعت في النوافذ', 'Seconds lost to pop-ups')}</h3><div class="big" data-n="${s(x => x.lostTotalS || 0)}">${s(x => x.lostTotalS || 0)}</div></div>
+      <div class="card an" style="animation-delay:.35s"><h3>${tx('دوسات بعصبية', 'Rage taps')}</h3><div class="big" style="color:#f472b6" data-n="${s(x => x.rage)}">${s(x => x.rage)}</div></div>
+      <div class="card an" style="grid-row:span 2;animation-delay:.45s"><h3>⚡ ${tx('اللايف', 'Live feed')}</h3><div class="feed" id="feed">${feedItems.map(feedHTML).join('')}</div></div>
+      <div class="card an" style="grid-column:span 3;animation-delay:.55s"><h3>${tx('الطلبة فين دلوقتي؟', 'Where is everyone?')}</h3>${siteBars()}</div>
+    </div>`; } },
+  { id: 'success', title: () => tx('نجاح المهام', 'Task success'), render: () => { const T = A.aggregate.usability.tasks, S = SITE();
+    const nm = { alkhabar: tx('نتيجة الماتش', 'Match score'), ledger: tx('قفل التنبيهات', 'Turn off alerts'), viralvault: tx('الأكلة رقم 7', 'Food #7') };
+    return `<div class="kick an">${tx('المقياس الأول: الفعالية', 'Metric #1: effectiveness')}</div><h1 class="an" style="animation-delay:.1s">${tx('عرفتوا ', 'Did you ')}<span class="grad">${tx('تخلّصوا المهمة', 'finish the task')}</span>${tx('؟', '?')}</h1>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr)">${Object.entries(T).map(([k, t], i) => `<div class="card an" style="animation-delay:${.2 + i * .1}s"><h3>${S[k]} · ${nm[k]}</h3>
+      <div class="big" data-n="${t.success}" data-s="%">${t.success}%</div><div class="sub">${tx('خلّصوها', 'succeeded')} · n=${t.n} · ${tx('سابوها', 'gave up')}: ${t.gaveUp}</div>
+      <div class="bars" style="margin-top:1em">${bar(tx('نجحوا', 'Success'), t.success, t.success + '%', 'linear-gradient(90deg,#22c55e,#38bdf8)')}${bar(tx('ماعرفوش', 'Failed'), 100 - t.success, (100 - t.success) + '%')}</div>
+      <div style="margin-top:1em">${t.fastest.map((f, j) => `<div>${['🥇', '🥈', '🥉'][j]} ${esc(f.name)} · ${f.s}${tx('ث', 's')}</div>`).join('')}</div></div>`).join('')}</div>`; } },
+  { id: 'effort', title: () => tx('المجهود', 'Effort'), render: () => { const T = A.aggregate.usability.tasks, S = SITE(); const mx = Math.max(1, ...Object.values(T).map(t => t.avgSteps));
+    return `<div class="kick an">${tx('المقياس التاني: الكفاءة', 'Metric #2: efficiency')}</div><h1 class="an" style="animation-delay:.1s">${tx('خدت منكم ', 'How much ')}<span class="grad">${tx('قد إيه', 'effort')}</span>${tx('؟', '?')}</h1>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr)">${Object.entries(T).map(([k, t], i) => `<div class="card an" style="animation-delay:${.2 + i * .1}s;display:flex;flex-direction:column;gap:.6em"><h3>${S[k]}</h3>
+      <div><div class="mid">${t.avgS}<span style="font-size:.45em;color:var(--mut)"> ${tx('ثانية في المتوسط', 'sec avg')}</span></div></div>
+      <div><div class="mid">${t.avgSteps}<span style="font-size:.45em;color:var(--mut)"> ${tx('دوسة', 'taps')}</span></div><div class="tr" style="height:.8em;background:#ffffff10;border-radius:99px;margin-top:.4em"><div class="fl" data-w="${t.avgSteps / mx * 100}" style="height:100%;border-radius:99px;background:linear-gradient(90deg,var(--a),var(--b))"></div></div></div>
+      <div class="sub">📄 ${t.avgViews} ${tx('صفحة', 'pages')} · 👆 ${t.avgDead} ${tx('دوسة على الفاضي', 'dead taps')}</div></div>`).join('')}</div>`; } },
+  { id: 'lost', title: () => tx('الوقت الضايع', 'Time lost'), render: () => { const U = A.aggregate.usability, S = SITE(); const mx = Math.max(1, ...U.lost.map(x => x.s));
+    return `<div class="kick an">${tx('المقاطعات', 'Interruptions')}</div><h1 class="an" style="animation-delay:.1s">${tx('كل واحد ضيّع ', 'Each of you lost ')}<span class="grad" data-n="${U.lostAvg}">${U.lostAvg}</span>${tx(' ثانية في النوافذ', ' seconds to pop-ups')}</h1>
+    <div class="grid" style="grid-template-columns:1.6fr 1fr">
+      <div class="card an" style="animation-delay:.2s"><h3>⏱ ${tx('كوكيز + إعلان الشاشة + النشرة + الإشعارات + الفيديو', 'Cookies + full-screen ad + newsletter + notifications + video')}</h3><div class="bars">${U.lost.slice(0, 14).map(r => bar(r.name, r.s / mx * 100, r.s + tx('ث', 's'))).join('') || empty()}</div></div>
+      <div class="card an" style="animation-delay:.3s"><h3>${tx('متوسط الوقت الضايع في كل موقع', 'Average time lost per site')}</h3><div class="vs" style="height:80%">${Object.entries(U.lostBySite).map(([k, v]) => `<div class="col"><div class="stk" data-h="${v / Math.max(1, ...Object.values(U.lostBySite)) * 100}">${v}${tx('ث', 's')}</div><div style="font-size:.8em;text-align:center">${S[k]}</div></div>`).join('')}</div></div></div>`; } },
+  { id: 'errors', title: () => tx('الأخطاء', 'Errors'), render: () => { const E = A.aggregate.usability.errors;
+    return `<div class="kick an">${tx('الأخطاء والعصبية', 'Errors & frustration')}</div><h1 class="an" style="animation-delay:.1s">${tx('الموبايل ', 'Your phones ')}<span class="grad">${tx('اتعصّب', 'got angry')}</span>${tx(' كام مرة؟', '')}</h1>
+    <div class="grid" style="grid-template-columns:repeat(4,1fr) 1.4fr">
+      ${[['😤', tx('دوسات بعصبية', 'Rage taps'), E.rage], ['👆', tx('دوسات على الفاضي', 'Dead taps'), E.dead], ['🫣', tx('دوسات بالغلط على إعلان', 'Accidental ad taps'), E.mistaps], ['🏳️', tx('مهام اتسابت', 'Tasks abandoned'), E.gaveUp]].map(([e, l, v], i) => `<div class="card an" style="animation-delay:${.2 + i * .08}s;text-align:center;display:flex;flex-direction:column;justify-content:center"><div style="font-size:3em">${e}</div><div class="big" data-n="${v}">${v}</div><div class="sub">${l}</div></div>`).join('')}
+      <div class="card an" style="animation-delay:.55s"><h3>😤 ${tx('الأكتر عصبية', 'Most frustrated')}</h3>${E.ragers.map(x => `<div style="display:flex;justify-content:space-between;padding:.3em 0"><span>${esc(x.name)}</span><b>${x.n}×</b></div>`).join('') || empty()}</div></div>`; } },
+  { id: 'reading', title: () => tx('القراية', 'Reading'), render: () => { const r = A.aggregate.reading; const col = { deep: '#38bdf8', skimmer: '#f59e0b', clickbait: '#f472b6', bouncer: '#ef4444' };
+    return `<div class="kick an">${tx('القراية', 'Reading')}</div><h1 class="an" style="animation-delay:.1s">${tx('قريتوا بجد', 'You actually read')} <span class="grad">${r.readPct}%</span> ${tx('من المقالات اللي فتحتوها', 'of the articles you opened')}</h1>
+    <div class="grid" style="grid-template-columns:2.2fr 1fr">
+      <div class="card an" style="animation-delay:.2s"><h3>${tx('كل نقطة طالب: ↑ عمق القراية · → سرعة القراية (أبطأ = قراية بجد)', 'Each dot is a student: ↑ scroll depth · → reading pace (further = really reading)')}</h3>
+        <div class="scatter" style="height:85%">${r.dots.map((d, i) => `<div class="sdot pop" style="left:${Math.min(94, 6 + Math.min(1.2, d.ratio) / 1.2 * 88 + ((i * 37) % 9 - 4))}%;bottom:${Math.min(90, 4 + d.depth * .80 + ((i * 53) % 11 - 5))}%;color:${col[d.persona] || '#c084fc'};animation-delay:${.3 + i * .05}s"><i></i><span>${esc(d.name)}</span></div>`).join('')}</div></div>
+      <div class="grid" style="grid-template-columns:1fr;grid-template-rows:1fr 1fr">
+        <div class="card an" style="animation-delay:.3s"><h3>${tx('متوسط عمق السكرول', 'Average scroll depth')}</h3><div class="big">${r.avgDepth}%</div></div>
+        <div class="card an" style="animation-delay:.4s"><h3>♾️ ${tx('أبطال السكرول اللي مالوش آخر', 'Infinite-scroll champions')}</h3>${r.feedMax.filter(x => x.n).map(x => `<div style="display:flex;justify-content:space-between"><span>${esc(x.name)}</span><b>${x.n}</b></div>`).join('') || empty()}</div>
+      </div></div>`; } },
+  { id: 'saydo', title: () => tx('بيقولوا وبيعملوا', 'Say vs Do'), render: () => { const U = A.aggregate.usability, S = SITE();
+    return `<div class="kick an">${tx('المقياس التالت: الرضا', 'Metric #3: satisfaction')}</div><h1 class="an" style="animation-delay:.1s">${tx('اللي بتقولوه ', 'What you say ')}<span class="grad">≠</span>${tx(' اللي بتعملوه', ' what you do')}</h1>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr) 1.3fr">${Object.entries(U.score).map(([k, x], i) => `<div class="card an" style="animation-delay:${.2 + i * .1}s;text-align:center"><h3>${S[k]}</h3><div class="big">${x.seq ?? '—'}<span style="font-size:.35em;color:var(--mut)">/7</span></div><div class="sub">${tx('قالوا: سهولة', 'said: ease')}</div><hr style="border-color:var(--line);margin:.8em 0">
+      <div style="text-align:start">✅ ${tx('خلّصوا', 'Succeeded')}: <b>${x.success}%</b><br>⏱ ${tx('وقت', 'Time')}: <b>${x.avgS}${tx('ث', 's')}</b><br>👆 ${tx('دوسات', 'Taps')}: <b>${x.steps}</b><br>😤 ${tx('عصبية', 'Rage')}: <b>${x.rage}</b></div><div class="sub">${tx('اللي عملوه', 'what they did')}</div></div>`).join('')}
+      <div class="card an" style="animation-delay:.5s"><h3>🤔 ${tx('تناقضات', 'Contradictions')}</h3>${U.saydo.map(c => `<div style="padding:.4em 0;border-bottom:1px solid var(--line)"><b>${esc(c.name)}</b> ${tx('قال إن', 'said')} ${S[c.site]} ${tx('سهل', 'was easy')} <b>${c.mood}/7</b> ${tx('بس', 'but')} ${c.failed ? tx('ماخلّصش المهمة', 'failed the task') : c.rage ? c.rage + ' ' + tx('دوسات بعصبية', 'rage taps') : tx('داس على إعلان بالغلط', 'mis-tapped an ad')}</div>`).join('') || empty()}</div></div>`; } },
+  { id: 'blockers', title: () => tx('إيه اللي عطّلكم', 'Blockers'), render: () => { const U = A.aggregate.usability; const L = [tx('النوافذ والإعلانات', 'Pop-ups & ads'), tx('مالقيتش اللي بدوّر عليه', 'Couldn’t find it'), tx('الصفحات المتقسمة', 'Split pages'), tx('الزحمة والخط', 'Clutter & text'), tx('ولا حاجة', 'Nothing')]; const t = Math.max(1, U.blockers.reduce((a, b) => a + b, 0));
+    return `<div class="kick an">${tx('بصوتكم', 'In your words')}</div><h1 class="an" style="animation-delay:.1s">${tx('إيه أكتر حاجة ', 'What ')}<span class="grad">${tx('عطّلتكم', 'slowed you down')}</span>${tx('؟', '?')}</h1>
+    <div class="grid" style="grid-template-columns:1fr"><div class="card an" style="animation-delay:.2s"><div class="bars" style="gap:1em;font-size:1.3em">${U.blockers.map((n, i) => bar(L[i], n / t * 100, Math.round(n / t * 100) + '%', i === 4 ? 'linear-gradient(90deg,#22c55e,#38bdf8)' : '')).join('')}</div></div></div>`; } },
+  { id: 'sites', title: () => tx('مقارنة المواقع', 'Site comparison'), render: () => { const U = A.aggregate.usability, S = SITE(), w = U.worst, b = U.best;
+    const rows = [[tx('درجة سهولة الاستخدام', 'Usability score'), 'score', '/100'], [tx('نجاح المهمة', 'Task success'), 'success', '%'], [tx('سهولة (قالوا)', 'Ease (said)'), 'seq', '/7'], [tx('متوسط وقت المهمة', 'Avg task time'), 'avgS', 's'], [tx('دوسات للمهمة', 'Taps per task'), 'steps', ''], [tx('وقت ضاع في النوافذ', 'Time lost to pop-ups'), 'lost', 's'], [tx('دوسات بعصبية', 'Rage taps'), 'rage', '']];
+    return `<div class="kick an">${tx('تقييم سهولة الاستخدام', 'Usability evaluation')}</div><h1 class="an" style="animation-delay:.1s">${tx('الأصعب: ', 'Hardest: ')}<span class="grad">${w ? S[w] : '—'}</span></h1>
+    <div class="grid" style="grid-template-columns:1fr 3fr"><div class="grid" style="grid-template-rows:1fr 1fr"><div class="card an pop" style="animation-delay:.3s;text-align:center;display:flex;flex-direction:column;justify-content:center"><div class="crown">🥵</div><div class="mid">${w ? U.score[w].score : '—'}</div><div class="sub">${w ? S[w] : ''}</div></div><div class="card an pop" style="animation-delay:.4s;text-align:center;display:flex;flex-direction:column;justify-content:center"><div class="crown">🏆</div><div class="mid">${b ? U.score[b].score : '—'}</div><div class="sub">${b ? S[b] : ''}</div></div></div>
+    <div class="card an" style="animation-delay:.2s"><table class="cmp"><tr><th></th>${Object.keys(U.score).map(k => `<th class="${k === w ? 'worst' : ''}">${S[k]}</th>`).join('')}</tr>${rows.map(([l, k, u]) => `<tr><td>${l}</td>${Object.keys(U.score).map(sk => `<td class="${sk === w ? 'worst' : ''}"><b>${U.score[sk][k] ?? '—'}</b>${u}</td>`).join('')}</tr>`).join('')}</table></div></div>`; } },
+  { id: 'heat', title: () => tx('خرايط الدوس', 'Heatmaps'), render: () => `<div class="kick an">${tx('خرايط حرارية', 'Heatmaps')}</div><h1 class="an" style="animation-delay:.1s;font-size:2.4em;margin-bottom:.3em">${tx('دوستوا فين في الصفحة الرئيسية؟', 'Where did you tap on each homepage?')}</h1>
+    <div class="heat" id="heat">${['alkhabar', 'ledger', 'viralvault'].map((k, i) => `<div class="hm an" style="animation-delay:${.2 + i * .12}s"><div class="ph"><iframe src="/sites/${k}?preview=1&lang=${lang}" loading="lazy"></iframe><canvas data-site="${k}"></canvas></div><b>${SITE()[k]}</b></div>`).join('')}</div>`, after: drawHeat, static: true },
+  { id: 'personas', title: () => tx('الشخصيات', 'Personas'), render: () => { const st = (A ? A.students : []).filter(s => s.taps || s.timeS);
+    const dist = Object.entries(A.aggregate.personas).sort((a, b) => b[1].names.length - a[1].names.length);
+    return `<div class="kick an">${tx('انتو مين؟', 'Who are you?')}</div><h1 class="an" style="animation-delay:.1s;margin-bottom:.3em">${dist.slice(0, 3).map(([k, p]) => `${p.emoji} <span class="grad">${p.names.length}</span>`).join(' &nbsp; ')}</h1>
+    <div class="wall" id="wall">${st.map((s, i) => `<div class="pc an" style="animation-delay:${.15 + i * .04}s" data-sid="${s.sid}"><div class="in"><div class="f"><div class="nm">${esc(s.name)}</div><div style="font-size:.6em;color:var(--mut);margin-top:.4em">${tx('دوس عشان تشوف', 'click to reveal')}</div></div><div class="b"><div class="em">${s.persona.emoji}</div><div class="nm">${esc(s.name)}</div><div class="pn">${P(s.persona)}</div><div class="tg">${s.taskSuccess != null ? '✅ ' + s.taskSuccess + '% · ' : ''}⏱ ${s.lostTotalS || 0}${tx('ث ضايعة', 's lost')}</div></div></div></div>`).join('')}</div>`; }, after: bindWall, static: true },
+  { id: 'spotlight', title: () => tx('تحليل لكل واحد', 'Spotlight'), render: () => spotlight(), after: () => {}, static: true },
+  { id: 'fame', title: () => tx('لوحة الشرف', 'Hall of fame'), render: () => { const F = { fastTask: ['⚡', tx('أسرع واحد خلّص المهام', 'Fastest task solver')], fewSteps: ['🎯', tx('أقل دوسات', 'Fewest taps')], ninja: ['🥷', tx('أقل وقت ضاع في النوافذ', 'Least time lost to pop-ups')], lost: ['🐢', tx('أكتر وقت ضاع في النوافذ', 'Most time lost to pop-ups')], rage: ['😤', tx('أكتر دوسات بعصبية', 'Most rage taps')], deepest: ['📖', tx('أعمق قارئ', 'Deepest reader')], scroller: ['♾️', tx('ملك السكرول', 'Scroll king')], spotter: ['🔍', tx('صياد الإعلانات', 'Ad spotter')] };
+    return `<div class="kick an">${tx('الختام', 'Finale')}</div><h1 class="an" style="animation-delay:.1s">🏆 ${tx('لوحة الشرف', 'Hall of fame')}</h1>
+    <div class="fame grid">${A.aggregate.usability.fame.map((f, i) => `<div class="card pop" style="animation-delay:${.3 + i * .18}s"><div class="ic">${F[f.k][0]}</div><div style="color:var(--mut)">${F[f.k][1]}</div><div class="who">${esc(f.name)}</div><div class="val">${f.value}</div></div>`).join('') || empty()}</div>`; } },
+];
+
+function empty() { return `<div class="empty">${tx('لسه مافيش داتا…', 'No data yet…')}</div>`; }
+function bar(name, pctW, val, g) { return `<div class="bar"><span class="nm">${esc(name)}</span><div class="tr"><div class="fl" data-w="${Math.max(2, pctW)}" style="${g ? 'background:' + g : ''}"></div></div><span class="vl">${val}</span></div>`; }
+function siteBars() { const s = A ? A.aggregate.sites : {}; const S = SITE(); const mx = Math.max(1, ...Object.values(s).map(x => x.n));
+  return `<div class="bars">${Object.entries(s).map(([k, x]) => bar(S[k], x.n / mx * 100, x.n + ' 👤')).join('')}</div>`; }
+const TAGS = () => ({ impulsive: tx('بيدوس على طول', 'Impulsive clicker'), lowPrivacy: tx('مش فارقة معاه الخصوصية', 'Low privacy'), privacyAware: tx('واعي بالخصوصية', 'Privacy-aware'), adResponsive: tx('بيتفاعل مع الإعلانات', 'Ad-responsive'), promoSusceptible: tx('بيصدّق "اكسب دلوقتي"', 'Falls for “win now”'), shortAttention: tx('تركيز قصير', 'Short attention'), engagedReader: tx('قارئ متفاعل', 'Engaged reader'), reachable: tx('سهل نوصله', 'Reachable'), frustrated: tx('متضايق', 'Frustrated'), payer: tx('مستعد يدفع', 'Willing to pay') });
+function tagLine(s) { const T = TAGS(); return s.adProfile.filter(t => t.k !== 'interests').slice(0, 2).map(t => T[t.k]).join(' · '); }
+
+let spotIdx = 0;
+function spotlight() {
+  const st = (A ? A.students : []).filter(s => s.taps || s.timeS);
+  if (!st.length) return `<h1>${tx('تحليل لكل واحد', 'Spotlight')}</h1>` + empty();
+  const s = st[spotIdx % st.length], S = SITE();
+  const line = (ic, t, v) => `<div style="display:flex;justify-content:space-between;padding:.45em 0;border-bottom:1px solid var(--line)"><span>${ic} ${t}</span><b>${v}</b></div>`;
+  const tk = (t) => !t ? '—' : t.gaveUp ? tx('سابها 🏳️', 'gave up 🏳️') : (t.ok ? '✅ ' : '❌ ') + sec(t.ms) + ' · ' + t.steps + ' ' + tx('دوسة', 'taps');
+  return `<div class="kick an">${tx('تحليل لكل واحد', 'Spotlight')} · ${spotIdx % st.length + 1}/${st.length} <span style="opacity:.6">(${tx('دوس ↓ للي بعده', 'press ↓ for next')})</span></div>
+  <h1 class="an" style="animation-delay:.1s">${s.persona.emoji} <span class="grad">${esc(s.name)}</span> — ${P(s.persona)}</h1>
+  <div class="spot"><div class="card an" style="animation-delay:.2s"><h3>${tx('المهام', 'Tasks')}</h3>
+    ${line('⚽', tx('نتيجة الماتش', 'Match score'), tk(s.task.alkhabar))}${line('🔕', tx('قفل التنبيهات', 'Turn off alerts'), tk(s.task.ledger))}${line('🍌', tx('الأكلة رقم 7', 'Food #7'), tk(s.task.viralvault))}
+    ${line('⏱', tx('وقت ضاع في النوافذ', 'Time lost to pop-ups'), (s.lostTotalS || 0) + tx('ث', 's'))}${line('😤', tx('دوسات بعصبية', 'Rage taps'), s.rage)}${line('👆', tx('دوسات على الفاضي', 'Dead taps'), s.deadTaps)}${line('🫣', tx('دوسات بالغلط على إعلانات', 'Accidental ad taps'), s.adTaps)}
+  </div><div class="grid" style="grid-template-rows:auto 1fr">
+    <div class="card an" style="animation-delay:.3s"><h3>${tx('قال إن السهولة', 'Said ease')}</h3><div style="display:flex;gap:1.4em">${['alkhabar', 'ledger', 'viralvault'].map(k => `<div style="text-align:center;flex:1"><div class="mid">${s.sites[k].mood ?? '—'}<span style="font-size:.4em;color:var(--mut)">/7</span></div><div class="sub">${S[k]}</div></div>`).join('')}</div></div>
+    <div class="card an" style="animation-delay:.4s"><h3>${tx('القراية', 'Reading')}</h3>${line('📖', tx('قرا / عدّى', 'read / skimmed'), s.reading.read + ' / ' + s.reading.skimmed)}${line('📏', tx('عمق السكرول', 'Scroll depth'), s.reading.avgDepth + '%')}${line('♾️', tx('بوستات في السكرول', 'Feed posts'), s.feedItems)}</div>
+  </div></div>`;
+}
+
+function bindWall() {
+  document.querySelectorAll('.pc').forEach(p => p.onclick = () => p.classList.toggle('flip'));
+}
+function flipAll() { const ps = [...document.querySelectorAll('.pc:not(.flip)')]; ps.forEach((p, i) => setTimeout(() => p.classList.add('flip'), i * 140)); }
+
+function drawHeat() {
+  const k = Math.min(.5, (innerHeight * .66) / 1300);
+  document.querySelectorAll('.hm .ph').forEach(p => p.style.setProperty('--k', k));
+  const paint = () => document.querySelectorAll('.hm canvas').forEach(cv => {
+    const pts = (A && A.aggregate.heat[cv.dataset.site]) || [];
+    cv.width = 390; cv.height = 1300; const g = cv.getContext('2d'); g.clearRect(0, 0, 390, 1300);
+    g.globalCompositeOperation = 'lighter';
+    pts.forEach(([x, yr]) => { const X = x * 390, Y = yr * 390; const rg = g.createRadialGradient(X, Y, 0, X, Y, 34); rg.addColorStop(0, 'rgba(255,30,70,.75)'); rg.addColorStop(.5, 'rgba(255,140,0,.32)'); rg.addColorStop(1, 'rgba(255,200,0,0)'); g.fillStyle = rg; g.fillRect(X - 34, Y - 34, 68, 68); });
+  });
+  paint(); window._paintHeat = paint;
+}
+
+// ---------------------------- engine ----------------------------
+const host = document.getElementById('scenes');
+function show(i, animate = true) {
+  cur = (i + SCENES.length) % SCENES.length; localStorage.setItem('live_scene', cur);
+  const sc = SCENES[cur];
+  host.innerHTML = `<section class="scene on ${animate ? 'enter' : ''}" id="sc">${A || sc.id === 'join' || sc.id === 'live' ? sc.render() : `<h1>${tx('مستنيين الداتا…', 'Waiting for data…')}</h1>`}</section>`;
+  if (sc.after) sc.after();
+  settle(animate);
+  document.getElementById('nav').innerHTML = SCENES.map((s, k) => `<i class="${k === cur ? 'on' : ''}" title="${s.title()}" onclick="show(${k})"></i>`).join('');
+  if (animate) { entering = true; setTimeout(() => { entering = false; const s = document.getElementById('sc'); if (s) s.classList.remove('enter'); }, 2600); }
+}
+function settle(animate) {
+  const d = animate ? 500 : 0;
+  setTimeout(() => {
+    document.querySelectorAll('.fl[data-w]').forEach(e => e.style.width = e.dataset.w + '%');
+    document.querySelectorAll('.stk[data-h]').forEach(e => e.style.height = Math.max(4, e.dataset.h * .9) + '%');
+  }, d);
+  if (animate) document.querySelectorAll('[data-n]').forEach(el => { const to = +el.dataset.n, suf = el.dataset.s || ''; const t0 = performance.now(); const step = (t) => { const p = Math.min(1, (t - t0) / 1400); el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))) + suf; if (p < 1) requestAnimationFrame(step); }; el.textContent = '0' + suf; setTimeout(() => requestAnimationFrame(step), 300); });
+}
+function refresh() {
+  if (entering) return;
+  const sc = SCENES[cur];
+  if (sc.id === 'heat') { if (window._paintHeat) window._paintHeat(); return; }
+  if (sc.static) return; // keep flipped cards / spotlight stable
+  show(cur, false);
+}
+async function loadQR() { try { const r = await fetch('/api/qr'); const j = await r.json(); document.getElementById('qr').innerHTML = j.svg; document.getElementById('qurl').textContent = j.url.replace(/^https?:\/\//, ''); } catch (e) {} }
+
+const EMO = { cookie: '⏱', interstitial: '📺', newsletter: '✉️', paywall: '💳', notif: '🔔', video: '▶️', adtap: '🧲', headline: '📰', task: '🎯', escape: '🪤', scam: '📱', appbanner: '📲', mood: '💬', spot: '🔍', join: '👋' };
+function feedText(f) {
+  const n = `<b>${esc(f.name)}</b>`, d = f.data || {}, S = SITE();
+  switch (f.kind) {
+    case 'join': return tx(`${n} دخل المدرج`, `${n} joined`);
+    case 'cookie': return d.choice === 'accept' ? tx(`${n} وافق على كل الكوكيز في ${sec(d.ms)}`, `${n} accepted all cookies in ${sec(d.ms)}`) : d.choice === 'reject' ? tx(`${n} رفض الكوكيز 🛡️`, `${n} rejected cookies 🛡️`) : tx(`${n} ظبط الكوكيز بنفسه`, `${n} customised cookies`);
+    case 'interstitial': return d.action === 'close' ? tx(`${n} قفل الإعلان بعد ${sec(d.ms)}`, `${n} closed the full-screen ad after ${sec(d.ms)}`) : tx(`${n} داس على الإعلان بالغلط 😬`, `${n} tapped the ad by mistake 😬`);
+    case 'newsletter': return { subscribe: tx(`${n} اشترك في النشرة`, `${n} subscribed to the newsletter`), decline: tx(`${n} داس "مش بحب أبقى فاهم"`, `${n} clicked “stay uninformed”`), close: tx(`${n} قفل النشرة`, `${n} closed the newsletter`) }[d.action];
+    case 'paywall': return d.action === 'seen' ? tx(`${n} خبط في جدار الدفع`, `${n} hit the paywall`) : tx(`${n} داس "${d.action}" في جدار الدفع`, `${n} chose “${d.action}” on the paywall`);
+    case 'notif': return d.choice === 'allow' ? tx(`${n} سمح بالإشعارات 🔔`, `${n} allowed notifications 🔔`) : tx(`${n} منع الإشعارات`, `${n} blocked notifications`);
+    case 'video': return d.action === 'skip' ? tx(`${n} عدّى الفيديو عند ${d.at}ث`, `${n} skipped the video at ${d.at}s`) : d.action === 'complete' ? tx(`${n} اتفرج على الإعلان كله`, `${n} watched the whole ad`) : tx(`${n} داس على إعلان الفيديو`, `${n} tapped the video ad`);
+    case 'adtap': return tx(`${n} داس على إعلان في ${S[f.site] || ''}`, `${n} tapped an ad on ${S[f.site] || ''}`);
+    case 'headline': return tx(`${n} فتح: "${esc(headTitle(d.id)).slice(0, 48)}…"`, `${n} opened: “${esc(headTitle(d.id)).slice(0, 48)}…”`);
+    case 'task': return d.gaveUp ? tx(`${n} ساب المهمة`, `${n} gave up the mission`) : d.correct ? tx(`${n} خلّص المهمة في ${sec(d.ms)} · ${d.steps || 0} دوسة ✅`, `${n} solved the mission in ${sec(d.ms)} ✅`) : tx(`${n} جاوب غلط ❌`, `${n} answered wrong ❌`);
+    case 'escape': return d.done ? tx(`${n} قفل التنبيهات في ${sec(d.ms)} · ${d.steps || 0} دوسة 🎉`, `${n} escaped the trap in ${sec(d.ms)} 🎉`) : tx(`${n} وقع في الفخ 🪤`, `${n} got trapped 🪤`);
+    case 'scam': return d.action === 'claim' ? tx(`${n} داس "خد الآيفون" 😱`, `${n} tried to claim the fake iPhone 😱`) : tx(`${n} طنّش جايزة الآيفون`, `${n} ignored the fake iPhone`);
+    case 'appbanner': return tx(`${n} ${d.action === 'open' ? 'حاول يفتح الأبلكيشن' : 'قفل شريط الأبلكيشن'}`, `${n} ${d.action === 'open' ? 'tried to open the app' : 'closed the app banner'}`);
+    case 'mood': return tx(`${n} قال إن المهمة سهولتها ${d.seq}/7`, `${n} rated task ease ${d.seq}/7`);
+    case 'spot': return tx(`${n} اكتشف ${d.hits}/${d.totalAds} إعلانات`, `${n} spotted ${d.hits}/${d.totalAds} ads`);
+  }
+  return null;
+}
+function feedHTML(f) { return `<div class="fi"><span class="e">${EMO[f.kind] || '•'}</span><span>${f.txt}</span></div>`; }
+
+// ---------------------------- socket ----------------------------
+const socket = io();
+socket.on('connect', () => socket.emit('hello', { role: 'live', key: KEY }));
+socket.on('denied', () => { host.innerHTML = '<section class="scene on"><h1>🔒 Add ?key=… to the URL</h1></section>'; });
+socket.on('analysis', (a) => { const first = !A; A = a; document.getElementById('hn').textContent = a.joined; const jc = document.getElementById('jc'); if (jc) jc.textContent = a.joined; if (first) show(cur); else refresh(); });
+socket.on('feedHistory', (h) => { feedItems.length = 0; h.slice().reverse().forEach(f => { f.txt = feedText(f); if (f.txt) feedItems.push(f); }); feedItems.length = Math.min(feedItems.length, 14); const el = document.getElementById('feed'); if (el) el.innerHTML = feedItems.map(feedHTML).join(''); });
+socket.on('state', (s) => { state = s; document.getElementById('hstage').textContent = stageName(s.stage) + (s.overlay ? ' · ' + (s.overlay.type === 'task' ? '🎯' : '⚡') : ''); renderCtrl(); });
+socket.on('feed', (f) => {
+  f.txt = feedText(f); if (!f.txt) return;
+  feedItems.unshift(f); feedItems.length = Math.min(feedItems.length, 14);
+  const el = document.getElementById('feed'); if (el) { el.insertAdjacentHTML('afterbegin', feedHTML(f)); while (el.children.length > 14) el.lastChild.remove(); }
+  if (f.kind === 'join') { const b = document.getElementById('bubbles'); if (b) b.insertAdjacentHTML('beforeend', `<span class="bub">${esc(f.name)}</span>`); }
+});
+const stageName = (s) => ({ lobby: tx('الانتظار', 'Lobby'), alkhabar: SITE().alkhabar, ledger: SITE().ledger, viralvault: SITE().viralvault, spot: tx('اكتشف الإعلان', 'Spot the ad'), wrapped: tx('المفاجأة', 'Reveal') }[s] || s);
+
+// ---------------------------- controls ----------------------------
+function renderCtrl() {
+  const c = document.getElementById('ctrl');
+  c.innerHTML = ['lobby', 'alkhabar', 'ledger', 'viralvault', 'spot', 'wrapped'].map(s => `<button class="${state.stage === s ? 'cur' : ''}" onclick="socket.emit('setStage','${s}')">${stageName(s)}</button>`).join('') +
+    `<span class="sep"></span><button onclick="socket.emit('pushOverlay','task')">🎯 ${tx('مهمة', 'Mission')}</button><button onclick="socket.emit('pushOverlay','check')">⚡ ${tx('سؤال سريع', 'Quick check')}</button><button onclick="socket.emit('clearOverlay')">✕</button>`;
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') show(cur + 1);
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(cur - 1);
+  else if (e.key === 'ArrowDown' && SCENES[cur].id === 'spotlight') { spotIdx++; show(cur); }
+  else if (e.key === 'ArrowUp' && SCENES[cur].id === 'spotlight') { spotIdx = Math.max(0, spotIdx - 1); show(cur); }
+  else if (e.key.toLowerCase() === 'f' && SCENES[cur].id === 'personas') flipAll();
+  else if (e.key.toLowerCase() === 'c') document.getElementById('ctrl').classList.toggle('on');
+  else if (e.key.toLowerCase() === 'l') { lang = lang === 'ar' ? 'en' : 'ar'; localStorage.setItem('live_lang', lang); applyLang(); show(cur); renderCtrl(); }
+  else if (/^[0-9]$/.test(e.key)) show(+e.key === 0 ? 9 : +e.key - 1);
+});
+function applyLang() { document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'; document.documentElement.lang = lang; document.getElementById('hl').textContent = tx('دخلوا', 'joined'); }
+applyLang(); show(cur);
+</script>
+</body></html>
