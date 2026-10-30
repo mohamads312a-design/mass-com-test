@@ -28,8 +28,7 @@ try { if (fs.existsSync(DATA_FILE)) db = JSON.parse(fs.readFileSync(DATA_FILE, '
 let dirty = false;
 setInterval(() => {
   if (!dirty) return; dirty = false;
-  fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
-  fs.writeFile(DATA_FILE, JSON.stringify(db), () => {});
+  try { fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true }); fs.writeFile(DATA_FILE, JSON.stringify(db), () => {}); } catch (e) {}
 }, 3000);
 
 function publicUrl(req) {
