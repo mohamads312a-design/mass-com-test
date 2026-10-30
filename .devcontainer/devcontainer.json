@@ -1,6 +1,7 @@
 {
   "name": "News UX Lab",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "features": { "ghcr.io/devcontainers/features/github-cli:1": {} },
   "postCreateCommand": "npm install",
   "postStartCommand": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME >/dev/null 2>&1 || true",
   "forwardPorts": [3000],
