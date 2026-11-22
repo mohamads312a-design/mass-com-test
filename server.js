@@ -22,7 +22,7 @@ app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
 
 // ---------------- store ----------------
-const STAGES = ['lobby', 'loop', 'halls', 'niletix', 'spot', 'wrapped'];
+const STAGES = ['lobby', 'loop', 'sponsor', 'niletix', 'spot', 'wrapped'];
 let db = { students: {}, events: [], state: { stage: 'lobby', overlay: null, startedAt: null } };
 try { if (fs.existsSync(DATA_FILE)) db = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); } catch (e) { console.warn('Could not load saved data', e.message); }
 let dirty = false;

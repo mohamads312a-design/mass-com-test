@@ -37,14 +37,14 @@ header{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid 
 const C = CONTENT, ar = Lab.lang === 'ar', tx = (a, e) => ar ? a : e, $ = (s) => document.querySelector(s);
 window.MISSION = { check: {}, task: {
   q: { ar: 'اعرف "قمة صنّاع المحتوى" بتاعة ‎@sahra.events‎ إمتى وفين.', en: 'Find out when and where the “Cairo Creators Summit” by @sahra.events takes place.' },
-  choices: { ar: ['الجمعة 5 ديسمبر · فندق النيل', 'الجمعة 12 ديسمبر · أرض المعارض قاعة B', 'السبت 13 ديسمبر · أرض المعارض قاعة B', 'البوستات مش بتقول'], en: ['Fri 5 Dec · Nile Hotel', 'Fri 12 Dec · Expo Hall B', 'Sat 13 Dec · Expo Hall B', 'The posts don’t say'] }, correct: 1 } };
+  choices: { ar: ['الجمعة 5 ديسمبر · فندق النيل', 'الجمعة 12 ديسمبر · فندق النيل', 'الجمعة 12 ديسمبر · أرض المعارض قاعة B', 'السبت 13 ديسمبر · أرض المعارض قاعة B'], en: ['Fri 5 Dec · Nile Hotel', 'Fri 12 Dec · Nile Hotel', 'Fri 12 Dec · Expo Hall B', 'Sat 13 Dec · Expo Hall B'] }, correct: 2 } };
 $('#foot').textContent = tx('محاكاة تعليمية — الحسابات والبوستات من خيالنا', 'Classroom simulation — accounts and posts are fictional');
 const G = (bg, html) => `<div class="g" style="background:${bg}">${html}</div>`;
 const BR = { u: 'sahra.events', n: 'S', c: 'linear-gradient(135deg,#f59e0b,#ef4444)' };
 const tags = '#CCS2026 #creators #cairo #egypt #contentcreator #event #summit #marketing #pr #socialmedia #influencer #brand #networking #cairoevents #creatoreconomy #digital #media #trending #fyp #explore #viral #inspo #goals #2026 #dontmissit';
 const P = {
   old: { by: BR, when: tx('من 3 أسابيع', '3 weeks ago'), likes: '2,341', media: G('linear-gradient(160deg,#1e1b4b,#7c3aed)', `<div style="font-size:15px;letter-spacing:4px">SAVE THE DATE</div><div style="font-size:64px;line-height:1">5 DEC</div><div style="font-size:20px">${tx('قمة صنّاع المحتوى', 'Cairo Creators Summit')}</div><div style="font-size:15px;font-weight:600">${tx('فندق النيل', 'Nile Hotel')}</div>`),
-    cap: tx('قمة صنّاع المحتوى جاية! 5 ديسمبر في فندق النيل. مين جاي؟ 🙌', 'Cairo Creators Summit is coming! 5 December at Nile Hotel. Who’s in? 🙌'), cm: [['nour.h', tx('هو لسه يوم 5؟؟', 'is it still on the 5th??')], ['omar_22', tx('حد عارف التذاكر منين؟', 'anyone know where to get tickets?')]] },
+    cap: tx('قمة صنّاع المحتوى جاية! 5 ديسمبر في فندق النيل. مين جاي؟ 🙌', 'Cairo Creators Summit is coming! 5 December at Nile Hotel. Who’s in? 🙌'), cm: [['nour.h', tx('هو لسه يوم 5؟؟', 'is it still on the 5th??')], ['omar_22', tx('حد عارف التذاكر منين؟', 'anyone know where to get tickets?')], ['farah.s', tx('حجزت فندق جنب النيل خلاص 😍', 'already booked a room near Nile Hotel 😍')], ['kimo', '🔥']] },
   teaser: { by: BR, when: tx('من يومين', '2 days ago'), likes: '986', media: G('linear-gradient(160deg,#111,#be123c)', `<div style="font-size:54px;line-height:1.05">BIG<br>NEWS<br>🔥🔥🔥</div>`),
     cap: tx('انتو مش جاهزين للي جاي!! 🚀 بقالنا شهور بنشتغل في صمت وأخيرًا نقدر نقول إن فيه حاجات كتير اتغيرت وكله للأحسن. شكرًا لكل شركائنا ولكل واحد آمن بينا من أول يوم. ', 'You are NOT ready for what’s coming!! 🚀 We’ve been working in silence for months and we can finally say a lot has changed, all for the better. Thank you to our partners and to everyone who believed in us from day one. '),
     more: tx('معاد جديد، مكان جديد، ولاين أب أكبر! شوفوا آخر بوست عندنا لكل التفاصيل. اللينك في البايو. ', 'New date, new venue, bigger line-up! Swipe our latest post for all the details. Link in bio. ') + tags, cm: [['salma.m', '🔥🔥🔥']] },
@@ -52,9 +52,13 @@ const P = {
       G('linear-gradient(160deg,#0f172a,#7c3aed)', `<div style="font-size:46px;line-height:1.1">WE’RE BACK<br>&amp; BIGGER</div><div style="font-size:14px;font-weight:600">${tx('اسحب ←', 'swipe →')}</div>`),
       G('linear-gradient(160deg,#831843,#f59e0b)', `<div style="font-size:30px">SPEAKERS</div><div style="font-size:15px;font-weight:600;line-height:1.9">Laila Mansour · Karim Adel<br>Dina Farouk · Youssef Nabil<br>+ 12 more</div>`),
       G('linear-gradient(160deg,#064e3b,#0ea5e9)', `<div style="font-size:30px">PARTNERS</div><div style="font-size:15px;font-weight:600;line-height:1.9">NileTel · VoltUp · Future Bank<br>Nile Gardens · Akla</div>`),
-      G('repeating-linear-gradient(45deg,#3b0764,#3b0764 14px,#4c1d95 14px,#4c1d95 28px)', `<div style="font-size:26px;line-height:1.15">CAIRO CREATORS SUMMIT 2026</div><div style="font-size:12px;font-weight:600;line-height:1.6;opacity:.9">${tx('ورش · بانلز · نتوركينج · جوايز · أكل · موسيقى · مفاجآت · مسابقات · ستاندات · تصوير', 'workshops · panels · networking · awards · food · music · surprises · contests · booths · photo zone')}</div><div style="font-size:11px;font-weight:500;color:#a78bfa;margin-top:6px">${tx('الجمعة 12 ديسمبر · أرض المعارض قاعة B · الأبواب 4 م', 'Fri 12 Dec · Expo Hall B · Doors 4 pm')}</div><div style="font-size:12px;font-weight:600;line-height:1.6;opacity:.9">#CCS2026 · ${tx('برعاية نيل تل', 'powered by NileTel')}</div>`),
+      G('linear-gradient(160deg,#0f172a,#f59e0b)', `<div style="font-size:30px">AGENDA</div><div style="font-size:14px;font-weight:600;line-height:1.9">4:00 Doors · 5:00 Keynote<br>6:30 Panels · 8:00 Awards<br>9:30 After party</div>`),
+      G('linear-gradient(160deg,#3f0d5c,#ec4899)', `<div style="font-size:30px">TICKETS</div><div style="font-size:15px;font-weight:600;line-height:1.9">Early bird · Regular · Creator Pass<br>${tx('الأماكن محدودة!', 'Limited spots!')}</div>`),
+      G('repeating-linear-gradient(45deg,#3b0764,#3b0764 14px,#4c1d95 14px,#4c1d95 28px)', `<div style="font-size:26px;line-height:1.15">CAIRO CREATORS SUMMIT 2026</div><div style="font-size:12px;font-weight:600;line-height:1.6;opacity:.9">${tx('ورش · بانلز · نتوركينج · جوايز · أكل · موسيقى · مفاجآت · مسابقات · ستاندات · تصوير', 'workshops · panels · networking · awards · food · music · surprises · contests · booths · photo zone')}</div><div style="font-size:11px;font-weight:500;color:#a78bfa;margin-top:6px">${tx('الجمعة 12 ديسمبر · الأبواب 4 م', 'Fri 12 Dec · Doors 4 pm')}</div><div style="font-size:12px;font-weight:600;line-height:1.6;opacity:.9">#CCS2026 · ${tx('برعاية نيل تل', 'powered by NileTel')}</div>`),
       G('linear-gradient(160deg,#111,#ec4899)', `<div style="font-size:44px;line-height:1.1">LINK<br>IN BIO</div><div style="font-size:40px">👆</div>`)],
-    cap: tx('رسميًا!! 🚀🚀 #CCS2026 راجعة وأكبر من أي مرة. تاجوا صحابكم 👇', 'It’s official!! 🚀🚀 #CCS2026 is back and bigger than ever. Tag your crew 👇'), cm: [['mido.k', tx('طب إمتى؟؟', 'so when is it??')], ['sahra.events', tx('شوف السلايد 4 😉', 'check slide 4 😉'), 1], ['hana_a', tx('وفين؟', 'and where?')]] },
+    cap: tx('رسميًا!! 🚀🚀 #CCS2026 راجعة وأكبر من أي مرة. تاجوا صحابكم 👇', 'It’s official!! 🚀🚀 #CCS2026 is back and bigger than ever. Tag your crew 👇'), cm: [['mido.k', tx('طب إمتى؟؟', 'so when is it??')], ['sahra.events', tx('كله في البوست 😉', 'it’s all in the post 😉'), 1], ['salma.m', '😍😍😍'], ['tarek.b', tx('الأسعار كام؟', 'how much are tickets?')], ['sahra.events', tx('اللينك في البايو 💜', 'link in bio 💜'), 1], ['dodo_x', tx('مين رايح؟ @kimo', 'who’s going? @kimo')], ['hana_a', tx('لسه في فندق النيل؟', 'still at Nile Hotel?')], ['sahra.events', tx('لأ، السنة دي في أرض المعارض قاعة B 💜', 'nope, Expo Hall B this year 💜'), 1], ['youssef.n', '🔥🔥'], ['rana.t', tx('مستنية 🙌', 'can’t wait 🙌')], ['a7med', tx('الباركينج عامل إزاي؟', 'what about parking?')]] },
+  spk: { by: { u: 'laila.mansour', n: 'L', c: 'linear-gradient(135deg,#0ea5e9,#6366f1)' }, when: tx('من 5 ساعات', '5 h ago'), likes: '3,870', media: G('linear-gradient(160deg,#0c4a6e,#6366f1)', `<div style="font-size:15px;letter-spacing:3px">I’M SPEAKING AT</div><div style="font-size:34px;line-height:1.1">CAIRO CREATORS SUMMIT</div><div style="font-size:26px">SAT 13 DEC</div><div style="font-size:15px;font-weight:600">Expo Hall B</div>`),
+    cap: tx('متحمسة جدًا إني هتكلم في #CCS2026! أشوفكم السبت 13 ديسمبر في أرض المعارض قاعة B 🎤', 'So excited to speak at #CCS2026! See you Saturday 13 December at Expo Hall B 🎤'), cm: [['sahra.events', tx('مستنيينك 💜', 'can’t wait to have you 💜')], ['mona.z', tx('هاجي عشانك!', 'coming just for you!')]] },
 };
 const OTHERS = [
   { by: { u: 'mariam.k', n: 'M', c: '#0ea5e9' }, when: tx('من ساعة', '1 h ago'), likes: '87', img: ['food', 5], cap: tx('أحلى كشري في وسط البلد 😍', 'Best koshary downtown 😍') },
@@ -62,14 +66,17 @@ const OTHERS = [
   { by: { u: 'ziad.photo', n: 'Z', c: '#16a34a' }, when: tx('من 3 ساعات', '3 h ago'), likes: '230', img: ['climate', 4], cap: tx('غروب النهارده من على الكورنيش', 'Tonight’s sunset from the Corniche') },
   { by: { u: 'daily.news', n: 'D', c: '#b3001b' }, when: tx('من 5 ساعات', '5 h ago'), likes: '1,020', img: ['sports', 6], cap: tx('نجوم النيل يكسب دلتا 3–2 في آخر دقيقة', 'Nile Stars beat Delta 3–2 in the last minute') },
   { by: { u: 'jana.reads', n: 'J', c: '#a855f7' }, when: tx('امبارح', '1 day ago'), likes: '64', img: ['culture', 2], cap: tx('كتاب الشهر 📚', 'Book of the month 📚') },
+  { by: { u: 'akla.eg', n: 'A', c: '#ea580c' }, when: tx('من 6 ساعات', '6 h ago'), likes: '412', img: ['food', 11], cap: tx('عرض الويك إند: 1+1 🍔', 'Weekend deal: buy 1 get 1 🍔') },
+  { by: { u: 'nile.gardens', n: 'N', c: '#15803d' }, when: tx('من 8 ساعات', '8 h ago'), likes: '158', img: ['local', 4], cap: tx('الربيع جه بدري عندنا 🌿', 'Spring came early here 🌿') },
+  { by: { u: 'tech.today', n: 'T', c: '#334155' }, when: tx('امبارح', '1 day ago'), likes: '940', img: ['tech', 3], cap: tx('5 أدوات AI لازم تجربها', '5 AI tools you need to try') },
 ];
-const FEED = [OTHERS[0], 'old', OTHERS[1], 'teaser', OTHERS[2], 'car', OTHERS[3], OTHERS[4]];
+const FEED = [OTHERS[0], 'spk', OTHERS[1], 'old', OTHERS[2], OTHERS[5], 'teaser', OTHERS[3], OTHERS[6], 'car', OTHERS[4], OTHERS[7]];
 
 function post(p, id) {
   const media = p.slides ? `<div class="media" style="aspect-ratio:auto"><div class="car" data-car="${id}">${p.slides.map(s => `<div>${s}</div>`).join('')}</div><span class="cnt" id="cnt-${id}">1/${p.slides.length}</span></div><div class="dots" id="dots-${id}">${p.slides.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>`
     : `<div class="media">${p.media || `<img src="${C.thumb(p.img[0], p.img[1])}" style="height:100%;object-fit:cover">`}</div>`;
   const prof = p.by.u === BR.u ? `href="#/p" data-t="profile"` : `data-t="user"`;
-  return `<article class="post" ${p.ad ? `data-ad="loop-ad"` : ''}><a class="ph" ${prof}><span class="av" style="background:${p.by.c}">${p.by.n}</span><span><b>${p.by.u}</b><small>${p.when}</small></span></a>${media}
+  return `<article class="post" ${id ? `id="p-${id}"` : ''} ${p.ad ? `data-ad="loop-ad"` : ''}><a class="ph" ${prof}><span class="av" style="background:${p.by.c}">${p.by.n}</span><span><b>${p.by.u}</b><small>${p.when}</small></span></a>${media}
     <div class="act"><span data-t="like">♡</span><span ${id ? `data-go="#/c/${id}"` : ''} data-t="comment">💬</span><span data-t="share">➤</span></div><div class="likes">${p.likes} ${tx('إعجاب', 'likes')}</div>
     <div class="cap"><b>${p.by.u}</b>${p.cap}${p.more ? `<span class="more" data-more="${id}" data-t="more">… ${tx('المزيد', 'more')}</span>` : ''}</div>
     ${p.cm ? `<a class="cm" href="#/c/${id}" data-t="comments">${tx('شوف كل الـ', 'View all')} ${p.cm.length} ${tx('تعليقات', 'comments')}</a>` : ''}</article>`;
@@ -87,15 +94,21 @@ function profile() {
   scrollTo(0, 0); Lab.setView({ view: 'profile', kind: 'profile' });
 }
 function links() {
-  $('#app').innerHTML = `<div class="links"><div style="font-size:44px">✨</div><b style="font-size:20px">Sahra Events</b>${[tx('حكايتنا', 'Our story'), tx('كن شريكًا', 'Partner with us'), tx('قدّم كمتحدث', 'Speaker applications'), tx('المتجر', 'Merch store'), tx('النشرة البريدية', 'Newsletter'), tx('سجّل', 'Register')].map((l, i) => `<a data-t="link-${i}" data-l="${i}">${l}</a>`).join('')}</div>`;
-  document.querySelectorAll('[data-l]').forEach(a => a.onclick = () => Lab.toast(+a.dataset.l === 5 ? tx('التسجيل هيفتح قريب', 'Registration opens soon') : tx('الصفحة مش متاحة في المحاكاة', 'Page not available in this simulation')));
+  $('#app').innerHTML = `<div class="links"><div style="font-size:44px">✨</div><b style="font-size:20px">Sahra Events</b>${[tx('حكايتنا', 'Our story'), tx('كن شريكًا', 'Partner with us'), tx('قدّم كمتحدث', 'Speaker applications'), tx('المتجر', 'Merch store'), tx('تفاصيل الإيفنت', 'Event details'), tx('النشرة البريدية', 'Newsletter'), tx('سجّل', 'Register')].map((l, i) => `<a data-t="link-${i}" data-l="${i}" ${i === 4 ? 'href="#/details"' : ''}>${l}</a>`).join('')}</div>`;
+  document.querySelectorAll('[data-l]').forEach(a => a.dataset.l === '4' ? 0 : a.onclick = () => Lab.toast(+a.dataset.l === 6 ? tx('التسجيل هيفتح قريب', 'Registration opens soon') : tx('الصفحة مش متاحة في المحاكاة', 'Page not available in this simulation')));
   scrollTo(0, 0); Lab.setView({ view: 'links', kind: 'links' });
+}
+function details() {
+  $('#app').innerHTML = `<div class="links" style="text-align:start"><a href="#/links" data-t="back" style="background:none;color:#fff;padding:0;text-align:start;margin:0 0 18px">‹ ${tx('رجوع', 'Back')}</a><b style="font-size:26px;line-height:1.2">${tx('قمة صنّاع المحتوى', 'Cairo Creators Summit')}</b>
+    <div style="margin-top:16px;line-height:2;font-size:16px">📅 ${tx('الجمعة 5 ديسمبر', 'Friday 5 December')}<br>📍 ${tx('فندق النيل، القاعة الكبرى', 'Nile Hotel, Grand Ballroom')}<br>🕓 ${tx('الأبواب 4 م', 'Doors 4 pm')}</div><a data-t="register" id="reg">${tx('سجّل دلوقتي', 'Register now')}</a><div style="font-size:11px;opacity:.5;margin-top:14px">sahra.link/ccs-details</div></div>`;
+  $('#reg').onclick = () => Lab.toast(tx('التسجيل هيفتح قريب', 'Registration opens soon'));
+  scrollTo(0, 0); Lab.setView({ view: 'details', kind: 'links', id: 'details' });
 }
 function single(id) { if (!P[id]) return feed(); $('#app').innerHTML = `<a class="back" href="#/p" data-t="back">‹ ${tx('رجوع', 'Back')}</a>` + post(P[id], id); bind(); scrollTo(0, 0); Lab.setView({ view: 'post', kind: 'post', id }); }
 function comments(id) { const p = P[id]; if (!p) return feed();
   $('#app').innerHTML = `<a class="back" href="#/" data-t="back">‹ ${tx('التعليقات', 'Comments')}</a>` + p.cm.map(([u, t, r]) => `<div class="cmt ${r ? 'r' : ''}"><b>${u}</b> ${t}</div>`).join('');
   scrollTo(0, 0); Lab.setView({ view: 'comments', kind: 'comments', id }); }
-function route() { const h = location.hash; if (h === '#/p') profile(); else if (h === '#/links') links(); else if (h.startsWith('#/post/')) single(h.slice(7)); else if (h.startsWith('#/c/')) comments(h.slice(4)); else feed(); }
+function route() { const h = location.hash; if (h === '#/p') profile(); else if (h === '#/links') links(); else if (h === '#/details') details(); else if (h.startsWith('#/post/')) single(h.slice(7)); else if (h.startsWith('#/c/')) comments(h.slice(4)); else feed(); }
 addEventListener('hashchange', route); route();
 })();
 </script>

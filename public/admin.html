@@ -35,14 +35,14 @@ a{color:#f0abfc}.small{font-size:12px;color:#b9acd6}
   <div class="card"><h2>Students</h2><div style="overflow:auto"><table id="tbl"></table></div></div>
   <div class="card"><h2>Data</h2><div class="act" style="grid-template-columns:1fr 1fr"><button id="exp">⬇️ Export JSON</button><button class="danger" id="reset">🗑 Delete all data &amp; reset</button></div></div>
   <div class="card flow"><h2>Suggested run (≈15–18 min)</h2>
-    Lobby (students scan &amp; join) → <b>Loop</b> 3 min → 🎯 mission (event date &amp; place) → ⚡ quick check → <b>Layali Venues</b> 3 min → 🎯 mission (hall &amp; rate) → ⚡ quick check → <b>NileTix</b> 3 min → 🎯 mission (book a ticket) → ⚡ quick check → <b>Spot the ad</b> → <b>Reveal</b> (phones show Wrapped, projector shows the analysis).</div>
+    Lobby (students scan &amp; join) → <b>Loop</b> 3 min → 🎯 mission (event date &amp; place) → ⚡ quick check → <b>Sponsor page</b> 3 min → 🎯 mission (sponsor package) → ⚡ quick check → <b>NileTix</b> 3 min → 🎯 mission (book a ticket) → ⚡ quick check → <b>Spot the ad</b> → <b>Reveal</b> (phones show Wrapped, projector shows the analysis).</div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
 const KEY = new URLSearchParams(location.search).get('key') || '';
 const $ = (s) => document.querySelector(s);
-const STAGES = [['lobby', 'Lobby', 'waiting screen'], ['loop', 'Loop', 'social media app'], ['halls', 'Layali Venues', 'venue booking site'], ['niletix', 'NileTix', 'event ticketing site'], ['spot', 'Spot the ad', 'mini game'], ['wrapped', 'Reveal ✨', 'personal Wrapped']];
-const HINT = { loop: 'Mission: find when and where the Cairo Creators Summit takes place. The app is clean; the brand posts are the problem (outdated post still up, hype teaser, details only on slide 4 of a carousel, link-in-bio maze). Correct: Fri 12 Dec · Expo Hall B.', halls: 'Mission: find the hall for a 200-guest seated dinner on a Friday evening and its rate (fluffy descriptions, capacity hidden in a Specs tab, rates behind a quote form, chat pop-up). Correct: Papyrus Hall · 60,000 EGP.', niletix: 'Mission: book 1 Standard ticket for Friday and read the gate on the ticket. Prices are clear; the experience is the problem (look-alike event on top, calendar on the wrong month, Standard hidden under “other ticket types”, 2 tickets by default, upsell pop-up, forced account with strict password rules, vague form errors, hold timer). Correct: Gate C.', lobby: 'Wait until everyone has joined, then move to Al-Khabar Now.', spot: 'Students tap the posts they think are ads.', wrapped: 'Phones show personal stories. Use the projector scenes to walk through the analysis.' };
+const STAGES = [['lobby', 'Lobby', 'waiting screen'], ['loop', 'Loop', 'social media app'], ['sponsor', 'Sponsor page', 'event sponsorship page'], ['niletix', 'NileTix', 'event ticketing site'], ['spot', 'Spot the ad', 'mini game'], ['wrapped', 'Reveal ✨', 'personal Wrapped']];
+const HINT = { loop: 'Mission: find when and where the Cairo Creators Summit takes place. The app is clean; the posting is the problem. The old post (5 Dec, Nile Hotel) is still up and has the most likes, a speaker posted the wrong day, the new date is small text on slide 6 of 7, the new venue is only in a reply in the comments, and the “Event details” link is outdated. Correct: Fri 12 Dec · Expo Hall B.', sponsor: 'Mission: you are a sponsor with 150,000 EGP who needs a logo on the main stage and a booth. The page is vague on purpose: “Tier-1 visibility”, “activation space: available*”, prices behind a contact form, definitions on page 5 of a PDF deck. Correct: Gold + booth add-on (120,000 + 30,000). Watch how many pick “I’d sponsor another event”.', niletix: 'Mission: book 1 Standard ticket for Friday and read the gate on the ticket. Prices are clear; the experience is the problem (look-alike event on top, calendar on the wrong month, Standard hidden under “other ticket types”, 2 tickets by default, upsell pop-up, forced account with strict password rules, vague form errors, hold timer). Correct: Gate C.', lobby: 'Wait until everyone has joined, then move to Al-Khabar Now.', spot: 'Students tap the posts they think are ads.', wrapped: 'Phones show personal stories. Use the projector scenes to walk through the analysis.' };
 let state = {};
 $('#liveLink').href = '/live?key=' + encodeURIComponent(KEY);
 const socket = io();
@@ -58,7 +58,7 @@ socket.on('analysis', (a) => {
 function render() {
   $('#stages').innerHTML = STAGES.map(([k, l, d]) => `<button class="${state.stage === k ? 'cur' : ''}" data-s="${k}">${l}<small>${d}</small></button>`).join('');
   document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => socket.emit('setStage', b.dataset.s));
-  const site = ['loop', 'halls', 'niletix'].includes(state.stage);
+  const site = ['loop', 'sponsor', 'niletix'].includes(state.stage);
   $('#task').disabled = $('#check').disabled = !site; $('#task').style.opacity = $('#check').style.opacity = site ? 1 : .35;
   $('#hint').textContent = (HINT[state.stage] || '') + (state.overlay ? `  ·  Active now: ${state.overlay.type === 'task' ? '🎯 mission' : '⚡ quick check'}` : '');
 }

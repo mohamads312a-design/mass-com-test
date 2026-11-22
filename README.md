@@ -44,11 +44,11 @@ Change the key with `ADMIN_KEY=yourkey npm start`.
 | Step | Instructor panel button | What students see |
 |---|---|---|
 | 1 | **Lobby** | Scan QR → choose language → name → consent |
-| 2 | **Loop** (3 min) | Social media app that works well; the brand's posts are the problem: an outdated post still up, a hype teaser, details on slide 4 of a carousel, a link-in-bio maze |
+| 2 | **Loop** (3 min) | Social media app that works well; the posting is the problem: an outdated post still up with the most likes, a speaker's post with the wrong day, the new date in small text on slide 6 of 7, the new venue only in a comment reply, an outdated "Event details" link |
 | 3 | 🎯 **Push mission** | "When and where is the Cairo Creators Summit?" (Fri 12 Dec · Expo Hall B) |
 | 4 | ⚡ **Push quick check** | Ease rating 1–7 (Single Ease Question) + "what slowed you down the most?" |
-| 5 | **Layali Venues** (3 min) | Venue booking site for planners: poetic descriptions, capacity hidden in a Specs tab, rates behind a quote form, chat pop-up |
-| 6 | 🎯 **Push mission** | "Which hall fits a 200-guest seated dinner on a Friday evening, and at what rate?" (Papyrus Hall · 60,000 EGP) |
+| 5 | **Sponsor page** (3 min) | Students play a sponsor reading the summit's "Partner with us" page: vague claims, jargon benefits ("Tier-1 visibility"), prices behind a contact form, definitions on page 5 of a PDF deck |
+| 6 | 🎯 **Push mission** | "You're a sponsor with 150,000 EGP. You need your logo on the main stage and a booth. What do you buy?" (Gold + booth add-on; watch how many answer "I'd sponsor another event") |
 | 7 | ⚡ **Push quick check** | Same as above |
 | 8 | **NileTix** (3 min) | Event ticketing site with clear prices and a hard experience: look-alike event on top, calendar on the wrong month, Standard hidden under "other ticket types", 2 tickets by default, upsell pop-up, forced account with strict password rules, vague form errors, hold timer |
 | 9 | 🎯 **Push mission** | "Book 1 Standard ticket for Friday. Which gate is printed on your ticket?" (Gate C) |
