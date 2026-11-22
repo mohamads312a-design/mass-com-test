@@ -1,0 +1,173 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NileTix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Rubik,system-ui,Tahoma,sans-serif;background:#f4f6f8;color:#10212b;-webkit-tap-highlight-color:rgba(0,0,0,.05)}
+a{color:inherit;text-decoration:none}img{display:block;width:100%}button{font-family:inherit}
+header{position:sticky;top:0;z-index:40;background:#0b3b46;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
+.logo{font-weight:900;font-size:22px;letter-spacing:-.5px}.logo span{color:#ffb020}
+.hold{background:#ffb020;color:#10212b;font-weight:700;font-size:13px;padding:7px 14px;display:flex;justify-content:space-between;position:sticky;top:46px;z-index:39}
+.urg{background:#e11d48;color:#fff;font-size:13px;font-weight:700;text-align:center;padding:7px}
+.wrap{padding:12px 12px 120px}
+.feat{border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.08);margin-bottom:14px;position:relative}
+.feat img{aspect-ratio:16/9;object-fit:cover}.feat .in{padding:12px 14px 14px}
+.feat h2{margin:0 0 4px;font-size:21px;font-weight:900}.sub{font-size:13px;color:#5b6b75}
+.tag{position:absolute;top:10px;inset-inline-start:10px;background:#e11d48;color:#fff;font-size:11px;font-weight:700;padding:4px 9px;border-radius:99px}
+.cta{display:block;width:100%;border:0;background:#ff5a1f;color:#fff;font-weight:900;font-size:17px;padding:14px;border-radius:12px;margin-top:12px;text-align:center}
+.cta.ghost{background:#fff;color:#0b3b46;border:2px solid #0b3b46}
+.ev{display:flex;gap:10px;background:#fff;border-radius:12px;padding:8px;margin-bottom:8px}.ev img{width:96px;height:72px;border-radius:8px;object-fit:cover;flex:none}.ev h3{margin:0 0 3px;font-size:15px}
+.h{font-weight:900;font-size:17px;margin:18px 0 8px}
+.steps{display:flex;gap:4px;margin:4px 0 14px}.steps i{flex:1;height:5px;border-radius:5px;background:#d6dde2}.steps i.on{background:#ff5a1f}
+.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.opts{display:grid;gap:8px}.opt{border:2px solid #d6dde2;border-radius:12px;padding:12px;background:#fff;display:flex;justify-content:space-between;align-items:center;font-size:15px;text-align:start;color:inherit}
+.opt.sel{border-color:#ff5a1f;background:#fff4ee}.opt.off{opacity:.45}.opt b{display:block}.opt small{color:#e11d48;font-weight:700}
+.badge{background:#0b3b46;color:#ffb020;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;margin-inline-start:6px}
+.qty{display:flex;align-items:center;gap:16px;justify-content:center}.qty button{width:44px;height:44px;border-radius:50%;border:2px solid #0b3b46;background:#fff;font-size:22px;font-weight:700;color:#0b3b46}.qty b{font-size:26px;min-width:30px;text-align:center}
+.add{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #eef1f3}.add:last-child{border:0}.add input{width:22px;height:22px;accent-color:#ff5a1f;flex:none;margin-top:2px}.add b{display:block;font-size:15px}.add span{font-size:12px;color:#5b6b75}.add em{margin-inline-start:auto;font-style:normal;font-weight:700;white-space:nowrap}
+label.f{display:block;font-size:13px;font-weight:700;margin:10px 0 4px}
+input.t,select.t{width:100%;padding:12px;border:1.5px solid #c5cdd3;border-radius:10px;font-size:16px;font-family:inherit;background:#fff}
+.err{background:#fde8ec;color:#b3122f;border-radius:10px;padding:10px 12px;font-size:14px;font-weight:700;margin-bottom:10px}
+.line{display:flex;justify-content:space-between;padding:7px 0;font-size:15px}.line.fee{color:#5b6b75;font-size:14px}.total{border-top:2px solid #10212b;margin-top:8px;padding-top:10px;font-weight:900;font-size:20px}
+.fine{font-size:11px;color:#8a979f;line-height:1.5;margin-top:8px}
+.ov{position:fixed;inset:0;z-index:100;background:rgba(8,20,26,.65);display:flex;align-items:center;justify-content:center;padding:18px}
+.mod{background:#fff;border-radius:18px;padding:22px 18px;width:100%;max-width:380px;text-align:center}
+.mod h3{margin:0 0 8px;font-size:22px;font-weight:900}.mod p{margin:0 0 6px;color:#44535c;font-size:15px;line-height:1.5}
+.tl{background:none;border:0;color:#8a979f;font-size:12px;text-decoration:underline;margin-top:12px}
+.ck{position:fixed;left:0;right:0;bottom:0;z-index:90;background:#fff;box-shadow:0 -6px 20px rgba(0,0,0,.2);padding:14px 14px calc(14px + env(safe-area-inset-bottom));font-size:13px;line-height:1.5}
+.ck .r{display:flex;gap:8px;margin-top:10px;align-items:center}.ck .ok{flex:1;border:0;background:#0b3b46;color:#fff;font-weight:900;font-size:16px;padding:12px;border-radius:10px}.ck .no{border:0;background:none;color:#8a979f;font-size:12px;text-decoration:underline}
+.foot{background:#0b3b46;color:#9db4bb;text-align:center;font-size:12px;padding:20px 14px 100px;line-height:1.8}.foot .sim{color:#ffb020}
+</style></head>
+<body data-site="niletix">
+<header><span data-t="menu" style="font-size:20px">☰</span><a class="logo" href="#/" data-t="logo">Nile<span>Tix</span></a><span data-t="account" style="font-size:20px">👤</span></header>
+<div id="holdbar"></div>
+<main id="app"></main>
+<footer class="foot" id="foot"></footer>
+<script src="/js/content.js"></script>
+<script src="/js/lab.js"></script>
+<script>
+(function(){
+const C = CONTENT, L = Lab.L, ar = Lab.lang === 'ar', tx = (a, e) => ar ? a : e, $ = (s) => document.querySelector(s);
+const EGP = (n) => n + ' ' + tx('جنيه', 'EGP');
+window.MISSION = { check: {}, task: {
+  q: { ar: 'احجز تذكرة واحدة عادية (Standard) ليوم الجمعة في "مهرجان القاهرة للموسيقى" من غير أي إضافات. الإجمالي في آخر خطوة كام؟', en: 'Book 1 Standard ticket for Friday at “Cairo Sound Festival”, with no extras. What is the total at the last step?' },
+  choices: ['400 EGP', '473 EGP', '518 EGP', '593 EGP'], correct: 1 } };
+
+const TYPES = { std: { n: tx('عادية', 'Standard'), d: tx('دخول عام', 'General admission'), p: 400 }, pit: { n: tx('فان بيت', 'Fan Pit'), d: tx('قدام المسرح', 'In front of the stage'), p: 750 }, vip: { n: 'VIP', d: tx('لاونج ومشروبات', 'Lounge & drinks'), p: 1500 } };
+const ADDS = { ins: { n: tx('حماية التذكرة', 'Ticket protection'), d: tx('استرجاع فلوسك لو ماقدرتش تيجي', 'Refund if you can’t attend'), p: 45 }, park: { n: tx('باركنج', 'Parking pass'), d: tx('مكان مضمون جنب البوابة', 'Guaranteed spot near the gate'), p: 60 }, sms: { n: tx('تذكير SMS', 'SMS reminders'), d: tx('رسايل بمواعيد الفقرات', 'Texts with set times'), p: 15 } };
+const DATES = [['thu', tx('الخميس 12 ديسمبر', 'Thu 12 Dec'), tx('خلصت', 'Sold out'), true], ['fri', tx('الجمعة 13 ديسمبر', 'Fri 13 Dec'), tx('باقي 3 بس!', 'Only 3 left!'), false], ['sat', tx('السبت 14 ديسمبر', 'Sat 14 Dec'), tx('بتخلص بسرعة', 'Selling fast'), false]];
+// bad defaults on purpose: VIP, 2 tickets, all extras ticked
+const o = { date: null, type: 'vip', qty: 2, adds: { ins: true, park: true, sms: true } };
+let holdStart = null, holdIv = null, upsold = false, formErrs = 0;
+
+$('#foot').innerHTML = `NileTix © 2026 · ${tx('المساعدة · الشروط · سياسة الاسترجاع', 'Help · Terms · Refund policy')}<br><span class="sim">${tx('محاكاة تعليمية — الفعاليات والأسعار من خيالنا', 'Classroom simulation — events and prices are fictional')}</span>`;
+const steps = (n) => `<div class="steps">${[1, 2, 3, 4].map(i => `<i class="${i <= n ? 'on' : ''}"></i>`).join('')}</div><div class="sub" style="margin-bottom:8px">${tx('خطوة', 'Step')} ${n} ${tx('من', 'of')} 4</div>`;
+const sum = () => { const t = TYPES[o.type].p * o.qty, a = Object.keys(ADDS).filter(k => o.adds[k]).reduce((s, k) => s + ADDS[k].p, 0), fee = Math.round(t * .12); return { t, a, fee, proc: 25, total: t + a + fee + 25 }; };
+
+function home() {
+  stopHold();
+  $('#app').innerHTML = `<div class="urg">🔥 ${tx('عرض النهارده بس: التذاكر بتخلص!', 'Today only: tickets are selling out!')}</div><div class="wrap">
+    <a class="feat" href="#/e" data-t="event" style="display:block"><span class="tag">${tx('الأكتر طلبًا', 'TRENDING')}</span><img src="${C.thumb('celeb', 12)}"><div class="in"><h2>${tx('مهرجان القاهرة للموسيقى', 'Cairo Sound Festival')}</h2><div class="sub">📍 ${tx('أرض المعارض · 12–14 ديسمبر', 'Expo Grounds · 12–14 Dec')}</div><div class="sub" style="margin-top:4px">${tx('الأسعار تبدأ من', 'From')} <b style="color:#ff5a1f;font-size:17px">${EGP(400)}</b>*</div><span class="cta">${tx('احجز تذكرتك', 'Get tickets')}</span></div></a>
+    <div class="h">${tx('فعاليات تانية', 'More events')}</div>
+    ${[['economy', tx('قمة العلاقات العامة 2026', 'PR Summit 2026'), tx('فندق النيل · 20 ديسمبر', 'Nile Hotel · 20 Dec')], ['food', tx('مهرجان أكل الشارع', 'Street Food Fest'), tx('الزمالك · كل جمعة', 'Zamalek · every Friday')], ['culture', tx('ليلة ستاند أب كوميدي', 'Stand-up Comedy Night'), tx('مسرح الجامعة · 18 ديسمبر', 'University Theatre · 18 Dec')], ['tech', tx('معرض التوظيف للخريجين', 'Graduate Career Fair'), tx('قاعة المؤتمرات · 25 ديسمبر', 'Convention Hall · 25 Dec')]].map(([c, t, d], i) => `<a class="ev" data-t="other-event"><img src="${C.thumb(c, i + 21)}"><div><h3>${t}</h3><div class="sub">${d}</div></div></a>`).join('')}
+    <div class="fine">* ${tx('الأسعار لا تشمل الرسوم.', 'Prices exclude fees.')}</div></div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'home', kind: 'home' });
+}
+
+function event() {
+  $('#app').innerHTML = `<div class="wrap"><div class="feat"><img src="${C.thumb('celeb', 12)}"><div class="in"><h2>${tx('مهرجان القاهرة للموسيقى', 'Cairo Sound Festival')}</h2><div class="sub">📍 ${tx('أرض المعارض', 'Expo Grounds')} · 🕗 ${tx('الأبواب 6 مساءً', 'Doors 6 pm')}</div></div></div>
+    ${steps(1)}
+    <div class="card"><div class="h" style="margin-top:0">${tx('اختار اليوم', 'Choose a day')}</div><div class="opts" id="dates">${DATES.map(([k, n, s, off]) => `<button class="opt ${off ? 'off' : ''} ${o.date === k ? 'sel' : ''}" data-d="${k}" data-t="date" ${off ? 'data-off="1"' : ''}><span><b>${n}</b></span><small>${s}</small></button>`).join('')}</div></div>
+    <div class="card"><div class="h" style="margin-top:0">${tx('نوع التذكرة', 'Ticket type')}</div><div class="opts" id="types">${['vip', 'pit', 'std'].map(k => `<button class="opt ${o.type === k ? 'sel' : ''}" data-y="${k}" data-t="type"><span><b>${TYPES[k].n}${k === 'vip' ? `<span class="badge">${tx('الأكتر مبيعًا', 'MOST POPULAR')}</span>` : ''}</b><span class="sub">${TYPES[k].d}</span></span><b>${EGP(TYPES[k].p)}</b></button>`).join('')}</div></div>
+    <div class="card"><div class="h" style="margin-top:0">${tx('عدد التذاكر', 'How many?')}</div><div class="qty"><button data-q="-1" data-t="qty-minus">−</button><b id="qty">${o.qty}</b><button data-q="1" data-t="qty-plus">+</button></div></div>
+    <button class="cta" id="next" data-t="continue">${tx('كمّل', 'Continue')}</button></div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'event', kind: 'flow', id: 'step1' }); Lab.log('tix', { step: 1 });
+  document.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { if (b.dataset.off) return Lab.toast(tx('اليوم ده خلص', 'That day is sold out')); o.date = b.dataset.d; document.querySelectorAll('[data-d]').forEach(x => x.classList.toggle('sel', x === b)); });
+  document.querySelectorAll('[data-y]').forEach(b => b.onclick = () => { o.type = b.dataset.y; document.querySelectorAll('[data-y]').forEach(x => x.classList.toggle('sel', x === b)); });
+  document.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { o.qty = Math.max(1, Math.min(6, o.qty + +b.dataset.q)); $('#qty').textContent = o.qty; });
+  $('#next').onclick = () => { if (!o.date) return Lab.toast(tx('اختار اليوم الأول', 'Choose a day first')); startHold(); if (o.type !== 'vip' && !upsold) upsell(() => location.hash = '#/s/2'); else location.hash = '#/s/2'; };
+}
+
+function upsell(after) {
+  upsold = true; const t0 = Date.now();
+  const d = document.createElement('div'); d.className = 'ov';
+  d.innerHTML = `<div class="mod" data-ad="t-upsell"><div style="font-size:54px">🥂</div><h3>${tx('استنى! رقّي لـ VIP', 'Wait! Upgrade to VIP')}</h3><p>${tx('لاونج خاص، مشروبات، ودخول من غير طابور. 87% من الحضور بيرقّوا.', 'Private lounge, drinks and no queue. 87% of guests upgrade.')}</p>
+    <button class="cta" data-t="upsell-yes" id="uy">${tx('رقّيني لـ VIP', 'Upgrade me to VIP')}</button><button class="tl" data-t="upsell-no" id="un">${tx('لأ، أنا بحب الوقفة في الطابور', 'No thanks, I enjoy queuing')}</button></div>`;
+  document.body.appendChild(d);
+  const close = (action) => { Lab.log('upsell', { action, ms: Date.now() - t0 }); d.remove(); after(); };
+  d.querySelector('#uy').onclick = () => { o.type = 'vip'; close('accept'); };
+  d.querySelector('#un').onclick = () => close('decline');
+}
+
+function extras() {
+  $('#app').innerHTML = `<div class="wrap">${steps(2)}<div class="card"><div class="h" style="margin-top:0">${tx('كمّل تجربتك', 'Complete your experience')}</div>
+    ${Object.entries(ADDS).map(([k, a]) => `<label class="add" data-t="addon"><input type="checkbox" data-a="${k}" ${o.adds[k] ? 'checked' : ''}><div><b>${a.n}</b><span>${a.d}</span></div><em>+${EGP(a.p)}</em></label>`).join('')}</div>
+    <button class="cta" id="next" data-t="continue">${tx('كمّل', 'Continue')}</button><a class="cta ghost" href="#/e" data-t="back">${tx('رجوع', 'Back')}</a></div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'extras', kind: 'flow', id: 'step2' }); Lab.log('tix', { step: 2 });
+  document.querySelectorAll('[data-a]').forEach(c => c.onchange = () => o.adds[c.dataset.a] = c.checked);
+  $('#next').onclick = () => location.hash = '#/s/3';
+}
+
+function details() {
+  const cities = [tx('القاهرة', 'Cairo'), tx('الجيزة', 'Giza'), tx('الإسكندرية', 'Alexandria'), tx('مدينة تانية', 'Other')];
+  const heard = [tx('سوشيال ميديا', 'Social media'), tx('صاحب', 'A friend'), tx('إعلان', 'An ad'), tx('حاجة تانية', 'Other')];
+  $('#app').innerHTML = `<div class="wrap">${steps(3)}<div id="err"></div><div class="card"><div class="h" style="margin-top:0">${tx('بياناتك', 'Your details')}</div>
+    <div class="fine" style="margin:0 0 6px">${tx('محاكاة: اكتب أي بيانات مش حقيقية. مفيش حاجة بتتحفظ.', 'Simulation: type made-up details. Nothing you type is saved.')}</div>
+    <label class="f">${tx('الاسم بالكامل', 'Full name')} *</label><input class="t" id="f1" autocomplete="off">
+    <label class="f">${tx('الإيميل', 'Email')} *</label><input class="t" id="f2" autocomplete="off" inputmode="email">
+    <label class="f">${tx('أكّد الإيميل', 'Confirm email')} *</label><input class="t" id="f3" autocomplete="off" inputmode="email">
+    <label class="f">${tx('رقم الموبايل', 'Mobile number')} *</label><input class="t" id="f4" autocomplete="off" inputmode="numeric">
+    <label class="f">${tx('المدينة', 'City')} *</label><select class="t" id="f5"><option value="">—</option>${cities.map(c => `<option>${c}</option>`).join('')}</select>
+    <label class="f">${tx('عرفت عننا منين؟', 'How did you hear about us?')} *</label><select class="t" id="f6"><option value="">—</option>${heard.map(c => `<option>${c}</option>`).join('')}</select></div>
+    <button class="cta" id="next" data-t="continue">${tx('كمّل للدفع', 'Continue to payment')}</button><a class="cta ghost" href="#/s/2" data-t="back">${tx('رجوع', 'Back')}</a></div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'details', kind: 'flow', id: 'step3' }); Lab.log('tix', { step: 3 });
+  $('#next').onclick = () => {
+    const v = (i) => $('#f' + i).value.trim();
+    const ok = v(1).length > 2 && /.+@.+/.test(v(2)) && v(2) === v(3) && /^\d{11}$/.test(v(4).replace(/\s/g, '')) && v(5) && v(6);
+    if (!ok) { formErrs++; Lab.log('formerror', { n: formErrs }); $('#f3').value = ''; $('#err').innerHTML = `<div class="err">⚠️ ${tx('فيه بيانات غلط. راجعها وحاول تاني.', 'Some details are invalid. Please check and try again.')}</div>`; scrollTo(0, 0); return; }
+    location.hash = '#/s/4';
+  };
+}
+
+function checkout() {
+  const s = sum(), d = DATES.find(x => x[0] === o.date);
+  $('#app').innerHTML = `<div class="wrap">${steps(4)}<div class="card" id="sumcard"><div class="h" style="margin-top:0">${tx('ملخص الطلب', 'Order summary')}</div>
+    <div class="line"><span>${o.qty} × ${TYPES[o.type].n} · ${d ? d[1] : ''}</span><b>${EGP(s.t)}</b></div>
+    ${Object.keys(ADDS).filter(k => o.adds[k]).map(k => `<div class="line"><span>${ADDS[k].n}</span><b>${EGP(ADDS[k].p)}</b></div>`).join('')}
+    <div class="line fee"><span>${tx('رسوم الخدمة (12%)', 'Service fee (12%)')}</span><span>${EGP(s.fee)}</span></div>
+    <div class="line fee"><span>${tx('رسوم معالجة الطلب', 'Order processing fee')}</span><span>${EGP(s.proc)}</span></div>
+    <div class="line total"><span>${tx('الإجمالي', 'Total')}</span><span id="total">${EGP(s.total)}</span></div></div>
+    <button class="cta" id="pay" data-t="pay">${tx('ادفع دلوقتي', 'Pay now')}</button><a class="cta ghost" href="#/s/2" data-t="edit">${tx('عدّل الإضافات', 'Edit extras')}</a><a class="cta ghost" href="#/e" data-t="edit">${tx('عدّل التذاكر', 'Edit tickets')}</a>
+    <div class="fine">${tx('التذاكر لا تُسترد. بالضغط على "ادفع" إنت موافق على الشروط.', 'Tickets are non-refundable. By tapping “Pay now” you accept the terms.')}</div></div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'checkout', kind: 'flow', id: 'step4' });
+  Lab.log('tix', { step: 4, total: s.total, type: o.type, qty: o.qty, date: o.date, adds: Object.keys(ADDS).filter(k => o.adds[k]).length });
+  $('#pay').onclick = () => { const m = document.createElement('div'); m.className = 'ov'; m.innerHTML = `<div class="mod"><div style="font-size:54px">💳</div><h3>${tx('دي محاكاة', 'This is a simulation')}</h3><p>${tx('مفيش دفع حقيقي. جاوب على سؤال المهمة تحت.', 'No real payment. Answer the mission question below.')}</p><button class="cta" data-t="ok">${tx('تمام', 'OK')}</button></div>`; document.body.appendChild(m); m.querySelector('button').onclick = () => m.remove(); };
+}
+
+// ---- hold timer ----
+function startHold() { if (holdStart) return; holdStart = Date.now(); holdIv = setInterval(tick, 1000); tick(); }
+function stopHold() { clearInterval(holdIv); holdStart = null; $('#holdbar').innerHTML = ''; }
+function tick() {
+  const left = 90 - Math.floor((Date.now() - holdStart) / 1000);
+  if (left <= 0) { clearInterval(holdIv); $('#holdbar').innerHTML = ''; const t0 = Date.now(); const m = document.createElement('div'); m.className = 'ov';
+    m.innerHTML = `<div class="mod"><div style="font-size:54px">⏰</div><h3>${tx('وقتك خلص!', 'Time’s up!')}</h3><p>${tx('التذاكر مش محجوزة ليك دلوقتي. عايز وقت زيادة؟', 'Your tickets are no longer held. Need more time?')}</p><button class="cta" data-t="hold-extend">${tx('إديني وقت زيادة', 'Give me more time')}</button></div>`;
+    document.body.appendChild(m); m.querySelector('button').onclick = () => { Lab.log('hold', { action: 'extend', ms: Date.now() - t0 }); m.remove(); holdStart = Date.now(); holdIv = setInterval(tick, 1000); tick(); }; return; }
+  $('#holdbar').innerHTML = `<div class="hold"><span>⏳ ${tx('تذاكرك محجوزة لمدة', 'Your tickets are held for')}</span><b>${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}</b></div>`;
+}
+
+function route() { const h = location.hash; if (h === '#/e') event(); else if (h === '#/s/2') extras(); else if (h === '#/s/3') details(); else if (h === '#/s/4') checkout(); else home(); }
+addEventListener('hashchange', route);
+
+function cookie() {
+  if (localStorage.getItem('lab_t_cookie')) return; const t0 = Date.now();
+  const c = document.createElement('div'); c.className = 'ck';
+  c.innerHTML = `🍪 ${tx('بنستخدم الكوكيز عشان نحسّن تجربتك ونعرضلك فعاليات تناسبك.', 'We use cookies to improve your experience and show events you’ll like.')}<div class="r"><button class="ok" data-t="cookie-accept">${tx('موافق', 'Accept')}</button><button class="no" data-t="cookie-reject">${tx('رفض', 'Decline')}</button></div>`;
+  document.body.appendChild(c);
+  const close = (choice) => { Lab.log('cookie', { choice, ms: Date.now() - t0, opened: false }); localStorage.setItem('lab_t_cookie', 1); c.remove(); };
+  c.querySelector('.ok').onclick = () => close('accept'); c.querySelector('.no').onclick = () => close('reject');
+}
+route();
+if (!Lab.dashboard) setTimeout(cookie, 700);
+})();
+</script>
+</body></html>

@@ -35,14 +35,14 @@ a{color:#f0abfc}.small{font-size:12px;color:#b9acd6}
   <div class="card"><h2>Students</h2><div style="overflow:auto"><table id="tbl"></table></div></div>
   <div class="card"><h2>Data</h2><div class="act" style="grid-template-columns:1fr 1fr"><button id="exp">⬇️ Export JSON</button><button class="danger" id="reset">🗑 Delete all data &amp; reset</button></div></div>
   <div class="card flow"><h2>Suggested run (≈15–18 min)</h2>
-    Lobby (students scan &amp; join) → <b>Al-Khabar Now</b> 3 min → 🎯 mission (match score) → ⚡ quick check → <b>The Global Ledger</b> 3 min → 🎯 mission (escape the alerts trap) → ⚡ quick check → <b>ViralVault</b> 3 min → 🎯 mission (food #7) → ⚡ quick check → <b>Spot the ad</b> → <b>Reveal</b> (phones show Wrapped, projector shows the analysis).</div>
+    Lobby (students scan &amp; join) → <b>Al-Khabar Now</b> 3 min → 🎯 mission (match score) → ⚡ quick check → <b>The Global Ledger</b> 3 min → 🎯 mission (escape the alerts trap) → ⚡ quick check → <b>NileTix</b> 3 min → 🎯 mission (book a ticket) → ⚡ quick check → <b>Spot the ad</b> → <b>Reveal</b> (phones show Wrapped, projector shows the analysis).</div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
 const KEY = new URLSearchParams(location.search).get('key') || '';
 const $ = (s) => document.querySelector(s);
-const STAGES = [['lobby', 'Lobby', 'waiting screen'], ['alkhabar', 'Al-Khabar Now', 'busy local portal'], ['ledger', 'The Global Ledger', 'paywall broadsheet'], ['viralvault', 'ViralVault', 'clickbait site'], ['spot', 'Spot the ad', 'mini game'], ['wrapped', 'Reveal ✨', 'personal Wrapped']];
-const HINT = { alkhabar: 'Mission: find the final match score (hidden on page 3 of a split article, behind ads + a fake prize popup).', ledger: 'Mission: turn off breaking-news alerts (☰ → My account → Preferences → bottom → confirmshaming → survey).', viralvault: 'Mission: find food #7 in the paginated listicle (pre-roll video ad + ads between items).', lobby: 'Wait until everyone has joined, then move to Al-Khabar Now.', spot: 'Students tap the posts they think are ads.', wrapped: 'Phones show personal stories. Use the projector scenes to walk through the analysis.' };
+const STAGES = [['lobby', 'Lobby', 'waiting screen'], ['alkhabar', 'Al-Khabar Now', 'busy local portal'], ['ledger', 'The Global Ledger', 'paywall broadsheet'], ['niletix', 'NileTix', 'event ticketing site'], ['spot', 'Spot the ad', 'mini game'], ['wrapped', 'Reveal ✨', 'personal Wrapped']];
+const HINT = { alkhabar: 'Mission: find the final match score (hidden on page 3 of a split article, behind ads + a fake prize popup).', ledger: 'Mission: turn off breaking-news alerts (☰ → My account → Preferences → bottom → confirmshaming → survey).', niletix: 'Mission: book 1 Standard ticket for Friday with no extras and report the total (bad defaults: VIP ×2, pre-ticked extras, VIP upsell popup, long form, hold timer, fees shown only at the end). Correct total: 473 EGP.', lobby: 'Wait until everyone has joined, then move to Al-Khabar Now.', spot: 'Students tap the posts they think are ads.', wrapped: 'Phones show personal stories. Use the projector scenes to walk through the analysis.' };
 let state = {};
 $('#liveLink').href = '/live?key=' + encodeURIComponent(KEY);
 const socket = io();
@@ -58,7 +58,7 @@ socket.on('analysis', (a) => {
 function render() {
   $('#stages').innerHTML = STAGES.map(([k, l, d]) => `<button class="${state.stage === k ? 'cur' : ''}" data-s="${k}">${l}<small>${d}</small></button>`).join('');
   document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => socket.emit('setStage', b.dataset.s));
-  const site = ['alkhabar', 'ledger', 'viralvault'].includes(state.stage);
+  const site = ['alkhabar', 'ledger', 'niletix'].includes(state.stage);
   $('#task').disabled = $('#check').disabled = !site; $('#task').style.opacity = $('#check').style.opacity = site ? 1 : .35;
   $('#hint').textContent = (HINT[state.stage] || '') + (state.overlay ? `  ·  Active now: ${state.overlay.type === 'task' ? '🎯 mission' : '⚡ quick check'}` : '');
 }

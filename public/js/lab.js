@@ -4,7 +4,7 @@
   const preview = qs.get('preview') === '1';
   const sid = localStorage.getItem('lab_sid');
   const lang = (preview && qs.get('lang')) || localStorage.getItem('lab_lang') || 'ar';
-  const PAGES = { lobby: '/wait', alkhabar: '/sites/alkhabar', ledger: '/sites/ledger', viralvault: '/sites/viralvault', spot: '/spot', wrapped: '/wrapped' };
+  const PAGES = { lobby: '/wait', alkhabar: '/sites/alkhabar', ledger: '/sites/ledger', niletix: '/sites/niletix', spot: '/spot', wrapped: '/wrapped' };
   const here = location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
   if (!sid && here !== '/' && !preview) { location.href = '/'; return; }
 

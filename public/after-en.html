@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>After</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:"Noto Naskh Arabic",Tahoma,system-ui,sans-serif;background:#fff8f0;color:#1d1d1b;min-height:844px;position:relative;overflow:hidden}
+img{display:block;width:100%}
+.ui{font-family:system-ui,Tahoma,sans-serif}
+/* ledger */
+.lh{border-bottom:1px solid #1d1d1b;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fff8f0}
+.lh .logo{font-weight:700;font-size:25px}.lh .btn{font-size:12px;font-weight:700;background:#0a3d62;color:#fff;padding:7px 10px;border-radius:3px}
+.secs{display:flex;gap:16px;padding:6px 14px 8px;font-size:13px;font-weight:600;border-bottom:1px solid #1d1d1b}
+.wrap{padding:0 16px}
+.lead img{aspect-ratio:16/10;object-fit:cover;margin:16px 0 12px}
+.kick{font-size:11px;font-weight:700;letter-spacing:.1em;color:#a12a1a;margin-bottom:6px}
+h2{font-size:27px;line-height:1.5;margin:0 0 6px}
+p.t{font-size:19px;line-height:1.95;margin:0 0 16px}
+.dim{position:absolute;inset:0;background:rgba(20,20,20,.35)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:20px 20px 0 0;padding:22px 18px 26px;box-shadow:0 -10px 30px rgba(0,0,0,.2)}
+.sheet h3{margin:0 0 8px;font-size:21px}.sheet p{margin:0 0 14px;color:#444;font-size:15px;line-height:1.7}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b{border:0;border-radius:8px;padding:14px;font-size:16px;font-weight:700;font-family:inherit;text-align:center}
+.b.p{background:#0a3d62;color:#fff}.b.o{background:#fff;color:#0a3d62;border:2px solid #0a3d62}
+.lnk{display:block;text-align:center;margin-top:12px;color:#0a3d62;font-size:14px;font-weight:600}
+.alerts{background:#0a3d62;color:#e6f0f7;font-size:13px;padding:8px 14px;display:flex;justify-content:space-between;align-items:center}
+.alerts .off{background:#fff;color:#0a3d62;border-radius:99px;padding:3px 12px;font-weight:700}
+.toast{position:absolute;left:16px;right:16px;bottom:24px;background:#1d1d1b;color:#fff;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;font-size:15px}
+.toast b{color:#7fd1ff}
+.box{background:#fff;border:1px solid #e1d6c6;border-radius:12px;padding:18px;margin:8px 0 18px}
+/* khabar */
+.top{background:#b3001b;color:#fff}.top .row{display:flex;justify-content:space-between;align-items:center;padding:8px 12px}
+.klogo{font-weight:900;font-size:24px}.klogo b{background:#fff;color:#b3001b;border-radius:6px;padding:0 6px;font-size:20px}
+.nav{display:flex;gap:16px;padding:7px 12px;background:#8c0015;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden}
+.kw{padding:10px;background:#f1f1f1;min-height:760px}
+.card{display:flex;gap:10px;background:#fff;border-radius:6px;padding:8px;margin-bottom:8px}.card img{width:118px;height:78px;border-radius:4px;object-fit:cover;flex:none}
+.card h3{font-size:15px;line-height:1.55;margin:0}.meta{font-size:11px;color:#888;margin-top:4px}
+.hero{position:relative;border-radius:6px;overflow:hidden;margin-bottom:10px}.hero img{height:200px;object-fit:cover}.hero .cap{position:absolute;inset:auto 0 0 0;padding:40px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font-weight:700;font-size:18px;line-height:1.45}
+.adzone{border:2px dashed #c9c9c9;border-radius:8px;padding:8px;margin:12px 0;background:#fafafa}
+.adzone .lbl{display:inline-block;background:#ffd400;color:#000;font-weight:800;font-size:12px;padding:2px 8px;border-radius:4px;margin-bottom:6px}
+.adsm{background:#fff;border:1px solid #ddd;padding:12px;display:flex;align-items:center;gap:10px;border-radius:6px}.adsm .lg{width:40px;height:40px;border-radius:9px;background:#0b4ea2;color:#fff;font-weight:900;display:grid;place-items:center}
+.sp{background:#fff7d6;border:2px solid #f2c200}
+.sp .badge{display:inline-block;background:#f2c200;color:#000;font-size:12px;font-weight:800;padding:2px 8px;border-radius:4px;margin-bottom:4px}
+.art{background:#fff;border-radius:6px;padding:12px}.art h1{font-size:22px;line-height:1.5;margin:6px 0 8px}.art p{font-size:17px;line-height:1.9;margin:12px 0}
+.rt{font-size:12px;color:#777;display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding-bottom:8px}
+.follow{background:#fff;border:2px solid #b3001b;border-radius:12px;padding:16px;margin-top:10px}
+.follow h4{margin:0 0 6px;font-size:17px}.follow p{margin:0 0 12px;font-size:14px;color:#555}
+.kb{border-radius:8px;padding:12px;font-weight:800;font-size:15px;text-align:center}
+/* viral */
+.vh{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:3px solid #ff2e63;font-family:system-ui,sans-serif}
+.vlogo{font-weight:900;font-size:24px;font-style:italic;direction:ltr}.vlogo span{color:#ff2e63}
+.vw{padding:0 12px;font-family:system-ui,Tahoma,sans-serif}
+.it{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0}.it img{width:110px;height:80px;border-radius:10px;object-fit:cover;flex:none}.it h3{margin:0;font-size:15px;line-height:1.4;font-weight:800}
+.end{text-align:center;padding:30px 10px;border-radius:16px;background:#f4f4f6;margin:16px 0}
+.end .ck{width:56px;height:56px;border-radius:50%;background:#22c55e;color:#fff;font-size:30px;display:grid;place-items:center;margin:0 auto 10px}
+.end h3{margin:0 0 6px;font-size:20px}.end p{margin:0;color:#666;font-size:14px}
+.vid{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:linear-gradient(135deg,#00e1ff,#0035ff 60%,#14002e);display:grid;place-items:center;margin:10px 0}
+.vid .play{width:70px;height:70px;border-radius:50%;background:#fffd;display:grid;place-items:center;font-size:28px;color:#0035ff;padding-left:4px}
+.vid .tag{position:absolute;top:8px;right:8px;background:#ffde00;color:#000;font-size:12px;font-weight:800;padding:3px 8px;border-radius:4px}
+.vid .cap{position:absolute;bottom:8px;right:10px;left:10px;color:#fff;font-size:13px;font-weight:700;display:flex;justify-content:space-between}
+/* paywall */
+.pay{background:#fff;border:2px solid #0a3d62;border-radius:14px;padding:18px;margin:8px 0}
+.pay h3{margin:0 0 10px;font-size:20px}.pr{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}.pr b{font-size:34px;color:#0a3d62}
+.pay ul{margin:0 0 14px;padding:0 0 0 20px;font-size:15px;line-height:2}
+.label{position:absolute;top:0;left:0;right:0;height:0}
+.th{background:#0b3b46;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-family:system-ui,sans-serif}.tlogo{font-weight:900;font-size:22px}.tlogo span{color:#ffb020}
+.tw{padding:12px;background:#f4f6f8;min-height:800px;font-family:system-ui,sans-serif}.tc{background:#fff;border-radius:14px;padding:14px;margin-bottom:10px}.tc h4{margin:0 0 8px;font-size:17px}
+.ta{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #eef1f3;font-size:15px;align-items:flex-start}.ta i{width:22px;height:22px;border:2px solid #9aa7ae;border-radius:5px;flex:none}.ta em{margin-left:auto;font-style:normal;font-weight:700}.ta small{display:block;color:#5b6b75;font-size:12px}
+.tb{background:#ff5a1f;color:#fff;font-weight:900;font-size:17px;padding:14px;border-radius:12px;text-align:center;margin-top:10px}
+.tf{border:1.5px solid #c5cdd3;border-radius:10px;padding:12px;font-size:16px;margin:4px 0 2px}.tf.bad{border-color:#b3122f;background:#fff5f6}.tl{font-size:13px;font-weight:700;margin-top:10px}.te{color:#b3122f;font-size:13px;font-weight:600}
+.tline{display:flex;justify-content:space-between;padding:6px 0;font-size:15px}.tsteps{display:flex;gap:4px;margin:4px 0 12px}.tsteps i{flex:1;height:5px;border-radius:5px;background:#d6dde2}.tsteps i.on{background:#ff5a1f}
+.sticky{position:absolute;left:0;right:0;bottom:0;background:#fff;box-shadow:0 -6px 20px rgba(0,0,0,.15);padding:14px;font-family:system-ui,sans-serif;display:flex;justify-content:space-between;align-items:center}
+</style></head>
+<body>
+<div id="s"></div>
+<script src="/js/content.js"></script>
+<script>
+const C = CONTENT, th = C.thumb, s = new URLSearchParams(location.search).get('s');
+const LH = `<div class="lh ui"><span style="font-size:22px">☰</span><span class="logo" style="font-family:Georgia,serif">The Global Ledger</span><span class="btn">Subscribe</span></div><div class="secs ui"><span>World</span><span>Business</span><span>Tech</span><span>Climate</span><span>Culture</span></div>`;
+const LEAD = `<div class="wrap"><div class="lead"><img src="${th('climate', 3)}"><div class="kick ui">SPECIAL REPORT</div><h2 style="line-height:1.2">Racing the tide: how coastal cities are rethinking water</h2><div style="font-size:15px;color:#55524c;line-height:1.5">From Alexandria to Rotterdam, cities are testing new answers to rising seas.</div></div></div>`;
+const KH = `<div class="top ui"><div class="row"><span style="font-size:20px">☰</span><span class="klogo"><b>Al-Khabar</b> Now</span><span style="font-size:20px">🔍</span></div><div class="nav"><span>Home</span><span>Egypt</span><span>Sports</span><span>Arts</span><span>Economy</span><span>Tech</span></div></div>`;
+const TH = `<div class="th"><span style="font-size:20px">☰</span><span class="tlogo">Nile<span>Tix</span></span><span style="font-size:20px">👤</span></div>`;
+const steps = (n) => `<div class="tsteps">${[1, 2].map(i => `<i class="${i <= n ? 'on' : ''}"></i>`).join('')}</div>`;
+const card = (c, t, i, m) => `<div class="card"><img src="${th(c, i)}"><div><h3 style="line-height:1.35">${t}</h3><div class="meta">${m} min ago</div></div></div>`;
+const S = {
+  cookiewall: `${LH}${LEAD}<div class="dim"></div><div class="sheet ui"><h3>Cookies on this site</h3><p>We use essential cookies to run the site. May we also use cookies for analytics and ads?</p><div class="row2"><div class="b o">Decline</div><div class="b o">Accept</div></div><span class="lnk">Choose for yourself ›</span></div>`,
+  newsletter: `${LH}<div class="wrap" style="padding-top:16px"><p class="t" style="line-height:1.6">In the end, the future of coastal cities looks set to be written by decisions made this decade, not in the distant future.</p><div style="text-align:center;color:#a12a1a;margin:6px 0 14px">◆ ◆ ◆</div><div class="box ui"><div class="kick">THE MORNING BRIEF</div><div style="font-size:19px;font-weight:700;margin-bottom:6px">Enjoyed this article?</div><div style="font-size:14px;color:#555;line-height:1.5;margin-bottom:12px">The 5 stories that matter, every morning. Unsubscribe with one tap from any email.</div><div style="border:1px solid #bbb;border-radius:6px;padding:12px;color:#999;font-size:15px;margin-bottom:10px">Your email address</div><div class="row2"><div class="b o">No thanks</div><div class="b p">Sign up</div></div></div><div class="kick ui" style="color:#1d1d1b;margin-top:16px">READ NEXT</div><div style="font-size:18px;font-weight:700;line-height:1.4">Is AI changing the way we read the news?</div></div>`,
+  confirmshame: `${LH.replace('</div><div class="secs', '</div><div class="alerts ui"><span>🔔 Breaking news alerts: ON</span><span class="off">Turn off</span></div><div class="secs')}${LEAD}<div class="toast ui"><span>🔕 Alerts turned off</span><b>Undo</b></div>`,
+  paywall: `${LH}<div class="wrap" style="padding-top:14px"><h2 style="line-height:1.25">Is AI changing the way we read the news?</h2><p class="t" style="color:#666;line-height:1.6">Many media organisations now offer short AI-written summaries of articles…</p><div class="pay ui"><h3>Keep reading with a subscription</h3><div class="pr"><b>299</b><span>EGP per month</span></div><ul><li>Same price every month</li><li>Cancel with one tap in your account</li><li>3 free articles every month</li></ul><div class="row2"><div class="b o">Not now</div><div class="b p">Subscribe</div></div></div></div>`,
+  interstitial: `${KH}<div class="kw"><div class="hero"><img src="${th('celeb', 7)}"><div class="cap">Nile Stars clinch dramatic late win over Delta FC</div></div>${card('local', 'Three new public parks open as district upgrades walkways', 3, 12)}${card('education', 'Universities to pilot digital student ID cards next term', 4, 19)}
+    <div class="adzone"><span class="lbl">Advertisement</span><div class="adsm"><div class="lg">F</div><div style="flex:1;font-size:13px;line-height:1.5"><b style="font-size:15px">Future Student Card</b><br>No issue fees for the first year</div></div></div>${card('economy', 'Survey: 6 in 10 young people shop online every week', 9, 40)}</div>`,
+  sponsored: `${KH}<div class="kw">${card('sports', 'Nile Stars clinch dramatic late win over Delta FC', 3, 12)}${card('education', 'Universities to pilot digital student ID cards next term', 4, 19)}
+    <div class="card sp"><img src="${th('crypto', 4)}"><div><span class="badge">Sponsored ad · CryptoNile</span><h3 style="line-height:1.35">AI trading platform. Profits are not guaranteed</h3></div></div>
+    ${card('local', 'Three new public parks open as district upgrades walkways', 8, 30)}${card('economy', 'Survey: 6 in 10 young people shop online every week', 9, 39)}${card('health', 'Study: 7 hours of sleep improves focus during exams', 10, 48)}</div>`,
+  scam: `${KH}<div class="kw"><div class="art"><h1 style="line-height:1.3">Nile Stars clinch dramatic late win over Delta FC</h1><div class="rt"><span>Al-Khabar staff</span><span>⏱ 3 min read</span></div>
+    <p style="line-height:1.6">Cairo International Stadium hosted a fiery clash last night between Nile Stars and Delta FC in week ten of the league.</p><p style="line-height:1.6">Delta took an early lead in the 12th minute, before Nile Stars levelled just before half-time.</p><p style="line-height:1.6">The lead changed hands again in the second half, and Delta equalised in the 78th minute.</p><p style="line-height:1.6">Two minutes from time, Karim Samy headed in the winner, and the match ended 3–2.</p><div style="text-align:center;color:#888;font-size:13px">— The whole article on one page —</div></div></div>`,
+  extras: `${TH}<div class="tw">${steps(1)}<div class="tc"><h4>Your ticket</h4><div class="tline"><span>1 × Standard · Fri 13 Dec</span><b>473 EGP</b></div><div style="font-size:12px;color:#5b6b75">All fees included</div></div>
+    <div class="tc"><h4>Optional extras</h4><div style="font-size:13px;color:#5b6b75;margin-bottom:4px">Nothing is selected. Add only what you want.</div>
+    <div class="ta"><i></i><div>Ticket protection<small>Refund if you can’t attend</small></div><em>+45 EGP</em></div><div class="ta"><i></i><div>Parking pass<small>Guaranteed spot near the gate</small></div><em>+60 EGP</em></div><div class="ta" style="border:0"><i></i><div>SMS reminders<small>Texts with set times</small></div><em>+15 EGP</em></div></div>
+    <div class="tb">Continue · 473 EGP</div></div>`,
+  form: `${TH}<div class="tw">${steps(2)}<div class="tc"><h4>Where should we send your ticket?</h4>
+    <div class="tl">Full name</div><div class="tf">Mona Hassan</div>
+    <div class="tl">Email</div><div class="tf">mona@example.com</div>
+    <div class="tl">Mobile number</div><div class="tf bad">0100 123 45</div><div class="te">Mobile numbers have 11 digits. You entered 9.</div></div>
+    <div style="font-size:13px;color:#5b6b75;padding:0 4px">3 fields only. We keep what you typed if something needs fixing.</div><div class="tb">Pay 473 EGP</div></div>`,
+  fees: `${TH}<div class="tw"><div class="tc" style="padding:0;overflow:hidden"><img src="${th('celeb', 12)}" style="aspect-ratio:16/9;object-fit:cover"><div style="padding:12px 14px"><h4 style="font-size:20px;margin-bottom:4px">Cairo Sound Festival</h4><div style="font-size:13px;color:#5b6b75">📍 Expo Grounds · Fri 13 Dec · Doors 6 pm</div></div></div>
+    <div class="tc"><h4>Ticket type</h4><div class="tline"><span><b>Standard</b></span><b>473 EGP</b></div><div class="tline"><span>Fan Pit</span><b>865 EGP</b></div><div class="tline"><span>VIP</span><b>1,705 EGP</b></div><div style="font-size:12px;color:#157a52;font-weight:700;margin-top:6px">✓ Prices include all fees. This is what you pay.</div></div>
+    <div class="tc"><h4>How many?</h4><div style="text-align:center;font-size:24px;font-weight:800">−  &nbsp; 1 &nbsp;  +</div></div></div><div class="sticky"><div><div style="font-size:12px;color:#5b6b75">Total</div><b style="font-size:22px">473 EGP</b></div><div class="tb" style="margin:0;padding:12px 26px">Continue</div></div>`,
+};
+document.getElementById('s').innerHTML = S[s] || '';
+</script>
+</body></html>

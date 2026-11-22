@@ -50,8 +50,8 @@ Change the key with `ADMIN_KEY=yourkey npm start`.
 | 5 | **The Global Ledger** (3 min) | Serious broadsheet: cookie wall (847 partners), metered paywall, confirmshaming newsletter |
 | 6 | 🎯 **Push mission** | "Turn off breaking-news alerts" (menu → account → preferences → guilt-trip → survey) |
 | 7 | ⚡ **Push quick check** | Same as above |
-| 8 | **ViralVault** (3 min) | Clickbait site: notification prompt, app banner, infinite feed, pre-roll video ad, disguised sponsored posts |
-| 9 | 🎯 **Push mission** | "What is food #7?" (one item per page + ads) |
+| 8 | **NileTix** (3 min) | Event ticketing site: VIP and 2 tickets preselected, pre-ticked extras, VIP upsell pop-up, long form with vague errors, hold timer, fees shown only at the last step |
+| 9 | 🎯 **Push mission** | "Book 1 Standard ticket for Friday with no extras. What is the total?" (473 EGP) |
 | 10 | ⚡ **Push quick check** | Same as above |
 | 11 | **Spot the ad** | Tap the posts you think are ads (2 are disguised) |
 | 12 | **Reveal ✨** | Phones: personal Wrapped story. Projector: walk through the scenes |
