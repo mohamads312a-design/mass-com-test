@@ -96,7 +96,7 @@ Tip: keep the dashboard on the **Live** scene while students browse; their names
 | Spot the ad | hits, missed disguised ads, false alarms |
 | Heatmaps | position of every tap on each homepage |
 
-**Personas:** 📖 Deep Reader · 🏃 Skimmer · 🎣 Clickbait Catch · 🧐 Careful One · ⚡ Speedrunner · 🥷 Popup Ninja · 🫣 Mis-Tapper · 🚪 Bouncer · 🎯 Mission Hunter. Each student also gets a personal ease-of-use report card.
+**Personas:** 🎯 Mission Hunter · 🔎 Detective · ⚡ Speedrunner · 👀 First-Glancer · 🚪 Walk-Away · 🥷 Popup Ninja · 🫣 Mis-Tapper · 📝 Form Fighter · 😇 Polite One · 🛍 Easy Sell. Each student also gets a personal ease-of-use report card.
 
 ---
 

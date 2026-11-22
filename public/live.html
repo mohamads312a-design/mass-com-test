@@ -1,6 +1,6 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>News UX Lab — Live</title>
+<title>UX Research Lab — Live</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0b0614;--card:#160d26;--line:#2a1d44;--mut:#a497c2;--a:#a855f7;--b:#ec4899;--c:#f59e0b;--g:#22c55e;--r:#ef4444;--s:#38bdf8}
@@ -28,6 +28,8 @@ h1{font-size:3.2em;line-height:1.05;margin:.15em 0 .5em;font-weight:700;letter-s
 /* bars */
 .bars{display:flex;flex-direction:column;gap:.45em}
 .bar{display:grid;grid-template-columns:8.5em 1fr 4.2em;align-items:center;gap:.7em;font-size:.95em}
+.bars.wide .bar{grid-template-columns:15em 1fr 4.2em}
+.wall.many{grid-template-columns:repeat(8,1fr);gap:.6em}.wall.many .pc{height:7.6em;font-size:.8em}
 .bar .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
 .bar .tr{height:1.25em;background:#ffffff0d;border-radius:99px;overflow:hidden}
 .bar .fl{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--a),var(--b));width:0;transition:width 1.2s cubic-bezier(.2,1,.3,1)}
@@ -126,7 +128,7 @@ const SCENES = [
     <div class="grid" style="grid-template-columns:repeat(3,1fr)">${Object.entries(T).map(([k, t], i) => `<div class="card an" style="animation-delay:${.2 + i * .1}s"><h3>${S[k]} · ${nm[k]}</h3>
       <div class="big" data-n="${t.success}" data-s="%">${t.success}%</div><div class="sub">${tx('خلّصوها', 'succeeded')} · n=${t.n} · ${tx('سابوها', 'gave up')}: ${t.gaveUp}</div>
       <div class="bars" style="margin-top:1em">${bar(tx('نجحوا', 'Success'), t.success, t.success + '%', 'linear-gradient(90deg,#22c55e,#38bdf8)')}${bar(tx('ماعرفوش', 'Failed'), 100 - t.success, (100 - t.success) + '%')}</div>
-      <div style="margin-top:1em">${t.fastest.map((f, j) => `<div>${['🥇', '🥈', '🥉'][j]} ${esc(f.name)} · ${f.s}${tx('ث', 's')}</div>`).join('')}</div>
+      <div style="margin-top:1em">${t.fastest.map((f, j) => `<div>${['🥇', '🥈', '🥉'][j]} <bdi>${esc(f.name)}</bdi> · ${f.s}${tx('ث', 's')}</div>`).join('')}</div>
       ${k === 'loop' && A.aggregate.usability.traps ? `<div class="sub" style="margin-top:.8em">📅 ${tx('صدّقوا البوست القديم', 'Trusted the outdated post')}: <b style="color:#f472b6">${A.aggregate.usability.traps.loopOld}</b> · 📍 ${tx('فاتهم تغيير المكان', 'Missed the venue change')}: <b style="color:#f472b6">${A.aggregate.usability.traps.loopVenue}</b> · 🎤 ${tx('صدّقوا بوست المتحدثة', 'Trusted the speaker’s post')}: <b style="color:#f472b6">${A.aggregate.usability.traps.loopSpeaker}</b></div>` : ''}${k === 'sponsor' && A.aggregate.usability.traps ? `<div class="sub" style="margin-top:.8em">💸 ${tx('رعاة مشيوا لإيفنت تاني', 'Sponsors who walked away')}: <b style="color:#f472b6">${A.aggregate.usability.traps.sponsorLost}</b> · 📦 ${tx('اشتروا جولد من غير بوث', 'Bought Gold with no booth')}: <b style="color:#f472b6">${A.aggregate.usability.traps.sponsorNoBooth}</b> · 💰 ${tx('عدّوا الميزانية', 'Went over budget')}: <b style="color:#f472b6">${A.aggregate.usability.traps.sponsorOver}</b></div>` : ''}${k === 'niletix' && A.aggregate.usability.traps ? `<div class="sub" style="margin-top:.8em">🎫 ${tx('نوع غلط', 'Wrong ticket type')}: <b style="color:#f472b6">${A.aggregate.usability.traps.tixType}</b> · 📆 ${tx('يوم غلط', 'Wrong day')}: <b style="color:#f472b6">${A.aggregate.usability.traps.tixDay}</b> · ✌️ ${tx('حجزوا تذكرتين', 'Booked 2 tickets')}: <b style="color:#f472b6">${A.aggregate.usability.traps.tixQty}</b> · 🎭 ${tx('إيفنت غلط', 'Wrong event')}: <b style="color:#f472b6">${A.aggregate.usability.traps.tixEvent}</b> · 📝 ${tx('أخطاء الفورم', 'Form errors')}: <b style="color:#f472b6">${A.aggregate.usability.traps.formErrors}</b></div>` : ''}</div>`).join('')}</div>`; } },
   { id: 'effort', title: () => tx('المجهود', 'Effort'), render: () => { const T = A.aggregate.usability.tasks, S = SITE(); const mx = Math.max(1, ...Object.values(T).map(t => t.avgSteps));
     return `<div class="kick an">${tx('المقياس التاني: الكفاءة', 'Metric #2: efficiency')}</div><h1 class="an" style="animation-delay:.1s">${tx('خدت منكم ', 'How much ')}<span class="grad">${tx('قد إيه', 'effort')}</span>${tx('؟', '?')}</h1>
@@ -151,7 +153,7 @@ const SCENES = [
       <div class="card an" style="animation-delay:.5s"><h3>🤔 ${tx('تناقضات', 'Contradictions')}</h3>${U.saydo.map(c => `<div style="padding:.4em 0;border-bottom:1px solid var(--line)"><b>${esc(c.name)}</b> ${tx('قال إن', 'said')} ${S[c.site]} ${tx('سهل', 'was easy')} <b>${c.mood}/7</b> ${tx('بس', 'but')} ${c.failed ? tx('ماخلّصش المهمة', 'failed the task') : c.rage ? c.rage + ' ' + tx('دوسات بعصبية', 'rage taps') : tx('داس على إعلان بالغلط', 'mis-tapped an ad')}</div>`).join('') || empty()}</div></div>`; } },
   { id: 'blockers', title: () => tx('إيه اللي عطّلكم', 'Blockers'), render: () => { const U = A.aggregate.usability; const L = [tx('النوافذ والمقاطعات', 'Pop-ups & interruptions'), tx('مالقيتش اللي بدوّر عليه', 'Couldn’t find it'), tx('المعلومة متقسمة أو مستخبية', 'Info split up or hidden'), tx('كلام كتير ومش واضح', 'Too much unclear text'), tx('ولا حاجة', 'Nothing')]; const t = Math.max(1, U.blockers.reduce((a, b) => a + b, 0));
     return `<div class="kick an">${tx('بصوتكم', 'In your words')}</div><h1 class="an" style="animation-delay:.1s">${tx('إيه أكتر حاجة ', 'What ')}<span class="grad">${tx('عطّلتكم', 'slowed you down')}</span>${tx('؟', '?')}</h1>
-    <div class="grid" style="grid-template-columns:1fr"><div class="card an" style="animation-delay:.2s"><div class="bars" style="gap:1em;font-size:1.3em">${U.blockers.map((n, i) => bar(L[i], n / t * 100, Math.round(n / t * 100) + '%', i === 4 ? 'linear-gradient(90deg,#22c55e,#38bdf8)' : '')).join('')}</div></div></div>`; } },
+    <div class="grid" style="grid-template-columns:1fr"><div class="card an" style="animation-delay:.2s"><div class="bars wide" style="gap:1em;font-size:1.3em">${U.blockers.map((n, i) => bar(L[i], n / t * 100, Math.round(n / t * 100) + '%', i === 4 ? 'linear-gradient(90deg,#22c55e,#38bdf8)' : '')).join('')}</div></div></div>`; } },
   { id: 'sites', title: () => tx('مقارنة المواقع', 'Site comparison'), render: () => { const U = A.aggregate.usability, S = SITE(), w = U.worst, b = U.best;
     const rows = [[tx('درجة سهولة الاستخدام', 'Usability score'), 'score', '/100'], [tx('نجاح المهمة', 'Task success'), 'success', '%'], [tx('سهولة (قالوا)', 'Ease (said)'), 'seq', '/7'], [tx('متوسط وقت المهمة', 'Avg task time'), 'avgS', 's'], [tx('دوسات للمهمة', 'Taps per task'), 'steps', ''], [tx('وقت ضاع في النوافذ', 'Time lost to pop-ups'), 'lost', 's'], [tx('دوسات بعصبية', 'Rage taps'), 'rage', '']];
     return `<div class="kick an">${tx('تقييم سهولة الاستخدام', 'Usability evaluation')}</div><h1 class="an" style="animation-delay:.1s">${tx('الأصعب: ', 'Hardest: ')}<span class="grad">${w ? S[w] : '—'}</span></h1>
@@ -162,7 +164,7 @@ const SCENES = [
   { id: 'personas', title: () => tx('الشخصيات', 'Personas'), render: () => { const st = (A ? A.students : []).filter(s => s.taps || s.timeS);
     const dist = Object.entries(A.aggregate.personas).sort((a, b) => b[1].names.length - a[1].names.length);
     return `<div class="kick an">${tx('انتو مين؟', 'Who are you?')}</div><h1 class="an" style="animation-delay:.1s;margin-bottom:.3em">${dist.slice(0, 3).map(([k, p]) => `${p.emoji} <span class="grad">${p.names.length}</span>`).join(' &nbsp; ')}</h1>
-    <div class="wall" id="wall">${st.map((s, i) => `<div class="pc an" style="animation-delay:${.15 + i * .04}s" data-sid="${s.sid}"><div class="in"><div class="f"><div class="nm">${esc(s.name)}</div><div style="font-size:.6em;color:var(--mut);margin-top:.4em">${tx('دوس عشان تشوف', 'click to reveal')}</div></div><div class="b"><div class="em">${s.persona.emoji}</div><div class="nm">${esc(s.name)}</div><div class="pn">${P(s.persona)}</div><div class="tg">${s.taskSuccess != null ? '✅ ' + s.taskSuccess + '% · ' : ''}⏱ ${s.lostTotalS || 0}${tx('ث ضايعة', 's lost')}</div></div></div></div>`).join('')}</div>`; }, after: bindWall, static: true },
+    <div class="wall ${st.length > 24 ? 'many' : ''}" id="wall">${st.map((s, i) => `<div class="pc an" style="animation-delay:${.15 + i * .04}s" data-sid="${s.sid}"><div class="in"><div class="f"><div class="nm">${esc(s.name)}</div><div style="font-size:.6em;color:var(--mut);margin-top:.4em">${tx('دوس عشان تشوف', 'click to reveal')}</div></div><div class="b"><div class="em">${s.persona.emoji}</div><div class="nm">${esc(s.name)}</div><div class="pn">${P(s.persona)}</div><div class="tg">${s.taskSuccess != null ? '✅ ' + s.taskSuccess + '% · ' : ''}⏱ ${s.lostTotalS || 0}${tx('ث ضايعة', 's lost')}</div></div></div></div>`).join('')}</div>`; }, after: bindWall, static: true },
   { id: 'spotlight', title: () => tx('تحليل لكل واحد', 'Spotlight'), render: () => spotlight(), after: () => {}, static: true },
   { id: 'fame', title: () => tx('لوحة الشرف', 'Hall of fame'), render: () => { const F = { fastTask: ['⚡', tx('أسرع واحد خلّص المهام', 'Fastest task solver')], fewSteps: ['🎯', tx('أقل دوسات', 'Fewest taps')], ninja: ['🥷', tx('أقل وقت ضاع في النوافذ', 'Least time lost to pop-ups')], lost: ['🐢', tx('أكتر وقت ضاع في النوافذ', 'Most time lost to pop-ups')], rage: ['😤', tx('أكتر دوسات بعصبية', 'Most rage taps')], deepest: ['📖', tx('أعمق قارئ', 'Deepest reader')], scroller: ['♾️', tx('ملك السكرول', 'Scroll king')], spotter: ['🔍', tx('صياد الإعلانات', 'Ad spotter')] };
     return `<div class="kick an">${tx('الختام', 'Finale')}</div><h1 class="an" style="animation-delay:.1s">🏆 ${tx('لوحة الشرف', 'Hall of fame')}</h1>
@@ -177,6 +179,9 @@ const TAGS = () => ({ impulsive: tx('بيدوس على طول', 'Impulsive click
 function tagLine(s) { const T = TAGS(); return s.adProfile.filter(t => t.k !== 'interests').slice(0, 2).map(t => T[t.k]).join(' · '); }
 
 let spotIdx = 0;
+const CH = { loop: ['Fri 5 Dec · Nile Hotel', 'Fri 12 Dec · Nile Hotel', 'Fri 12 Dec · Expo Hall B ✓', 'Sat 13 Dec · Expo Hall B'],
+  sponsor: () => [tx('بلاتينيوم (فوق الميزانية)', 'Platinum (over budget)'), tx('جولد من غير بوث', 'Gold, no booth'), tx('جولد + بوث ✓', 'Gold + booth ✓'), tx('مشي لإيفنت تاني 💸', 'Walked away 💸')],
+  type: () => ({ vip: 'Golden Circle', pit: 'Fan Pit', std: 'Standard', acc: 'Accessible' }) };
 function spotlight() {
   const st = (A ? A.students : []).filter(s => s.taps || s.timeS);
   if (!st.length) return `<h1>${tx('تحليل لكل واحد', 'Spotlight')}</h1>` + empty();
@@ -190,7 +195,7 @@ function spotlight() {
     ${line('⏱', tx('وقت ضاع في النوافذ', 'Time lost to pop-ups'), (s.lostTotalS || 0) + tx('ث', 's'))}${line('😤', tx('دوسات بعصبية', 'Rage taps'), s.rage)}${line('👆', tx('دوسات على الفاضي', 'Dead taps'), s.deadTaps)}${line('🫣', tx('دوسات بالغلط على إعلانات', 'Accidental ad taps'), s.adTaps)}
   </div><div class="grid" style="grid-template-rows:auto 1fr">
     <div class="card an" style="animation-delay:.3s"><h3>${tx('قال إن السهولة', 'Said ease')}</h3><div style="display:flex;gap:1.4em">${['loop', 'sponsor', 'niletix'].map(k => `<div style="text-align:center;flex:1"><div class="mid">${s.sites[k].mood ?? '—'}<span style="font-size:.4em;color:var(--mut)">/7</span></div><div class="sub">${S[k]}</div></div>`).join('')}</div></div>
-    <div class="card an" style="animation-delay:.4s"><h3>${tx('القراية', 'Reading')}</h3>${line('📖', tx('قرا / عدّى', 'read / skimmed'), s.reading.read + ' / ' + s.reading.skimmed)}${line('📏', tx('عمق السكرول', 'Scroll depth'), s.reading.avgDepth + '%')}${line('♾️', tx('بوستات في السكرول', 'Feed posts'), s.feedItems)}</div>
+    <div class="card an" style="animation-delay:.4s"><h3>${tx('اختار إيه فعلًا', 'What they actually chose')}</h3>${line('📱', tx('قال الإيفنت', 'Said the event is'), CH.loop[s.choice.loop] || '—')}${line('🤝', tx('كراعي قرر', 'As a sponsor'), CH.sponsor()[s.choice.sponsor] || '—')}${line('🎟', tx('حجز', 'Booked'), s.choice.tix ? `${s.choice.tix.qty} × ${CH.type()[s.choice.tix.type] || s.choice.tix.type} · ${s.choice.tix.ev === 'party' ? tx('الأفتر بارتي', 'the After Party') : tx('المهرجان', 'the festival')} · ${s.choice.tix.date} Dec` : '—')}${line('🔍', tx('اكتشف الإعلان', 'Spot the ad'), s.spot ? s.spot.hits + '/' + s.spot.totalAds : '—')}<div class="sub" style="margin-top:.8em">${s.persona.why ? (lang === 'ar' ? s.persona.why.ar : s.persona.why.en) : ''}</div></div>
   </div></div>`;
 }
 

@@ -37,8 +37,8 @@ else {
 function done(r) {
   const s = new Set(r.sel || []);
   app.innerHTML = `<div class="res"><div class="big grad">${r.hits}/${r.totalAds}</div><p style="font-size:18px">${tx('إعلانات اكتشفتها', 'ads spotted')}</p>
-    ${r.falseAlarms ? `<p class="muted">${tx('وكمان افتكرت إن', 'You also thought')} ${r.falseAlarms} ${tx('خبر حقيقي إعلان', 'real stories were ads')}</p>` : ''}</div>
-    ${C.spot.map((x, i) => { const cls = x.ad ? (s.has(i) ? 'hit' : 'miss') : (s.has(i) ? 'fa' : ''); const lbl = x.ad ? (s.has(i) ? ['#22c55e', tx('إعلان ✓', 'Ad ✓')] : ['#f59e0b', tx('إعلان فاتك!', 'Missed ad!')]) : (s.has(i) ? ['#ef4444', tx('خبر حقيقي', 'Real news')] : null);
+    ${r.falseAlarms ? `<p class="muted">${tx('وكمان افتكرت إن', 'You also thought')} ${r.falseAlarms} ${tx('بوست حقيقي إعلان', 'real posts were ads')}</p>` : ''}</div>
+    ${C.spot.map((x, i) => { const cls = x.ad ? (s.has(i) ? 'hit' : 'miss') : (s.has(i) ? 'fa' : ''); const lbl = x.ad ? (s.has(i) ? ['#22c55e', tx('إعلان ✓', 'Ad ✓')] : ['#f59e0b', tx('إعلان فاتك!', 'Missed ad!')]) : (s.has(i) ? ['#ef4444', tx('بوست حقيقي', 'Real post')] : null);
       return `<div class="c ${cls}"><img src="${C.thumb(x.cat, i + 3)}"><div><h3>${L(x.t)}</h3><small>${L(x.src)}</small></div>${lbl ? `<span class="tag" style="background:${lbl[0]}">${lbl[1]}</span>` : ''}</div>`; }).join('')}
     <p class="muted" style="text-align:center">${tx('استنى المفاجأة الكبيرة… 👀', 'Wait for the big reveal… 👀')}</p>`;
 }

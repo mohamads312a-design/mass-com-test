@@ -144,7 +144,7 @@ setInterval(() => {
 
 server.listen(PORT, () => {
   const url = publicUrl();
-  console.log('\n  📰  News UX Lab is running');
+  console.log('\n  🧪  UX Research Lab is running');
   console.log(`  Students join:     ${url}`);
   console.log(`  Instructor panel:  ${url}/admin?key=${ADMIN_KEY}`);
   console.log(`  Projector (live):  ${url}/live?key=${ADMIN_KEY}\n`);
