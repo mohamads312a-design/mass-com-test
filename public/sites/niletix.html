@@ -37,6 +37,7 @@ input.t,select.t{width:100%;padding:12px;border:1.5px solid #c5cdd3;border-radiu
 .ck{position:fixed;left:0;right:0;bottom:0;z-index:90;background:#fff;box-shadow:0 -6px 20px rgba(0,0,0,.2);padding:14px 14px calc(14px + env(safe-area-inset-bottom));font-size:13px;line-height:1.5}
 .ck .r{display:flex;gap:8px;margin-top:10px;align-items:center}.ck .ok{flex:1;border:0;background:#0b3b46;color:#fff;font-weight:900;font-size:16px;padding:12px;border-radius:10px}.ck .no{border:0;background:none;color:#8a979f;font-size:12px;text-decoration:underline}
 .foot{background:#0b3b46;color:#9db4bb;text-align:center;font-size:12px;padding:20px 14px 100px;line-height:1.8}.foot .sim{color:#ffb020}
+.calh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.calh button{border:0;background:none;font-size:15px;color:#8a979f;padding:2px 8px}.calg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;direction:ltr}.calg i{font-style:normal;font-size:11px;color:#8a979f}.cd{border:0;background:none;padding:8px 0;border-radius:8px;font-size:14px;color:#b5bec4;font-family:inherit}.cd.ok{color:#10212b;font-weight:700;background:#eef6f8}.cd.so{color:#b5bec4;text-decoration:line-through}.cd.sel{background:#ff5a1f;color:#fff}
 </style></head>
 <body data-site="niletix">
 <header><span data-t="menu" style="font-size:20px">☰</span><a class="logo" href="#/" data-t="logo">Nile<span>Tix</span></a><span data-t="account" style="font-size:20px">👤</span></header>
@@ -50,98 +51,126 @@ input.t,select.t{width:100%;padding:12px;border:1.5px solid #c5cdd3;border-radiu
 const C = CONTENT, L = Lab.L, ar = Lab.lang === 'ar', tx = (a, e) => ar ? a : e, $ = (s) => document.querySelector(s);
 const EGP = (n) => n + ' ' + tx('جنيه', 'EGP');
 window.MISSION = { check: {}, task: {
-  q: { ar: 'احجز تذكرة واحدة عادية (Standard) ليوم الجمعة في "مهرجان القاهرة للموسيقى" من غير أي إضافات. الإجمالي في آخر خطوة كام؟', en: 'Book 1 Standard ticket for Friday at “Cairo Sound Festival”, with no extras. What is the total at the last step?' },
-  choices: ['400 EGP', '473 EGP', '518 EGP', '593 EGP'], correct: 1 } };
+  q: { ar: 'احجز تذكرة واحدة عادية (Standard) ليوم الجمعة في "مهرجان القاهرة للموسيقى". بوابة الدخول المكتوبة على تذكرتك إيه؟', en: 'Book 1 Standard ticket for Friday at “Cairo Sound Festival”. Which gate is printed on your ticket?' },
+  choices: { ar: ['بوابة A', 'بوابة B', 'بوابة C', 'بوابة D'], en: ['Gate A', 'Gate B', 'Gate C', 'Gate D'] }, correct: 2 } };
 
-const TYPES = { std: { n: tx('عادية', 'Standard'), d: tx('دخول عام', 'General admission'), p: 400 }, pit: { n: tx('فان بيت', 'Fan Pit'), d: tx('قدام المسرح', 'In front of the stage'), p: 750 }, vip: { n: 'VIP', d: tx('لاونج ومشروبات', 'Lounge & drinks'), p: 1500 } };
-const ADDS = { ins: { n: tx('حماية التذكرة', 'Ticket protection'), d: tx('استرجاع فلوسك لو ماقدرتش تيجي', 'Refund if you can’t attend'), p: 45 }, park: { n: tx('باركنج', 'Parking pass'), d: tx('مكان مضمون جنب البوابة', 'Guaranteed spot near the gate'), p: 60 }, sms: { n: tx('تذكير SMS', 'SMS reminders'), d: tx('رسايل بمواعيد الفقرات', 'Texts with set times'), p: 15 } };
-const DATES = [['thu', tx('الخميس 12 ديسمبر', 'Thu 12 Dec'), tx('خلصت', 'Sold out'), true], ['fri', tx('الجمعة 13 ديسمبر', 'Fri 13 Dec'), tx('باقي 3 بس!', 'Only 3 left!'), false], ['sat', tx('السبت 14 ديسمبر', 'Sat 14 Dec'), tx('بتخلص بسرعة', 'Selling fast'), false]];
-// bad defaults on purpose: VIP, 2 tickets, all extras ticked
-const o = { date: null, type: 'vip', qty: 2, adds: { ins: true, park: true, sms: true } };
+// prices are all-in and visible from the start: the difficulty here is the experience, not the price
+const TYPES = { vip: { n: tx('جولدن سيركل', 'Golden Circle'), d: tx('لاونج ومشروبات', 'Lounge & drinks'), p: 1705 }, pit: { n: tx('فان بيت', 'Fan Pit'), d: tx('قدام المسرح', 'In front of the stage'), p: 865 }, std: { n: tx('عادية', 'Standard'), d: tx('دخول عام', 'General admission'), p: 473 }, acc: { n: tx('ذوي الهمم', 'Accessible'), d: tx('منطقة مجهزة', 'Accessible platform'), p: 473 } };
+const EVS = { csf: { n: tx('مهرجان القاهرة للموسيقى', 'Cairo Sound Festival'), days: { 10: 'off', 11: 'ok', 12: 'ok' }, img: 12 }, party: { n: tx('كايرو ساوندز: الأفتر بارتي', 'Cairo Sounds: The After Party'), days: { 12: 'ok' }, img: 3 } };
+const DAYN = { 10: tx('الخميس 10 ديسمبر', 'Thu 10 Dec'), 11: tx('الجمعة 11 ديسمبر', 'Fri 11 Dec'), 12: tx('السبت 12 ديسمبر', 'Sat 12 Dec') };
+const gate = () => o.ev === 'party' ? 'E' : o.type === 'vip' ? 'A' : o.type === 'pit' ? 'B' : o.type === 'acc' ? 'F' : o.date === 12 ? 'D' : 'C';
+// bad defaults on purpose: Golden Circle, 2 tickets, calendar on the wrong month
+const o = { ev: 'csf', date: null, type: 'vip', qty: 2, month: 10, more: false };
 let holdStart = null, holdIv = null, upsold = false, formErrs = 0;
 
 $('#foot').innerHTML = `NileTix © 2026 · ${tx('المساعدة · الشروط · سياسة الاسترجاع', 'Help · Terms · Refund policy')}<br><span class="sim">${tx('محاكاة تعليمية — الفعاليات والأسعار من خيالنا', 'Classroom simulation — events and prices are fictional')}</span>`;
 const steps = (n) => `<div class="steps">${[1, 2, 3, 4].map(i => `<i class="${i <= n ? 'on' : ''}"></i>`).join('')}</div><div class="sub" style="margin-bottom:8px">${tx('خطوة', 'Step')} ${n} ${tx('من', 'of')} 4</div>`;
-const sum = () => { const t = TYPES[o.type].p * o.qty, a = Object.keys(ADDS).filter(k => o.adds[k]).reduce((s, k) => s + ADDS[k].p, 0), fee = Math.round(t * .12); return { t, a, fee, proc: 25, total: t + a + fee + 25 }; };
+const fail = (el, msg) => { formErrs++; Lab.log('formerror', { n: formErrs }); $(el).innerHTML = `<div class="err">⚠️ ${msg}</div>`; scrollTo(0, 0); };
 
 function home() {
   stopHold();
-  $('#app').innerHTML = `<div class="urg">🔥 ${tx('عرض النهارده بس: التذاكر بتخلص!', 'Today only: tickets are selling out!')}</div><div class="wrap">
-    <a class="feat" href="#/e" data-t="event" style="display:block"><span class="tag">${tx('الأكتر طلبًا', 'TRENDING')}</span><img src="${C.thumb('celeb', 12)}"><div class="in"><h2>${tx('مهرجان القاهرة للموسيقى', 'Cairo Sound Festival')}</h2><div class="sub">📍 ${tx('أرض المعارض · 12–14 ديسمبر', 'Expo Grounds · 12–14 Dec')}</div><div class="sub" style="margin-top:4px">${tx('الأسعار تبدأ من', 'From')} <b style="color:#ff5a1f;font-size:17px">${EGP(400)}</b>*</div><span class="cta">${tx('احجز تذكرتك', 'Get tickets')}</span></div></a>
+  const small = (c, t, d, i, ev) => `<a class="ev" ${ev ? `href="#/e/${ev}" data-t="event"` : 'data-t="other-event"'}><img src="${C.thumb(c, i + 21)}"><div><h3>${t}</h3><div class="sub">${d}</div></div></a>`;
+  $('#app').innerHTML = `<div class="urg">🔥 ${tx('الأكتر طلبًا النهارده', 'Trending today')}</div><div class="wrap">
+    <a class="feat" href="#/e/party" data-t="event" style="display:block"><span class="tag">${tx('الأكتر طلبًا', 'TRENDING')}</span><img src="${C.thumb('celeb', 3)}"><div class="in"><h2>${EVS.party.n}</h2><div class="sub">📍 ${tx('أرض المعارض · ديسمبر', 'Expo Grounds · December')}</div><span class="cta">${tx('احجز تذكرتك', 'Get tickets')}</span></div></a>
     <div class="h">${tx('فعاليات تانية', 'More events')}</div>
-    ${[['economy', tx('قمة العلاقات العامة 2026', 'PR Summit 2026'), tx('فندق النيل · 20 ديسمبر', 'Nile Hotel · 20 Dec')], ['food', tx('مهرجان أكل الشارع', 'Street Food Fest'), tx('الزمالك · كل جمعة', 'Zamalek · every Friday')], ['culture', tx('ليلة ستاند أب كوميدي', 'Stand-up Comedy Night'), tx('مسرح الجامعة · 18 ديسمبر', 'University Theatre · 18 Dec')], ['tech', tx('معرض التوظيف للخريجين', 'Graduate Career Fair'), tx('قاعة المؤتمرات · 25 ديسمبر', 'Convention Hall · 25 Dec')]].map(([c, t, d], i) => `<a class="ev" data-t="other-event"><img src="${C.thumb(c, i + 21)}"><div><h3>${t}</h3><div class="sub">${d}</div></div></a>`).join('')}
-    <div class="fine">* ${tx('الأسعار لا تشمل الرسوم.', 'Prices exclude fees.')}</div></div>`;
+    ${small('economy', tx('قمة العلاقات العامة 2026', 'PR Summit 2026'), tx('فندق النيل', 'Nile Hotel'), 0)}${small('food', tx('مهرجان أكل الشارع', 'Street Food Fest'), tx('الزمالك', 'Zamalek'), 1)}
+    ${small('celeb', EVS.csf.n, tx('أرض المعارض · ديسمبر', 'Expo Grounds · December'), 12 - 21, 'csf')}
+    ${small('culture', tx('ليلة ستاند أب كوميدي', 'Stand-up Comedy Night'), tx('مسرح الجامعة', 'University Theatre'), 2)}${small('tech', tx('معرض التوظيف للخريجين', 'Graduate Career Fair'), tx('قاعة المؤتمرات', 'Convention Hall'), 3)}</div>`;
   scrollTo(0, 0); Lab.setView({ view: 'home', kind: 'home' });
 }
 
-function event() {
-  $('#app').innerHTML = `<div class="wrap"><div class="feat"><img src="${C.thumb('celeb', 12)}"><div class="in"><h2>${tx('مهرجان القاهرة للموسيقى', 'Cairo Sound Festival')}</h2><div class="sub">📍 ${tx('أرض المعارض', 'Expo Grounds')} · 🕗 ${tx('الأبواب 6 مساءً', 'Doors 6 pm')}</div></div></div>
+function cal() {
+  const E = EVS[o.ev], names = [tx('نوفمبر 2026', 'November 2026'), tx('ديسمبر 2026', 'December 2026'), tx('يناير 2027', 'January 2027')], first = [0, 2, 5], len = [30, 31, 31], mi = o.month - 10;
+  let cells = ''; for (let i = 0; i < first[mi]; i++) cells += '<span></span>';
+  for (let d = 1; d <= len[mi]; d++) { const st = mi === 1 ? E.days[d] : null; cells += `<button class="cd ${st === 'ok' ? 'ok' : ''} ${st === 'off' ? 'so' : ''} ${o.date === d && mi === 1 ? 'sel' : ''}" ${st ? `data-day="${d}" data-st="${st}"` : 'data-nd="1"'} data-t="cal-day">${d}</button>`; }
+  return `<div class="calh"><button data-mv="-1" data-t="cal-prev">‹</button><b>${names[mi]}</b><button data-mv="1" data-t="cal-next">›</button></div><div class="calg">${['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(x => `<i>${x}</i>`).join('')}${cells}</div>`;
+}
+function event(ev) {
+  if (EVS[ev] && o.ev !== ev) { o.ev = ev; o.date = null; }
+  const E = EVS[o.ev], list = o.more ? ['vip', 'pit', 'std', 'acc'] : ['vip', 'pit'];
+  $('#app').innerHTML = `<div class="wrap"><div class="feat"><img src="${C.thumb('celeb', E.img)}"><div class="in"><h2>${E.n}</h2><div class="sub">📍 ${tx('أرض المعارض', 'Expo Grounds')} · 🕗 ${tx('الأبواب 4 مساءً', 'Doors 4 pm')}</div></div></div>
     ${steps(1)}
-    <div class="card"><div class="h" style="margin-top:0">${tx('اختار اليوم', 'Choose a day')}</div><div class="opts" id="dates">${DATES.map(([k, n, s, off]) => `<button class="opt ${off ? 'off' : ''} ${o.date === k ? 'sel' : ''}" data-d="${k}" data-t="date" ${off ? 'data-off="1"' : ''}><span><b>${n}</b></span><small>${s}</small></button>`).join('')}</div></div>
-    <div class="card"><div class="h" style="margin-top:0">${tx('نوع التذكرة', 'Ticket type')}</div><div class="opts" id="types">${['vip', 'pit', 'std'].map(k => `<button class="opt ${o.type === k ? 'sel' : ''}" data-y="${k}" data-t="type"><span><b>${TYPES[k].n}${k === 'vip' ? `<span class="badge">${tx('الأكتر مبيعًا', 'MOST POPULAR')}</span>` : ''}</b><span class="sub">${TYPES[k].d}</span></span><b>${EGP(TYPES[k].p)}</b></button>`).join('')}</div></div>
-    <div class="card"><div class="h" style="margin-top:0">${tx('عدد التذاكر', 'How many?')}</div><div class="qty"><button data-q="-1" data-t="qty-minus">−</button><b id="qty">${o.qty}</b><button data-q="1" data-t="qty-plus">+</button></div></div>
+    <div class="card"><div class="h" style="margin-top:0">${tx('اختار التاريخ', 'Select a date')}</div><div id="cal">${cal()}</div></div>
+    <div class="card"><div class="h" style="margin-top:0">${tx('نوع التذكرة', 'Ticket type')}</div><div class="opts" id="types">${list.map(k => `<button class="opt ${o.type === k ? 'sel' : ''}" data-y="${k}" data-t="type"><span><b>${TYPES[k].n}${k === 'vip' ? `<span class="badge">${tx('الأكتر مبيعًا', 'MOST POPULAR')}</span>` : ''}</b><span class="sub">${TYPES[k].d}</span></span><b>${EGP(TYPES[k].p)}</b></button>`).join('')}</div>
+      ${o.more ? '' : `<button class="tl" id="more" data-t="more-types" style="display:block;margin:10px auto 0">${tx('أنواع تانية', 'other ticket types')} ▾</button>`}<div class="fine">${tx('الأسعار شاملة كل الرسوم.', 'Prices include all fees.')}</div></div>
+    <div class="card"><div class="h" style="margin-top:0">${tx('العدد', 'Quantity')}</div><select class="t" id="qty" data-t="qty">${[1, 2, 3, 4, 5, 6].map(n => `<option value="${n}" ${o.qty === n ? 'selected' : ''}>${n} ${tx(n === 1 ? 'تذكرة' : 'تذاكر', n === 1 ? 'ticket' : 'tickets')}</option>`).join('')}</select></div>
     <button class="cta" id="next" data-t="continue">${tx('كمّل', 'Continue')}</button></div>`;
-  scrollTo(0, 0); Lab.setView({ view: 'event', kind: 'flow', id: 'step1' }); Lab.log('tix', { step: 1 });
-  document.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { if (b.dataset.off) return Lab.toast(tx('اليوم ده خلص', 'That day is sold out')); o.date = b.dataset.d; document.querySelectorAll('[data-d]').forEach(x => x.classList.toggle('sel', x === b)); });
+  Lab.setView({ view: 'event', kind: 'flow', id: 'step1' }); Lab.log('tix', { step: 1, ev: o.ev });
+  const bindCal = () => { document.querySelectorAll('[data-mv]').forEach(b => b.onclick = () => { o.month = Math.max(10, Math.min(12, o.month + +b.dataset.mv)); $('#cal').innerHTML = cal(); bindCal(); });
+    document.querySelectorAll('.cd').forEach(b => b.onclick = () => { if (b.dataset.nd) return Lab.toast(tx('مافيش عروض في اليوم ده', 'No shows on this day')); if (b.dataset.st === 'off') return Lab.toast(tx('اليوم ده خلص', 'That day is sold out')); o.date = +b.dataset.day; $('#cal').innerHTML = cal(); bindCal(); }); };
+  bindCal();
   document.querySelectorAll('[data-y]').forEach(b => b.onclick = () => { o.type = b.dataset.y; document.querySelectorAll('[data-y]').forEach(x => x.classList.toggle('sel', x === b)); });
-  document.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { o.qty = Math.max(1, Math.min(6, o.qty + +b.dataset.q)); $('#qty').textContent = o.qty; });
-  $('#next').onclick = () => { if (!o.date) return Lab.toast(tx('اختار اليوم الأول', 'Choose a day first')); startHold(); if (o.type !== 'vip' && !upsold) upsell(() => location.hash = '#/s/2'); else location.hash = '#/s/2'; };
+  if ($('#more')) $('#more').onclick = () => { o.more = true; const y = scrollY; event(o.ev); scrollTo(0, y); };
+  $('#qty').onchange = () => o.qty = +$('#qty').value;
+  $('#next').onclick = () => { if (!o.date) return Lab.toast(tx('اختار التاريخ الأول', 'Select a date first')); startHold(); if (o.type !== 'vip' && !upsold) upsell(() => location.hash = '#/s/2'); else location.hash = '#/s/2'; };
 }
 
 function upsell(after) {
   upsold = true; const t0 = Date.now();
   const d = document.createElement('div'); d.className = 'ov';
-  d.innerHTML = `<div class="mod" data-ad="t-upsell"><div style="font-size:54px">🥂</div><h3>${tx('استنى! رقّي لـ VIP', 'Wait! Upgrade to VIP')}</h3><p>${tx('لاونج خاص، مشروبات، ودخول من غير طابور. 87% من الحضور بيرقّوا.', 'Private lounge, drinks and no queue. 87% of guests upgrade.')}</p>
-    <button class="cta" data-t="upsell-yes" id="uy">${tx('رقّيني لـ VIP', 'Upgrade me to VIP')}</button><button class="tl" data-t="upsell-no" id="un">${tx('لأ، أنا بحب الوقفة في الطابور', 'No thanks, I enjoy queuing')}</button></div>`;
+  d.innerHTML = `<div class="mod" data-ad="t-upsell"><div style="font-size:54px">🥂</div><h3>${tx('استنى! رقّي لجولدن سيركل', 'Wait! Upgrade to Golden Circle')}</h3><p>${tx('لاونج خاص، مشروبات، ودخول من غير طابور. 87% من الحضور بيرقّوا.', 'Private lounge, drinks and no queue. 87% of guests upgrade.')}</p>
+    <button class="cta" data-t="upsell-yes" id="uy">${tx('رقّيني', 'Upgrade me')}</button><button class="tl" data-t="upsell-no" id="un">${tx('لأ، أنا بحب الوقفة في الطابور', 'No thanks, I enjoy queuing')}</button></div>`;
   document.body.appendChild(d);
   const close = (action) => { Lab.log('upsell', { action, ms: Date.now() - t0 }); d.remove(); after(); };
   d.querySelector('#uy').onclick = () => { o.type = 'vip'; close('accept'); };
   d.querySelector('#un').onclick = () => close('decline');
 }
 
-function extras() {
-  $('#app').innerHTML = `<div class="wrap">${steps(2)}<div class="card"><div class="h" style="margin-top:0">${tx('كمّل تجربتك', 'Complete your experience')}</div>
-    ${Object.entries(ADDS).map(([k, a]) => `<label class="add" data-t="addon"><input type="checkbox" data-a="${k}" ${o.adds[k] ? 'checked' : ''}><div><b>${a.n}</b><span>${a.d}</span></div><em>+${EGP(a.p)}</em></label>`).join('')}</div>
-    <button class="cta" id="next" data-t="continue">${tx('كمّل', 'Continue')}</button><a class="cta ghost" href="#/e" data-t="back">${tx('رجوع', 'Back')}</a></div>`;
-  scrollTo(0, 0); Lab.setView({ view: 'extras', kind: 'flow', id: 'step2' }); Lab.log('tix', { step: 2 });
-  document.querySelectorAll('[data-a]').forEach(c => c.onchange = () => o.adds[c.dataset.a] = c.checked);
-  $('#next').onclick = () => location.hash = '#/s/3';
+function account() {
+  $('#app').innerHTML = `<div class="wrap">${steps(2)}<div id="err"></div><div class="card"><div class="h" style="margin-top:0">${tx('اعمل حساب عشان تكمّل', 'Create an account to continue')}</div>
+    <div class="fine" style="margin:0 0 6px">${tx('محاكاة: اكتب أي بيانات مش حقيقية. مفيش حاجة بتتحفظ.', 'Simulation: type made-up details. Nothing you type is saved.')}</div>
+    <label class="f">${tx('الإيميل', 'Email')} *</label><input class="t" id="a1" autocomplete="off" inputmode="email">
+    <label class="f">${tx('كلمة السر', 'Password')} *</label><input class="t" id="a2" type="password" autocomplete="new-password">
+    <label class="f">${tx('أكّد كلمة السر', 'Confirm password')} *</label><input class="t" id="a3" type="password" autocomplete="new-password">
+    <button class="cta" id="next" data-t="create-account">${tx('اعمل الحساب', 'Create account')}</button></div>
+    <div class="card"><b>${tx('ليه تعمل حساب؟', 'Why create an account?')}</b><div class="sub" style="line-height:1.7;margin-top:6px">✓ ${tx('تذاكرك في مكان واحد', 'All your tickets in one place')}<br>✓ ${tx('عروض حصرية', 'Exclusive offers')}<br>✓ ${tx('حجز أسرع المرة الجاية', 'Faster checkout next time')}<br>✓ ${tx('نقاط ولاء', 'Loyalty points')}</div></div>
+    <button class="tl" id="guest" data-t="guest" style="display:block;margin:6px auto">${tx('كمّل كضيف', 'continue as guest')}</button></div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'account', kind: 'flow', id: 'step2' }); Lab.log('tix', { step: 2 });
+  $('#guest').onclick = () => { Lab.log('guest', {}); location.hash = '#/s/3'; };
+  $('#next').onclick = () => { const e = $('#a1').value.trim(), p = $('#a2').value, c = $('#a3').value;
+    const m = !/.+@.+/.test(e) ? tx('الإيميل مش صح.', 'Invalid email.') : p.length < 8 ? tx('كلمة السر قصيرة.', 'Password is too short.') : !/[A-Z]/.test(p) ? tx('كلمة السر لازم فيها حرف كابيتال.', 'Password must contain an uppercase letter.') : !/\d/.test(p) ? tx('كلمة السر لازم فيها رقم.', 'Password must contain a number.') : !/[^A-Za-z0-9]/.test(p) ? tx('كلمة السر لازم فيها رمز.', 'Password must contain a symbol.') : p !== c ? tx('كلمتين السر مش زي بعض.', 'Passwords do not match.') : '';
+    if (m) { $('#a2').value = ''; $('#a3').value = ''; return fail('#err', m); }
+    location.hash = '#/s/3'; };
 }
 
 function details() {
   const cities = [tx('القاهرة', 'Cairo'), tx('الجيزة', 'Giza'), tx('الإسكندرية', 'Alexandria'), tx('مدينة تانية', 'Other')];
   const heard = [tx('سوشيال ميديا', 'Social media'), tx('صاحب', 'A friend'), tx('إعلان', 'An ad'), tx('حاجة تانية', 'Other')];
-  $('#app').innerHTML = `<div class="wrap">${steps(3)}<div id="err"></div><div class="card"><div class="h" style="margin-top:0">${tx('بياناتك', 'Your details')}</div>
-    <div class="fine" style="margin:0 0 6px">${tx('محاكاة: اكتب أي بيانات مش حقيقية. مفيش حاجة بتتحفظ.', 'Simulation: type made-up details. Nothing you type is saved.')}</div>
+  $('#app').innerHTML = `<div class="wrap">${steps(3)}<div id="err"></div><div class="card"><div class="h" style="margin-top:0">${tx('بيانات صاحب التذكرة', 'Ticket holder details')}</div>
     <label class="f">${tx('الاسم بالكامل', 'Full name')} *</label><input class="t" id="f1" autocomplete="off">
     <label class="f">${tx('الإيميل', 'Email')} *</label><input class="t" id="f2" autocomplete="off" inputmode="email">
     <label class="f">${tx('أكّد الإيميل', 'Confirm email')} *</label><input class="t" id="f3" autocomplete="off" inputmode="email">
     <label class="f">${tx('رقم الموبايل', 'Mobile number')} *</label><input class="t" id="f4" autocomplete="off" inputmode="numeric">
     <label class="f">${tx('المدينة', 'City')} *</label><select class="t" id="f5"><option value="">—</option>${cities.map(c => `<option>${c}</option>`).join('')}</select>
     <label class="f">${tx('عرفت عننا منين؟', 'How did you hear about us?')} *</label><select class="t" id="f6"><option value="">—</option>${heard.map(c => `<option>${c}</option>`).join('')}</select></div>
-    <button class="cta" id="next" data-t="continue">${tx('كمّل للدفع', 'Continue to payment')}</button><a class="cta ghost" href="#/s/2" data-t="back">${tx('رجوع', 'Back')}</a></div>`;
+    <button class="cta" id="next" data-t="continue">${tx('كمّل', 'Continue')}</button><a class="cta ghost" href="#/s/2" data-t="back">${tx('رجوع', 'Back')}</a></div>`;
   scrollTo(0, 0); Lab.setView({ view: 'details', kind: 'flow', id: 'step3' }); Lab.log('tix', { step: 3 });
   $('#next').onclick = () => {
     const v = (i) => $('#f' + i).value.trim();
     const ok = v(1).length > 2 && /.+@.+/.test(v(2)) && v(2) === v(3) && /^\d{11}$/.test(v(4).replace(/\s/g, '')) && v(5) && v(6);
-    if (!ok) { formErrs++; Lab.log('formerror', { n: formErrs }); $('#f3').value = ''; $('#err').innerHTML = `<div class="err">⚠️ ${tx('فيه بيانات غلط. راجعها وحاول تاني.', 'Some details are invalid. Please check and try again.')}</div>`; scrollTo(0, 0); return; }
+    if (!ok) { $('#f3').value = ''; return fail('#err', tx('فيه بيانات غلط. راجعها وحاول تاني.', 'Some details are invalid. Please check and try again.')); }
     location.hash = '#/s/4';
   };
 }
 
 function checkout() {
-  const s = sum(), d = DATES.find(x => x[0] === o.date);
-  $('#app').innerHTML = `<div class="wrap">${steps(4)}<div class="card" id="sumcard"><div class="h" style="margin-top:0">${tx('ملخص الطلب', 'Order summary')}</div>
-    <div class="line"><span>${o.qty} × ${TYPES[o.type].n} · ${d ? d[1] : ''}</span><b>${EGP(s.t)}</b></div>
-    ${Object.keys(ADDS).filter(k => o.adds[k]).map(k => `<div class="line"><span>${ADDS[k].n}</span><b>${EGP(ADDS[k].p)}</b></div>`).join('')}
-    <div class="line fee"><span>${tx('رسوم الخدمة (12%)', 'Service fee (12%)')}</span><span>${EGP(s.fee)}</span></div>
-    <div class="line fee"><span>${tx('رسوم معالجة الطلب', 'Order processing fee')}</span><span>${EGP(s.proc)}</span></div>
-    <div class="line total"><span>${tx('الإجمالي', 'Total')}</span><span id="total">${EGP(s.total)}</span></div></div>
-    <button class="cta" id="pay" data-t="pay">${tx('ادفع دلوقتي', 'Pay now')}</button><a class="cta ghost" href="#/s/2" data-t="edit">${tx('عدّل الإضافات', 'Edit extras')}</a><a class="cta ghost" href="#/e" data-t="edit">${tx('عدّل التذاكر', 'Edit tickets')}</a>
-    <div class="fine">${tx('التذاكر لا تُسترد. بالضغط على "ادفع" إنت موافق على الشروط.', 'Tickets are non-refundable. By tapping “Pay now” you accept the terms.')}</div></div>`;
-  scrollTo(0, 0); Lab.setView({ view: 'checkout', kind: 'flow', id: 'step4' });
-  Lab.log('tix', { step: 4, total: s.total, type: o.type, qty: o.qty, date: o.date, adds: Object.keys(ADDS).filter(k => o.adds[k]).length });
-  $('#pay').onclick = () => { const m = document.createElement('div'); m.className = 'ov'; m.innerHTML = `<div class="mod"><div style="font-size:54px">💳</div><h3>${tx('دي محاكاة', 'This is a simulation')}</h3><p>${tx('مفيش دفع حقيقي. جاوب على سؤال المهمة تحت.', 'No real payment. Answer the mission question below.')}</p><button class="cta" data-t="ok">${tx('تمام', 'OK')}</button></div>`; document.body.appendChild(m); m.querySelector('button').onclick = () => m.remove(); };
+  const E = EVS[o.ev];
+  $('#app').innerHTML = `<div class="wrap">${steps(4)}<div class="card" id="sumcard"><div class="h" style="margin-top:0">${tx('راجع طلبك', 'Review your order')}</div>
+    <div class="line"><span>${tx('الفعالية', 'Event')}</span><b>${E.n}</b></div><div class="line"><span>${tx('اليوم', 'Day')}</span><b>${DAYN[o.date] || ''}</b></div>
+    <div class="line"><span>${tx('التذاكر', 'Tickets')}</span><b>${o.qty} × ${TYPES[o.type].n}</b></div>
+    <div class="line total"><span>${tx('الإجمالي', 'Total')}</span><span id="total">${EGP(TYPES[o.type].p * o.qty)}</span></div><div class="fine">${tx('شامل كل الرسوم.', 'All fees included.')}</div></div>
+    <button class="cta" id="pay" data-t="confirm">${tx('أكّد الحجز', 'Confirm booking')}</button><a class="cta ghost" href="#/e/${o.ev}" data-t="edit">${tx('عدّل', 'Change')}</a></div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'checkout', kind: 'flow', id: 'step4' }); Lab.log('tix', { step: 4 });
+  $('#pay').onclick = () => location.hash = '#/done';
+}
+function done() {
+  if (!o.date) return home(); stopHold(); const E = EVS[o.ev];
+  $('#app').innerHTML = `<div class="wrap"><div class="card" style="text-align:center"><div style="font-size:50px">🎟</div><div class="h" style="margin:4px 0">${tx('تم الحجز (محاكاة)', 'Booking confirmed (simulation)')}</div><div class="sub">${tx('مفيش دفع حقيقي.', 'No real payment was taken.')}</div></div>
+    <div class="card" id="ticket" style="border:2px dashed #0b3b46"><b style="font-size:18px">${E.n}</b><div class="line"><span>${tx('اليوم', 'Day')}</span><b>${DAYN[o.date]}</b></div><div class="line"><span>${tx('التذاكر', 'Tickets')}</span><b>${o.qty} × ${TYPES[o.type].n}</b></div>
+    <div class="line total"><span>${tx('بوابة الدخول', 'Entry gate')}</span><span id="gate">${tx('بوابة', 'Gate')} ${gate()}</span></div><div class="fine">#NTX-${Math.floor(100000 + Math.random() * 899999)}</div></div>
+    <a class="cta ghost" href="#/" data-t="home">${tx('احجز تاني', 'Book another')}</a></div>`;
+  scrollTo(0, 0); Lab.setView({ view: 'done', kind: 'flow', id: 'done' });
+  Lab.log('tix', { step: 5, ev: o.ev, type: o.type, qty: o.qty, date: o.date, gate: gate() });
 }
 
 // ---- hold timer ----
@@ -155,7 +184,7 @@ function tick() {
   $('#holdbar').innerHTML = `<div class="hold"><span>⏳ ${tx('تذاكرك محجوزة لمدة', 'Your tickets are held for')}</span><b>${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}</b></div>`;
 }
 
-function route() { const h = location.hash; if (h === '#/e') event(); else if (h === '#/s/2') extras(); else if (h === '#/s/3') details(); else if (h === '#/s/4') checkout(); else home(); }
+function route() { const h = location.hash; if (h.startsWith('#/e/')) event(h.slice(4)); else if (h === '#/s/2') account(); else if (h === '#/s/3') details(); else if (h === '#/s/4') checkout(); else if (h === '#/done') done(); else home(); }
 addEventListener('hashchange', route);
 
 function cookie() {

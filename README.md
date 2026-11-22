@@ -50,8 +50,8 @@ Change the key with `ADMIN_KEY=yourkey npm start`.
 | 5 | **Layali Venues** (3 min) | Venue booking site for planners: poetic descriptions, capacity hidden in a Specs tab, rates behind a quote form, chat pop-up |
 | 6 | 🎯 **Push mission** | "Which hall fits a 200-guest seated dinner on a Friday evening, and at what rate?" (Papyrus Hall · 60,000 EGP) |
 | 7 | ⚡ **Push quick check** | Same as above |
-| 8 | **NileTix** (3 min) | Event ticketing site: VIP and 2 tickets preselected, pre-ticked extras, VIP upsell pop-up, long form with vague errors, hold timer, fees shown only at the last step |
-| 9 | 🎯 **Push mission** | "Book 1 Standard ticket for Friday with no extras. What is the total?" (473 EGP) |
+| 8 | **NileTix** (3 min) | Event ticketing site with clear prices and a hard experience: look-alike event on top, calendar on the wrong month, Standard hidden under "other ticket types", 2 tickets by default, upsell pop-up, forced account with strict password rules, vague form errors, hold timer |
+| 9 | 🎯 **Push mission** | "Book 1 Standard ticket for Friday. Which gate is printed on your ticket?" (Gate C) |
 | 10 | ⚡ **Push quick check** | Same as above |
 | 11 | **Spot the ad** | Tap the posts you think are ads (2 are disguised) |
 | 12 | **Reveal ✨** | Phones: personal Wrapped story. Projector: walk through the scenes |
