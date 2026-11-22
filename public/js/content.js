@@ -160,16 +160,16 @@
 
   // ============ Spot the ad ============
   const spot = [
-    { ad: false, cat: 'education', src: { ar: 'الخبر الآن', en: 'Al-Khabar Now' }, t: { ar: 'جدول امتحانات الميدترم نزل على موقع الكلية', en: 'Midterm exam timetable now available on the faculty website' } },
+    { ad: false, cat: 'education', src: { ar: 'أخبار اليوم', en: 'Daily News' }, t: { ar: 'جدول امتحانات الميدترم نزل على موقع الكلية', en: 'Midterm exam timetable now available on the faculty website' } },
     { ad: true, native: true, cat: 'crypto', src: { ar: 'نيل كوين · ممول', en: 'NileCoin · Sponsored' }, t: { ar: 'خبير اقتصادي: العملة دي هتضرب في 10 قبل آخر السنة', en: 'Economist: this coin will 10× before the end of the year' } },
-    { ad: false, cat: 'sports', src: { ar: 'ذا جلوبال ليدجر', en: 'The Global Ledger' }, t: { ar: 'منتخب الشباب يطلع النهائي بعد ماتش صعب', en: 'Youth national team reaches the final after a tough match' } },
+    { ad: false, cat: 'sports', src: { ar: 'ذا ليدجر', en: 'The Ledger' }, t: { ar: 'منتخب الشباب يطلع النهائي بعد ماتش صعب', en: 'Youth national team reaches the final after a tough match' } },
     { ad: true, native: true, cat: 'health', src: { ar: 'مقترح ليك', en: 'Recommended for you' }, t: { ar: 'دكاترة بيكشفوا: معلقة واحدة قبل النوم بتدوّب الدهون', en: 'Doctors reveal: one spoon before bed melts fat' } },
-    { ad: false, cat: 'climate', src: { ar: 'ذا جلوبال ليدجر', en: 'The Global Ledger' }, t: { ar: 'موجة حر جاية آخر الأسبوع.. خلي بالك من نفسك', en: 'Heatwave expected this weekend — tips to stay safe' } },
+    { ad: false, cat: 'climate', src: { ar: 'ذا ليدجر', en: 'The Ledger' }, t: { ar: 'موجة حر جاية آخر الأسبوع.. خلي بالك من نفسك', en: 'Heatwave expected this weekend — tips to stay safe' } },
     { ad: true, native: false, cat: 'tech', src: { ar: 'إعلان', en: 'Ad' }, t: { ar: 'نيل تل: 50 جيجا بـ 99 جنيه بس! اشترك دلوقتي', en: 'NileTel: 50GB for just 99 EGP! Subscribe now' } },
-    { ad: false, cat: 'culture', src: { ar: 'الخبر الآن', en: 'Al-Khabar Now' }, t: { ar: 'معرض الكتاب أعلن مواعيده الجديدة', en: 'The book fair announces its new dates' } },
+    { ad: false, cat: 'culture', src: { ar: 'أخبار اليوم', en: 'Daily News' }, t: { ar: 'معرض الكتاب أعلن مواعيده الجديدة', en: 'The book fair announces its new dates' } },
     { ad: true, native: true, cat: 'local', src: { ar: 'بالتعاون مع نايل جاردنز', en: 'Paid partnership · Nile Gardens' }, t: { ar: 'ليه الشباب بيعزّلوا للمدن الجديدة؟ حكايات حقيقية', en: 'Why are young people moving to new cities? Real stories' } },
-    { ad: false, cat: 'economy', src: { ar: 'نايل تيكس', en: 'NileTix' }, t: { ar: 'استطلاع: الطلبة بيقضّوا 6 ساعات في اليوم على الموبايل', en: 'Survey: students spend 6 hours a day on their phones' } },
-    { ad: false, cat: 'tech', src: { ar: 'ذا جلوبال ليدجر', en: 'The Global Ledger' }, t: { ar: 'تحديث جديد بيضيف ميزة "وقت الشاشة" للموبايلات', en: 'New update adds a “screen time” feature to phones' } },
+    { ad: false, cat: 'economy', src: { ar: 'أخبار اليوم', en: 'Daily News' }, t: { ar: 'استطلاع: الطلبة بيقضّوا 6 ساعات في اليوم على الموبايل', en: 'Survey: students spend 6 hours a day on their phones' } },
+    { ad: false, cat: 'tech', src: { ar: 'ذا ليدجر', en: 'The Ledger' }, t: { ar: 'تحديث جديد بيضيف ميزة "وقت الشاشة" للموبايلات', en: 'New update adds a “screen time” feature to phones' } },
   ];
 
   window.CONTENT = { thumb, body, FILL, alkhabar, ledger, viral, spot };

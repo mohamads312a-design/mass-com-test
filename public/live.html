@@ -97,7 +97,7 @@ const C = CONTENT;
 let A = null, state = { stage: 'lobby' }, cur = +localStorage.getItem('live_scene') || 0, entering = false;
 const feedItems = [];
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const SITE = () => ({ alkhabar: tx('الخبر الآن', 'Al-Khabar Now'), ledger: tx('ذا جلوبال ليدجر', 'The Global Ledger'), niletix: tx('نايل تيكس', 'NileTix') });
+const SITE = () => ({ loop: tx('لووب', 'Loop'), halls: tx('ليالي للقاعات', 'Layali Venues'), niletix: tx('نايل تيكس', 'NileTix') });
 const P = (p) => p ? (lang === 'ar' ? p.ar : p.en) : '';
 const sec = (ms) => ms == null ? '—' : (ms / 1000).toFixed(1) + tx('ث', 's');
 const headTitle = (id) => { for (const s of [C.alkhabar, C.ledger, C.viral]) { const it = s.items.find(i => i.id === id); if (it) return it.title[lang]; } if (id && id.startsWith('v-feed-')) return C.viral.feedTitles[lang][+id.slice(7)]; return id; };
@@ -121,13 +121,13 @@ const SCENES = [
       <div class="card an" style="grid-column:span 3;animation-delay:.55s"><h3>${tx('الطلبة فين دلوقتي؟', 'Where is everyone?')}</h3>${siteBars()}</div>
     </div>`; } },
   { id: 'success', title: () => tx('نجاح المهام', 'Task success'), render: () => { const T = A.aggregate.usability.tasks, S = SITE();
-    const nm = { alkhabar: tx('نتيجة الماتش', 'Match score'), ledger: tx('قفل التنبيهات', 'Turn off alerts'), niletix: tx('حجز تذكرة', 'Book a ticket') };
+    const nm = { loop: tx('معاد ومكان الإيفنت', 'Event date & place'), halls: tx('القاعة وسعرها', 'Hall & rate'), niletix: tx('حجز تذكرة', 'Book a ticket') };
     return `<div class="kick an">${tx('المقياس الأول: الفعالية', 'Metric #1: effectiveness')}</div><h1 class="an" style="animation-delay:.1s">${tx('عرفتوا ', 'Did you ')}<span class="grad">${tx('تخلّصوا المهمة', 'finish the task')}</span>${tx('؟', '?')}</h1>
     <div class="grid" style="grid-template-columns:repeat(3,1fr)">${Object.entries(T).map(([k, t], i) => `<div class="card an" style="animation-delay:${.2 + i * .1}s"><h3>${S[k]} · ${nm[k]}</h3>
       <div class="big" data-n="${t.success}" data-s="%">${t.success}%</div><div class="sub">${tx('خلّصوها', 'succeeded')} · n=${t.n} · ${tx('سابوها', 'gave up')}: ${t.gaveUp}</div>
       <div class="bars" style="margin-top:1em">${bar(tx('نجحوا', 'Success'), t.success, t.success + '%', 'linear-gradient(90deg,#22c55e,#38bdf8)')}${bar(tx('ماعرفوش', 'Failed'), 100 - t.success, (100 - t.success) + '%')}</div>
       <div style="margin-top:1em">${t.fastest.map((f, j) => `<div>${['🥇', '🥈', '🥉'][j]} ${esc(f.name)} · ${f.s}${tx('ث', 's')}</div>`).join('')}</div>
-      ${k === 'niletix' && A.aggregate.usability.traps ? `<div class="sub" style="margin-top:.8em">🪤 ${tx('دفعوا إضافات من غير ما ياخدوا بالهم', 'Paid for pre-ticked extras')}: <b style="color:#f472b6">${A.aggregate.usability.traps.extras}</b> · 📝 ${tx('أخطاء الفورم', 'Form errors')}: <b style="color:#f472b6">${A.aggregate.usability.traps.formErrors}</b> · 🥂 ${tx('قبلوا VIP', 'Took VIP upsell')}: <b style="color:#f472b6">${A.aggregate.usability.traps.upsell}</b></div>` : ''}</div>`).join('')}</div>`; } },
+      ${k === 'loop' && A.aggregate.usability.traps ? `<div class="sub" style="margin-top:.8em">📅 ${tx('صدّقوا البوست القديم', 'Trusted the outdated post')}: <b style="color:#f472b6">${A.aggregate.usability.traps.loopOld}</b> · 🤷 ${tx('قالوا مش مكتوب', 'Said “it doesn’t say”')}: <b style="color:#f472b6">${A.aggregate.usability.traps.loopNone}</b></div>` : ''}${k === 'halls' && A.aggregate.usability.traps ? `<div class="sub" style="margin-top:.8em">🪑 ${tx('اختاروا قاعة صغيرة (مسرح مش عشا)', 'Picked a hall that only fits theatre-style')}: <b style="color:#f472b6">${A.aggregate.usability.traps.hallsSmall}</b> · 📆 ${tx('قروا سعر يوم غلط', 'Read the weekday rate')}: <b style="color:#f472b6">${A.aggregate.usability.traps.hallsWeekday}</b></div>` : ''}${k === 'niletix' && A.aggregate.usability.traps ? `<div class="sub" style="margin-top:.8em">🪤 ${tx('دفعوا إضافات من غير ما ياخدوا بالهم', 'Paid for pre-ticked extras')}: <b style="color:#f472b6">${A.aggregate.usability.traps.extras}</b> · 📝 ${tx('أخطاء الفورم', 'Form errors')}: <b style="color:#f472b6">${A.aggregate.usability.traps.formErrors}</b> · 🥂 ${tx('قبلوا VIP', 'Took VIP upsell')}: <b style="color:#f472b6">${A.aggregate.usability.traps.upsell}</b></div>` : ''}</div>`).join('')}</div>`; } },
   { id: 'effort', title: () => tx('المجهود', 'Effort'), render: () => { const T = A.aggregate.usability.tasks, S = SITE(); const mx = Math.max(1, ...Object.values(T).map(t => t.avgSteps));
     return `<div class="kick an">${tx('المقياس التاني: الكفاءة', 'Metric #2: efficiency')}</div><h1 class="an" style="animation-delay:.1s">${tx('خدت منكم ', 'How much ')}<span class="grad">${tx('قد إيه', 'effort')}</span>${tx('؟', '?')}</h1>
     <div class="grid" style="grid-template-columns:repeat(3,1fr)">${Object.entries(T).map(([k, t], i) => `<div class="card an" style="animation-delay:${.2 + i * .1}s;display:flex;flex-direction:column;gap:.6em"><h3>${S[k]}</h3>
@@ -137,28 +137,19 @@ const SCENES = [
   { id: 'lost', title: () => tx('الوقت الضايع', 'Time lost'), render: () => { const U = A.aggregate.usability, S = SITE(); const mx = Math.max(1, ...U.lost.map(x => x.s));
     return `<div class="kick an">${tx('المقاطعات', 'Interruptions')}</div><h1 class="an" style="animation-delay:.1s">${tx('كل واحد ضيّع ', 'Each of you lost ')}<span class="grad" data-n="${U.lostAvg}">${U.lostAvg}</span>${tx(' ثانية في النوافذ', ' seconds to pop-ups')}</h1>
     <div class="grid" style="grid-template-columns:1.6fr 1fr">
-      <div class="card an" style="animation-delay:.2s"><h3>⏱ ${tx('كوكيز + إعلان الشاشة + النشرة + الإشعارات + الفيديو', 'Cookies + full-screen ad + newsletter + notifications + video')}</h3><div class="bars">${U.lost.slice(0, 14).map(r => bar(r.name, r.s / mx * 100, r.s + tx('ث', 's'))).join('') || empty()}</div></div>
+      <div class="card an" style="animation-delay:.2s"><h3>⏱ ${tx('كوكيز + شات + فورم عرض السعر + ترقية VIP + عدّاد الوقت', 'Cookies + chat pop-up + quote form + VIP upsell + hold timer')}</h3><div class="bars">${U.lost.slice(0, 14).map(r => bar(r.name, r.s / mx * 100, r.s + tx('ث', 's'))).join('') || empty()}</div></div>
       <div class="card an" style="animation-delay:.3s"><h3>${tx('متوسط الوقت الضايع في كل موقع', 'Average time lost per site')}</h3><div class="vs" style="height:80%">${Object.entries(U.lostBySite).map(([k, v]) => `<div class="col"><div class="stk" data-h="${v / Math.max(1, ...Object.values(U.lostBySite)) * 100}">${v}${tx('ث', 's')}</div><div style="font-size:.8em;text-align:center">${S[k]}</div></div>`).join('')}</div></div></div>`; } },
   { id: 'errors', title: () => tx('الأخطاء', 'Errors'), render: () => { const E = A.aggregate.usability.errors;
     return `<div class="kick an">${tx('الأخطاء والعصبية', 'Errors & frustration')}</div><h1 class="an" style="animation-delay:.1s">${tx('الموبايل ', 'Your phones ')}<span class="grad">${tx('اتعصّب', 'got angry')}</span>${tx(' كام مرة؟', '')}</h1>
     <div class="grid" style="grid-template-columns:repeat(4,1fr) 1.4fr">
       ${[['😤', tx('دوسات بعصبية', 'Rage taps'), E.rage], ['👆', tx('دوسات على الفاضي', 'Dead taps'), E.dead], ['🫣', tx('دوسات بالغلط على إعلان', 'Accidental ad taps'), E.mistaps], ['🏳️', tx('مهام اتسابت', 'Tasks abandoned'), E.gaveUp]].map(([e, l, v], i) => `<div class="card an" style="animation-delay:${.2 + i * .08}s;text-align:center;display:flex;flex-direction:column;justify-content:center"><div style="font-size:3em">${e}</div><div class="big" data-n="${v}">${v}</div><div class="sub">${l}</div></div>`).join('')}
       <div class="card an" style="animation-delay:.55s"><h3>😤 ${tx('الأكتر عصبية', 'Most frustrated')}</h3>${E.ragers.map(x => `<div style="display:flex;justify-content:space-between;padding:.3em 0"><span>${esc(x.name)}</span><b>${x.n}×</b></div>`).join('') || empty()}</div></div>`; } },
-  { id: 'reading', title: () => tx('القراية', 'Reading'), render: () => { const r = A.aggregate.reading; const col = { deep: '#38bdf8', skimmer: '#f59e0b', clickbait: '#f472b6', bouncer: '#ef4444' };
-    return `<div class="kick an">${tx('القراية', 'Reading')}</div><h1 class="an" style="animation-delay:.1s">${tx('قريتوا بجد', 'You actually read')} <span class="grad">${r.readPct}%</span> ${tx('من المقالات اللي فتحتوها', 'of the articles you opened')}</h1>
-    <div class="grid" style="grid-template-columns:2.2fr 1fr">
-      <div class="card an" style="animation-delay:.2s"><h3>${tx('كل نقطة طالب: ↑ عمق القراية · → سرعة القراية (أبطأ = قراية بجد)', 'Each dot is a student: ↑ scroll depth · → reading pace (further = really reading)')}</h3>
-        <div class="scatter" style="height:85%">${r.dots.map((d, i) => `<div class="sdot pop" style="left:${Math.min(94, 6 + Math.min(1.2, d.ratio) / 1.2 * 88 + ((i * 37) % 9 - 4))}%;bottom:${Math.min(90, 4 + d.depth * .80 + ((i * 53) % 11 - 5))}%;color:${col[d.persona] || '#c084fc'};animation-delay:${.3 + i * .05}s"><i></i><span>${esc(d.name)}</span></div>`).join('')}</div></div>
-      <div class="grid" style="grid-template-columns:1fr;grid-template-rows:1fr 1fr">
-        <div class="card an" style="animation-delay:.3s"><h3>${tx('متوسط عمق السكرول', 'Average scroll depth')}</h3><div class="big">${r.avgDepth}%</div></div>
-        <div class="card an" style="animation-delay:.4s"><h3>♾️ ${tx('أبطال السكرول اللي مالوش آخر', 'Infinite-scroll champions')}</h3>${r.feedMax.filter(x => x.n).map(x => `<div style="display:flex;justify-content:space-between"><span>${esc(x.name)}</span><b>${x.n}</b></div>`).join('') || empty()}</div>
-      </div></div>`; } },
   { id: 'saydo', title: () => tx('بيقولوا وبيعملوا', 'Say vs Do'), render: () => { const U = A.aggregate.usability, S = SITE();
     return `<div class="kick an">${tx('المقياس التالت: الرضا', 'Metric #3: satisfaction')}</div><h1 class="an" style="animation-delay:.1s">${tx('اللي بتقولوه ', 'What you say ')}<span class="grad">≠</span>${tx(' اللي بتعملوه', ' what you do')}</h1>
     <div class="grid" style="grid-template-columns:repeat(3,1fr) 1.3fr">${Object.entries(U.score).map(([k, x], i) => `<div class="card an" style="animation-delay:${.2 + i * .1}s;text-align:center"><h3>${S[k]}</h3><div class="big">${x.seq ?? '—'}<span style="font-size:.35em;color:var(--mut)">/7</span></div><div class="sub">${tx('قالوا: سهولة', 'said: ease')}</div><hr style="border-color:var(--line);margin:.8em 0">
       <div style="text-align:start">✅ ${tx('خلّصوا', 'Succeeded')}: <b>${x.success}%</b><br>⏱ ${tx('وقت', 'Time')}: <b>${x.avgS}${tx('ث', 's')}</b><br>👆 ${tx('دوسات', 'Taps')}: <b>${x.steps}</b><br>😤 ${tx('عصبية', 'Rage')}: <b>${x.rage}</b></div><div class="sub">${tx('اللي عملوه', 'what they did')}</div></div>`).join('')}
       <div class="card an" style="animation-delay:.5s"><h3>🤔 ${tx('تناقضات', 'Contradictions')}</h3>${U.saydo.map(c => `<div style="padding:.4em 0;border-bottom:1px solid var(--line)"><b>${esc(c.name)}</b> ${tx('قال إن', 'said')} ${S[c.site]} ${tx('سهل', 'was easy')} <b>${c.mood}/7</b> ${tx('بس', 'but')} ${c.failed ? tx('ماخلّصش المهمة', 'failed the task') : c.rage ? c.rage + ' ' + tx('دوسات بعصبية', 'rage taps') : tx('داس على إعلان بالغلط', 'mis-tapped an ad')}</div>`).join('') || empty()}</div></div>`; } },
-  { id: 'blockers', title: () => tx('إيه اللي عطّلكم', 'Blockers'), render: () => { const U = A.aggregate.usability; const L = [tx('النوافذ والإعلانات', 'Pop-ups & ads'), tx('مالقيتش اللي بدوّر عليه', 'Couldn’t find it'), tx('الصفحات المتقسمة', 'Split pages'), tx('الزحمة والخط', 'Clutter & text'), tx('ولا حاجة', 'Nothing')]; const t = Math.max(1, U.blockers.reduce((a, b) => a + b, 0));
+  { id: 'blockers', title: () => tx('إيه اللي عطّلكم', 'Blockers'), render: () => { const U = A.aggregate.usability; const L = [tx('النوافذ والمقاطعات', 'Pop-ups & interruptions'), tx('مالقيتش اللي بدوّر عليه', 'Couldn’t find it'), tx('المعلومة متقسمة أو مستخبية', 'Info split up or hidden'), tx('كلام كتير ومش واضح', 'Too much unclear text'), tx('ولا حاجة', 'Nothing')]; const t = Math.max(1, U.blockers.reduce((a, b) => a + b, 0));
     return `<div class="kick an">${tx('بصوتكم', 'In your words')}</div><h1 class="an" style="animation-delay:.1s">${tx('إيه أكتر حاجة ', 'What ')}<span class="grad">${tx('عطّلتكم', 'slowed you down')}</span>${tx('؟', '?')}</h1>
     <div class="grid" style="grid-template-columns:1fr"><div class="card an" style="animation-delay:.2s"><div class="bars" style="gap:1em;font-size:1.3em">${U.blockers.map((n, i) => bar(L[i], n / t * 100, Math.round(n / t * 100) + '%', i === 4 ? 'linear-gradient(90deg,#22c55e,#38bdf8)' : '')).join('')}</div></div></div>`; } },
   { id: 'sites', title: () => tx('مقارنة المواقع', 'Site comparison'), render: () => { const U = A.aggregate.usability, S = SITE(), w = U.worst, b = U.best;
@@ -167,7 +158,7 @@ const SCENES = [
     <div class="grid" style="grid-template-columns:1fr 3fr"><div class="grid" style="grid-template-rows:1fr 1fr"><div class="card an pop" style="animation-delay:.3s;text-align:center;display:flex;flex-direction:column;justify-content:center"><div class="crown">🥵</div><div class="mid">${w ? U.score[w].score : '—'}</div><div class="sub">${w ? S[w] : ''}</div></div><div class="card an pop" style="animation-delay:.4s;text-align:center;display:flex;flex-direction:column;justify-content:center"><div class="crown">🏆</div><div class="mid">${b ? U.score[b].score : '—'}</div><div class="sub">${b ? S[b] : ''}</div></div></div>
     <div class="card an" style="animation-delay:.2s"><table class="cmp"><tr><th></th>${Object.keys(U.score).map(k => `<th class="${k === w ? 'worst' : ''}">${S[k]}</th>`).join('')}</tr>${rows.map(([l, k, u]) => `<tr><td>${l}</td>${Object.keys(U.score).map(sk => `<td class="${sk === w ? 'worst' : ''}"><b>${U.score[sk][k] ?? '—'}</b>${u}</td>`).join('')}</tr>`).join('')}</table></div></div>`; } },
   { id: 'heat', title: () => tx('خرايط الدوس', 'Heatmaps'), render: () => `<div class="kick an">${tx('خرايط حرارية', 'Heatmaps')}</div><h1 class="an" style="animation-delay:.1s;font-size:2.4em;margin-bottom:.3em">${tx('دوستوا فين في الصفحة الرئيسية؟', 'Where did you tap on each homepage?')}</h1>
-    <div class="heat" id="heat">${['alkhabar', 'ledger', 'niletix'].map((k, i) => `<div class="hm an" style="animation-delay:${.2 + i * .12}s"><div class="ph"><iframe src="/sites/${k}?preview=1&lang=${lang}" loading="lazy"></iframe><canvas data-site="${k}"></canvas></div><b>${SITE()[k]}</b></div>`).join('')}</div>`, after: drawHeat, static: true },
+    <div class="heat" id="heat">${['loop', 'halls', 'niletix'].map((k, i) => `<div class="hm an" style="animation-delay:${.2 + i * .12}s"><div class="ph"><iframe src="/sites/${k}?preview=1&lang=${lang}" loading="lazy"></iframe><canvas data-site="${k}"></canvas></div><b>${SITE()[k]}</b></div>`).join('')}</div>`, after: drawHeat, static: true },
   { id: 'personas', title: () => tx('الشخصيات', 'Personas'), render: () => { const st = (A ? A.students : []).filter(s => s.taps || s.timeS);
     const dist = Object.entries(A.aggregate.personas).sort((a, b) => b[1].names.length - a[1].names.length);
     return `<div class="kick an">${tx('انتو مين؟', 'Who are you?')}</div><h1 class="an" style="animation-delay:.1s;margin-bottom:.3em">${dist.slice(0, 3).map(([k, p]) => `${p.emoji} <span class="grad">${p.names.length}</span>`).join(' &nbsp; ')}</h1>
@@ -195,10 +186,10 @@ function spotlight() {
   return `<div class="kick an">${tx('تحليل لكل واحد', 'Spotlight')} · ${spotIdx % st.length + 1}/${st.length} <span style="opacity:.6">(${tx('دوس ↓ للي بعده', 'press ↓ for next')})</span></div>
   <h1 class="an" style="animation-delay:.1s">${s.persona.emoji} <span class="grad">${esc(s.name)}</span> — ${P(s.persona)}</h1>
   <div class="spot"><div class="card an" style="animation-delay:.2s"><h3>${tx('المهام', 'Tasks')}</h3>
-    ${line('⚽', tx('نتيجة الماتش', 'Match score'), tk(s.task.alkhabar))}${line('🔕', tx('قفل التنبيهات', 'Turn off alerts'), tk(s.task.ledger))}${line('🍌', tx('حجز تذكرة', 'Book a ticket'), tk(s.task.niletix))}
+    ${line('📱', tx('معاد ومكان الإيفنت', 'Event date & place'), tk(s.task.loop))}${line('🏛', tx('القاعة وسعرها', 'Hall & rate'), tk(s.task.halls))}${line('🎟', tx('حجز تذكرة', 'Book a ticket'), tk(s.task.niletix))}
     ${line('⏱', tx('وقت ضاع في النوافذ', 'Time lost to pop-ups'), (s.lostTotalS || 0) + tx('ث', 's'))}${line('😤', tx('دوسات بعصبية', 'Rage taps'), s.rage)}${line('👆', tx('دوسات على الفاضي', 'Dead taps'), s.deadTaps)}${line('🫣', tx('دوسات بالغلط على إعلانات', 'Accidental ad taps'), s.adTaps)}
   </div><div class="grid" style="grid-template-rows:auto 1fr">
-    <div class="card an" style="animation-delay:.3s"><h3>${tx('قال إن السهولة', 'Said ease')}</h3><div style="display:flex;gap:1.4em">${['alkhabar', 'ledger', 'niletix'].map(k => `<div style="text-align:center;flex:1"><div class="mid">${s.sites[k].mood ?? '—'}<span style="font-size:.4em;color:var(--mut)">/7</span></div><div class="sub">${S[k]}</div></div>`).join('')}</div></div>
+    <div class="card an" style="animation-delay:.3s"><h3>${tx('قال إن السهولة', 'Said ease')}</h3><div style="display:flex;gap:1.4em">${['loop', 'halls', 'niletix'].map(k => `<div style="text-align:center;flex:1"><div class="mid">${s.sites[k].mood ?? '—'}<span style="font-size:.4em;color:var(--mut)">/7</span></div><div class="sub">${S[k]}</div></div>`).join('')}</div></div>
     <div class="card an" style="animation-delay:.4s"><h3>${tx('القراية', 'Reading')}</h3>${line('📖', tx('قرا / عدّى', 'read / skimmed'), s.reading.read + ' / ' + s.reading.skimmed)}${line('📏', tx('عمق السكرول', 'Scroll depth'), s.reading.avgDepth + '%')}${line('♾️', tx('بوستات في السكرول', 'Feed posts'), s.feedItems)}</div>
   </div></div>`;
 }
@@ -248,7 +239,7 @@ function refresh() {
 }
 async function loadQR() { try { const r = await fetch('/api/qr'); const j = await r.json(); document.getElementById('qr').innerHTML = j.svg; document.getElementById('qurl').textContent = j.url.replace(/^https?:\/\//, ''); } catch (e) {} }
 
-const EMO = { upsell: '🥂', formerror: '📝', cookie: '⏱', interstitial: '📺', newsletter: '✉️', paywall: '💳', notif: '🔔', video: '▶️', adtap: '🧲', headline: '📰', task: '🎯', escape: '🪤', scam: '📱', appbanner: '📲', mood: '💬', spot: '🔍', join: '👋' };
+const EMO = { gate: '📝', chat: '💬', swipe: '👉', upsell: '🥂', formerror: '📝', cookie: '⏱', interstitial: '📺', newsletter: '✉️', paywall: '💳', notif: '🔔', video: '▶️', adtap: '🧲', headline: '📰', task: '🎯', escape: '🪤', scam: '📱', appbanner: '📲', mood: '💬', spot: '🔍', join: '👋' };
 function feedText(f) {
   const n = `<b>${esc(f.name)}</b>`, d = f.data || {}, S = SITE();
   switch (f.kind) {
@@ -261,6 +252,9 @@ function feedText(f) {
     case 'video': return d.action === 'skip' ? tx(`${n} عدّى الفيديو عند ${d.at}ث`, `${n} skipped the video at ${d.at}s`) : d.action === 'complete' ? tx(`${n} اتفرج على الإعلان كله`, `${n} watched the whole ad`) : tx(`${n} داس على إعلان الفيديو`, `${n} tapped the video ad`);
     case 'upsell': return d.action === 'accept' ? tx(`${n} وافق يرقّي لـ VIP 🥂`, `${n} accepted the VIP upsell 🥂`) : tx(`${n} رفض ترقية VIP`, `${n} declined the VIP upsell`);
     case 'formerror': return tx(`${n} الفورم رفض بياناته (مرة ${d.n}) 😤`, `${n} got a form error (×${d.n}) 😤`);
+    case 'gate': return d.action === 'send' ? tx(`${n} ملا فورم عرض السعر 📝`, `${n} filled in the quote form 📝`) : tx(`${n} عدّى فورم عرض السعر`, `${n} skipped the quote form`);
+    case 'chat': return tx(`${n} قفل الشات بعد ${sec(d.ms)}`, `${n} closed the chat pop-up after ${sec(d.ms)}`);
+    case 'swipe': return d.idx >= 3 ? tx(`${n} وصل للسلايد ${d.idx + 1} في البوست 👀`, `${n} reached slide ${d.idx + 1} of the carousel 👀`) : null;
     case 'adtap': return tx(`${n} داس على إعلان في ${S[f.site] || ''}`, `${n} tapped an ad on ${S[f.site] || ''}`);
     case 'headline': return tx(`${n} فتح: "${esc(headTitle(d.id)).slice(0, 48)}…"`, `${n} opened: “${esc(headTitle(d.id)).slice(0, 48)}…”`);
     case 'task': return d.gaveUp ? tx(`${n} ساب المهمة`, `${n} gave up the mission`) : d.correct ? tx(`${n} خلّص المهمة في ${sec(d.ms)} · ${d.steps || 0} دوسة ✅`, `${n} solved the mission in ${sec(d.ms)} ✅`) : tx(`${n} جاوب غلط ❌`, `${n} answered wrong ❌`);
@@ -287,12 +281,12 @@ socket.on('feed', (f) => {
   const el = document.getElementById('feed'); if (el) { el.insertAdjacentHTML('afterbegin', feedHTML(f)); while (el.children.length > 14) el.lastChild.remove(); }
   if (f.kind === 'join') { const b = document.getElementById('bubbles'); if (b) b.insertAdjacentHTML('beforeend', `<span class="bub">${esc(f.name)}</span>`); }
 });
-const stageName = (s) => ({ lobby: tx('الانتظار', 'Lobby'), alkhabar: SITE().alkhabar, ledger: SITE().ledger, niletix: SITE().niletix, spot: tx('اكتشف الإعلان', 'Spot the ad'), wrapped: tx('المفاجأة', 'Reveal') }[s] || s);
+const stageName = (s) => ({ lobby: tx('الانتظار', 'Lobby'), loop: SITE().loop, halls: SITE().halls, niletix: SITE().niletix, spot: tx('اكتشف الإعلان', 'Spot the ad'), wrapped: tx('المفاجأة', 'Reveal') }[s] || s);
 
 // ---------------------------- controls ----------------------------
 function renderCtrl() {
   const c = document.getElementById('ctrl');
-  c.innerHTML = ['lobby', 'alkhabar', 'ledger', 'niletix', 'spot', 'wrapped'].map(s => `<button class="${state.stage === s ? 'cur' : ''}" onclick="socket.emit('setStage','${s}')">${stageName(s)}</button>`).join('') +
+  c.innerHTML = ['lobby', 'loop', 'halls', 'niletix', 'spot', 'wrapped'].map(s => `<button class="${state.stage === s ? 'cur' : ''}" onclick="socket.emit('setStage','${s}')">${stageName(s)}</button>`).join('') +
     `<span class="sep"></span><button onclick="socket.emit('pushOverlay','task')">🎯 ${tx('مهمة', 'Mission')}</button><button onclick="socket.emit('pushOverlay','check')">⚡ ${tx('سؤال سريع', 'Quick check')}</button><button onclick="socket.emit('clearOverlay')">✕</button>`;
 }
 document.addEventListener('keydown', (e) => {

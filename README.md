@@ -1,6 +1,6 @@
 # 📰 News UX Lab
 
-A live classroom activity for a UX research lecture on **ease of use**. About 30 students browse **three simulated news sites** on their phones (Egyptian Arabic or English) and complete tasks on each. Every interaction is recorded, and the projector shows an **animated live usability analysis with students' names**: task success, time, taps, errors, time lost to pop-ups and ease ratings. At the end, each phone shows a personal **"News Wrapped"** story.
+A live classroom activity for a UX research lecture on **ease of use**. About 30 students browse **three simulated sites (a social media app, a venue booking site and an event ticketing site)** on their phones (Egyptian Arabic or English) and complete tasks on each. Every interaction is recorded, and the projector shows an **animated live usability analysis with students' names**: task success, time, taps, errors, time lost to pop-ups and ease ratings. At the end, each phone shows a personal **"News Wrapped"** story.
 
 > All sites, brands, ads and news stories are fictional (classroom simulation).
 
@@ -44,11 +44,11 @@ Change the key with `ADMIN_KEY=yourkey npm start`.
 | Step | Instructor panel button | What students see |
 |---|---|---|
 | 1 | **Lobby** | Scan QR → choose language → name → consent |
-| 2 | **Al-Khabar Now** (3 min) | Busy local portal: full-screen ad, cookie bar, sticky ad, split articles, fake iPhone prize |
-| 3 | 🎯 **Push mission** | "Find the final score of Nile Stars vs Delta FC" (hidden on page 3) |
+| 2 | **Loop** (3 min) | Social media app that works well; the brand's posts are the problem: an outdated post still up, a hype teaser, details on slide 4 of a carousel, a link-in-bio maze |
+| 3 | 🎯 **Push mission** | "When and where is the Cairo Creators Summit?" (Fri 12 Dec · Expo Hall B) |
 | 4 | ⚡ **Push quick check** | Ease rating 1–7 (Single Ease Question) + "what slowed you down the most?" |
-| 5 | **The Global Ledger** (3 min) | Serious broadsheet: cookie wall (847 partners), metered paywall, confirmshaming newsletter |
-| 6 | 🎯 **Push mission** | "Turn off breaking-news alerts" (menu → account → preferences → guilt-trip → survey) |
+| 5 | **Layali Venues** (3 min) | Venue booking site for planners: poetic descriptions, capacity hidden in a Specs tab, rates behind a quote form, chat pop-up |
+| 6 | 🎯 **Push mission** | "Which hall fits a 200-guest seated dinner on a Friday evening, and at what rate?" (Papyrus Hall · 60,000 EGP) |
 | 7 | ⚡ **Push quick check** | Same as above |
 | 8 | **NileTix** (3 min) | Event ticketing site: VIP and 2 tickets preselected, pre-ticked extras, VIP upsell pop-up, long form with vague errors, hold timer, fees shown only at the last step |
 | 9 | 🎯 **Push mission** | "Book 1 Standard ticket for Friday with no extras. What is the total?" (473 EGP) |

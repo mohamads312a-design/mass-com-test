@@ -4,7 +4,7 @@
   const preview = qs.get('preview') === '1';
   const sid = localStorage.getItem('lab_sid');
   const lang = (preview && qs.get('lang')) || localStorage.getItem('lab_lang') || 'ar';
-  const PAGES = { lobby: '/wait', alkhabar: '/sites/alkhabar', ledger: '/sites/ledger', niletix: '/sites/niletix', spot: '/spot', wrapped: '/wrapped' };
+  const PAGES = { lobby: '/wait', loop: '/sites/loop', halls: '/sites/halls', niletix: '/sites/niletix', spot: '/spot', wrapped: '/wrapped' };
   const here = location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
   if (!sid && here !== '/' && !preview) { location.href = '/'; return; }
 
@@ -62,7 +62,7 @@
     mood: { ar: 'المهمة في الموقع ده كانت سهلة ولا صعبة؟', en: 'Overall, how easy or difficult was the task on this site?' },
     hard: { ar: 'صعبة جدًا', en: 'Very difficult' }, easy: { ar: 'سهلة جدًا', en: 'Very easy' },
     ads: { ar: 'إيه أكتر حاجة عطّلتك؟', en: 'What slowed you down the most?' },
-    blockers: { ar: ['النوافذ والإعلانات', 'مالقيتش اللي بدوّر عليه بسهولة', 'الصفحات المتقسمة', 'الزحمة والخط', 'ولا حاجة، كانت سهلة'], en: ['Pop-ups and ads', 'Couldn\'t find what I needed', 'Content split across pages', 'Clutter and text', 'Nothing, it was easy'] },
+    blockers: { ar: ['النوافذ والمقاطعات', 'مالقيتش اللي بدوّر عليه بسهولة', 'المعلومة متقسمة أو مستخبية', 'كلام كتير ومش واضح', 'ولا حاجة، كانت سهلة'], en: ['Pop-ups and interruptions', 'Couldn\'t find what I needed', 'Information split up or hidden', 'Too much unclear text', 'Nothing, it was easy'] },
     thanks: { ar: 'شكرًا! كمّل تصفح 👀', en: 'Thanks! Keep browsing 👀' }, back: { ar: 'رجوع', en: 'Back' },
     escapeQ: { ar: 'اقفل تنبيهات الأخبار العاجلة في "ذا جلوبال ليدجر"', en: 'Turn off breaking-news alerts on The Global Ledger' },
     escapeDone: { ar: 'برافو! قفلت التنبيهات 🎉', en: 'Nice! Alerts turned off 🎉' }, choose: { ar: 'اختار إجابة', en: 'Choose an answer' },
